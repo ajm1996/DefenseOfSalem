@@ -1,18 +1,9 @@
 "AddonInfo"
 {
-  "TeamCount" "10"
-  "maps"      "template_map"
+  "TeamCount" "1"
+  "maps"      "town_of_salem"
   "IsPlayable"  "1"
-  "template_map"
+  "town_of_salem"
   {
-          "MaxPlayers"                    "10"
+          "MaxPlayers"                    "15"
   }
-//  "desert_duo"
-//  {
-//          "MaxPlayers"                    "10"
-//  }
-//  "forest_solo"
-//  {
-//          "MaxPlayers"                    "10"
-//  }
-}
