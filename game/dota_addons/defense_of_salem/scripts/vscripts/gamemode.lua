@@ -86,8 +86,8 @@ function GameMode:OnHeroInGame(hero)
   -- This line for example will set the starting gold of every hero to 500 unreliable gold
   hero:SetGold(0, false)
 
-  if not hero:HasModifier("modifier_stunned") then
-  	hero:AddNewModifier(hero, nil, "modifier_stunned", {})
+  if not hero:HasModifier("modifier_rooted") then
+  	hero:AddNewModifier(hero, nil, "modifier_rooted", {})
   end
 
   -- These lines will create an item and add it to the player, effectively ensuring they start with the item
