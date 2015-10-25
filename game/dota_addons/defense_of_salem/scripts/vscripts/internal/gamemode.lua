@@ -88,8 +88,6 @@ function GameMode:_InitGameMode()
   ListenToGameEvent("dota_tower_kill", Dynamic_Wrap(GameMode, 'OnTowerKill'), self)
   ListenToGameEvent("dota_player_selected_custom_team", Dynamic_Wrap(GameMode, 'OnPlayerSelectedCustomTeam'), self)
   ListenToGameEvent("dota_npc_goal_reached", Dynamic_Wrap(GameMode, 'OnNPCGoalReached'), self)
-
-  ListenToGameEvent("player_chat", Dynamic_Wrap(GameMode, 'OnPlayerChat'), self)
   
   --ListenToGameEvent("dota_tutorial_shop_toggled", Dynamic_Wrap(GameMode, 'OnShopToggled'), self)
 
@@ -101,6 +99,14 @@ function GameMode:_InitGameMode()
   --ListenToGameEvent('dota_combatlog', Dynamic_Wrap(GameMode, 'OnCombatLogEvent'), self)
   --ListenToGameEvent('dota_player_killed', Dynamic_Wrap(GameMode, 'OnPlayerKilled'), self)
   --ListenToGameEvent('player_team', Dynamic_Wrap(GameMode, 'OnPlayerTeam'), self)
+
+  PlayerSay:TeamChatHandler(function(playerEntity, text)
+    print(playerEntity:GetPlayerID() .. ' said "' .. text .. '" to their team.')
+  end)
+
+  PlayerSay:AllChatHandler(function(playerEntity, text)
+    print(playerEntity:GetPlayerID() .. ' said "' .. text .. '" to all chat.')
+  end)
 
   --[[This block is only used for testing events handling in the event that Valve adds more in the future
   Convars:RegisterCommand('events_test', function()

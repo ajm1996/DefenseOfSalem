@@ -83,6 +83,8 @@ end
 function GameMode:OnHeroInGame(hero)
   DebugPrint("[BAREBONES] Hero spawned in game for first time -- " .. hero:GetUnitName())
 
+  PlayerSay:SendConfig(hero:GetPlayerID(), false, false)
+
   -- This line for example will set the starting gold of every hero to 500 unreliable gold
   hero:SetGold(0, false)
 
@@ -100,6 +102,10 @@ function GameMode:OnHeroInGame(hero)
   local abil = hero:GetAbilityByIndex(1)
   hero:RemoveAbility(abil:GetAbilityName())
   hero:AddAbility("example_ability")]]
+end
+
+function GameMode:OnPlayerChat(keys)
+  DebugPrint("chat")
 end
 
 --[[
