@@ -60,4 +60,27 @@
 	    "BaseClass"           "ability_datadriven"
 	    "AbilityTextureName"            "rubick_empty1"
 	  }
+	"SK_kill" {
+		"BaseClass"             "ability_datadriven"
+	        "AbilityTextureName"    "phantom_assassin_coup_de_grace"
+	        "MaxLevel"                      "1"
+	
+	        "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	        "AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	        "CastFilterRejectCaster"
+	        "AbilityUnitTargetType" "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	        "AbilityUnitDamageType" "DAMAGE_TYPE_MAGICAL"
+	
+	        “AbilityDamage”         "500"
+	
+	        "OnSpellStart"
+	        {
+	                "Damage"
+	                {
+	                        "Target"        "TARGET"
+	                        "Type"          "DAMAGE_TYPE_MAGICAL"
+	                        "Damage"        "%AbilityDamage"
+	                }
+	        }
+	}
 }

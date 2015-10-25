@@ -6,7 +6,7 @@ UNIVERSAL_SHOP_MODE = false             -- Should the main shop contain Secret S
 ALLOW_SAME_HERO_SELECTION = false        -- Should we let people select the same hero as each other
 
 HERO_SELECTION_TIME = 30.0              -- How long should we let people select their hero?
-PRE_GAME_TIME = 30.0                    -- How long after people select their heroes should the horn blow and the game start?
+PRE_GAME_TIME = 5.0                    -- How long after people select their heroes should the horn blow and the game start?
 POST_GAME_TIME = 60.0                   -- How long should we let people look at the scoreboard before closing the server automatically?
 TREE_REGROW_TIME = 60.0                 -- How long should it take individual trees to respawn after being cut down/destroyed?
 
@@ -43,7 +43,7 @@ END_GAME_ON_KILLS = false                -- Should the game end after a certain 
 KILLS_TO_END_GAME_FOR_TEAM = -1         -- How many kills for a team should signify an end of game?
 
 USE_CUSTOM_HERO_LEVELS = false           -- Should we allow heroes to have custom levels?
-MAX_LEVEL = 25                          -- What level should we let heroes get to?
+MAX_LEVEL = 0                          -- What level should we let heroes get to?
 USE_CUSTOM_XP_VALUES = false             -- Should we use custom XP values to level up heroes, or the default Dota numbers?
 
 -- Fill this table up with the required XP per level if you want to change it

@@ -85,25 +85,15 @@ function GameMode:OnHeroInGame(hero)
 
   PlayerSay:SendConfig(hero:GetPlayerID(), false, false)
 
-  -- This line for example will set the starting gold of every hero to 500 unreliable gold
-  hero:SetGold(0, false)
-
   if not hero:HasModifier("modifier_rooted") then
   	hero:AddNewModifier(hero, nil, "modifier_rooted", {})
   end
 
   PlayerResource:SetOverrideSelectionEntity(hero:GetPlayerID(), hero)
 
-  -- These lines will create an item and add it to the player, effectively ensuring they start with the item
-  local item = CreateItem("item_example_item", hero, hero)
-  hero:AddItem(item)
+  -- This line for example will set the starting gold of every hero to 500 unreliable gold
+  hero:SetGold(0, false)
 
-  --[[ --These lines if uncommented will replace the W ability of any hero that loads into the game
-    --with the "example_ability" ability
-
-  local abil = hero:GetAbilityByIndex(1)
-  hero:RemoveAbility(abil:GetAbilityName())
-  hero:AddAbility("example_ability")]]
 end
 
 function GameMode:OnPlayerChat(keys)
@@ -116,12 +106,41 @@ end
   is useful for starting any game logic timers/thinkers, beginning the first round, etc.
 ]]
 function GameMode:OnGameInProgress()
-  DebugPrint("[BAREBONES] The game has officially begun")
-
-  Timers:CreateTimer(30, -- Start this timer 30 game-time seconds later
+  local time_flow = 0.0020833333
+  print("Time: " .. GameRules:GetTimeOfDay() * 480)
+  local waitTime = 10.0
+  Timers:CreateTimer(waitTime,
     function()
-      DebugPrint("This function is called 30 seconds after the game begins, and every 30 seconds thereafter")
-      return 30.0 -- Rerun this timer every 30 game-time seconds 
+      print("Time: " .. GameRules:GetTimeOfDay() * 480)
+      GameRules:SetTimeOfDay(GameRules:GetTimeOfDay() + ((240 - waitTime) * time_flow))
+      if GameRules:IsDaytime() then
+        mode:SetFogOfWarDisabled(false)
+        local heroes = HeroList:GetAllHeroes()
+        for i=1,#heroes do
+          local hero = heroes[i]
+          local abil = hero:GetAbilityByIndex(0)
+          if abil then
+            hero:RemoveAbility(abil:GetAbilityName())
+            hero:AddAbility("SK_kill")
+            hero:GetAbilityByIndex(0):SetLevel(1)
+          end
+          --TODO: night time init
+        end
+      else
+        mode:SetFogOfWarDisabled(true)
+        local heroes = HeroList:GetAllHeroes()
+        for i=1,#heroes do
+          local hero = heroes[i]
+          local abil = hero:GetAbilityByIndex(0)
+          if abil then
+            hero:RemoveAbility(abil:GetAbilityName())
+            hero:AddAbility("barebones_empty1")
+          end
+          --TODO: night time init
+        end
+        --TODO: day time init
+      end
+      return waitTime;
     end)
 end
 
@@ -131,30 +150,18 @@ end
 -- It can be used to pre-initialize any values/tables that will be needed later
 function GameMode:InitGameMode()
   GameMode = self
-  DebugPrint('[BAREBONES] Starting to load Barebones gamemode...')
 
   -- Call the internal function to set up the rules/behaviors specified in constants.lua
   -- This also sets up event hooks for all event handlers in events.lua
   -- Check out internals/gamemode to see/modify the exact code
   GameMode:_InitGameMode()
 
-  -- Commands can be registered for debugging purposes or as functions that can be called by the custom Scaleform UI
-  Convars:RegisterCommand( "command_example", Dynamic_Wrap(GameMode, 'ExampleConsoleCommand'), "A console command example", FCVAR_CHEAT )
+  PlayerSay:TeamChatHandler(function(playerEntity, text)
+    print(playerEntity:GetPlayerID() .. ' said "' .. text .. '" to their team.')
+  end)
 
-  DebugPrint('[BAREBONES] Done loading Barebones gamemode!\n\n')
-end
+  PlayerSay:AllChatHandler(function(playerEntity, text)
+    print(playerEntity:GetPlayerID() .. ' said "' .. text .. '" to all chat.')
+  end)
 
--- This is an example console command
-function GameMode:ExampleConsoleCommand()
-  print( '******* Example Console Command ***************' )
-  local cmdPlayer = Convars:GetCommandClient()
-  if cmdPlayer then
-    local playerID = cmdPlayer:GetPlayerID()
-    if playerID ~= nil and playerID ~= -1 then
-      -- Do something here for the player who called this command
-      PlayerResource:ReplaceHeroWith(playerID, "npc_dota_hero_viper", 1000, 1000)
-    end
-  end
-
-  print( '*********************************************' )
 end
