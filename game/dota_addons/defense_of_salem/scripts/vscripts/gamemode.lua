@@ -92,6 +92,8 @@ function GameMode:OnHeroInGame(hero)
   	hero:AddNewModifier(hero, nil, "modifier_rooted", {})
   end
 
+  PlayerResource:SetOverrideSelectionEntity(hero:GetPlayerID(), hero)
+
   -- These lines will create an item and add it to the player, effectively ensuring they start with the item
   local item = CreateItem("item_example_item", hero, hero)
   hero:AddItem(item)
