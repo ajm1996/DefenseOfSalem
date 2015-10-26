@@ -1,5 +1,75 @@
 "DOTAAbilities"
 {
+
+	"SK_kill"
+	{
+		"BaseClass"					"ability_datadriven"
+		"MaxLevel"					"1"
+		"AbilityTextureName"		"phantom_assassin_coup_de_grace"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"CastFilterRejectCaster"	"1"
+
+		"AbilityCastAnimation"		"ACT_IDLE"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities.lua"
+				"Function"			"serialKillerKill"
+			}
+	    }
+	    "Modifiers"
+	    {
+	    	"modifier_no_turn"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+			    "Properties"
+			    {
+			    	"MODIFIER_PROPERTY_IGNORE_CAST_ANGLE"		"1"
+			    }
+			}
+		}
+	}
+
+	"doctor_heal"
+	{
+		"BaseClass"					"ability_datadriven"
+		"MaxLevel"					"1"
+		"AbilityTextureName"		"dazzle_shallow_grave"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+
+		"AbilityCastAnimation"		"ACT_IDLE"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities.lua"
+				"Function"			"doctorHeal"
+			}
+	    }
+	    "Modifiers"
+	    {
+	    	"modifier_no_turn"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+			    "Properties"
+			    {
+			    	"MODIFIER_PROPERTY_IGNORE_CAST_ANGLE"		"1"
+			    }
+			}
+		}
+	}
+
+
+
 	"barebones_empty1"
 	  {
 	    // General
@@ -60,27 +130,4 @@
 	    "BaseClass"           "ability_datadriven"
 	    "AbilityTextureName"            "rubick_empty1"
 	  }
-	"SK_kill" {
-		"BaseClass"             "ability_datadriven"
-	        "AbilityTextureName"    "phantom_assassin_coup_de_grace"
-	        "MaxLevel"                      "1"
-	
-	        "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	        "AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_ENEMY"
-	        "CastFilterRejectCaster"
-	        "AbilityUnitTargetType" "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	        "AbilityUnitDamageType" "DAMAGE_TYPE_MAGICAL"
-	
-	        “AbilityDamage”         "500"
-	
-	        "OnSpellStart"
-	        {
-	                "Damage"
-	                {
-	                        "Target"        "TARGET"
-	                        "Type"          "DAMAGE_TYPE_MAGICAL"
-	                        "Damage"        "%AbilityDamage"
-	                }
-	        }
-	}
 }

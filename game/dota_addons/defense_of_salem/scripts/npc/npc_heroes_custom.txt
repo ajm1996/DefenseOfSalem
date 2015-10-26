@@ -52,7 +52,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_antimage"
@@ -107,7 +107,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_axe"
@@ -162,7 +162,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_bane"
@@ -217,7 +217,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_beastmaster"
@@ -272,7 +272,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_bloodseeker"
@@ -327,7 +327,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_chen"
@@ -382,7 +382,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_crystal_maiden"
@@ -437,7 +437,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_dark_seer"
@@ -492,7 +492,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_dazzle"
@@ -547,7 +547,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_dragon_knight"
@@ -602,7 +602,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_doom_bringer"
@@ -657,7 +657,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_drow_ranger"
@@ -712,7 +712,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_earthshaker"
@@ -767,7 +767,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_enchantress"
@@ -822,7 +822,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_enigma"
@@ -877,7 +877,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_faceless_void"
@@ -932,7 +932,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_furion"
@@ -987,7 +987,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_juggernaut"
@@ -1042,7 +1042,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_kunkka"
@@ -1097,7 +1097,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_leshrac"
@@ -1152,7 +1152,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_lich"
@@ -1207,7 +1207,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_life_stealer"
@@ -1262,7 +1262,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_lina"
@@ -1317,7 +1317,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_lion"
@@ -1372,7 +1372,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_mirana"
@@ -1427,7 +1427,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_morphling"
@@ -1482,7 +1482,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_necrolyte"
@@ -1537,7 +1537,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_nevermore"
@@ -1592,7 +1592,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_night_stalker"
@@ -1647,8 +1647,8 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-    "VisionDaytimeRange"		"350"									// Range of vision at daytime.
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+    "VisionDaytimeRange"		"0"									// Range of vision at daytime.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_omniknight"
@@ -1703,7 +1703,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_puck"
@@ -1758,7 +1758,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_pudge"
@@ -1813,7 +1813,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_pugna"
@@ -1868,7 +1868,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_rattletrap"
@@ -1923,7 +1923,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_razor"
@@ -1978,7 +1978,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_riki"
@@ -2033,7 +2033,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_sand_king"
@@ -2088,7 +2088,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_shadow_shaman"
@@ -2143,7 +2143,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_slardar"
@@ -2198,7 +2198,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_sniper"
@@ -2253,7 +2253,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_spectre"
@@ -2308,7 +2308,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_storm_spirit"
@@ -2363,7 +2363,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_sven"
@@ -2418,7 +2418,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_tidehunter"
@@ -2473,7 +2473,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_tinker"
@@ -2528,7 +2528,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_tiny"
@@ -2583,7 +2583,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_vengefulspirit"
@@ -2638,7 +2638,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_venomancer"
@@ -2693,7 +2693,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_viper"
@@ -2748,7 +2748,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_weaver"
@@ -2803,7 +2803,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_windrunner"
@@ -2858,7 +2858,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_witch_doctor"
@@ -2913,7 +2913,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_zuus"
@@ -2968,7 +2968,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_broodmother"
@@ -3023,7 +3023,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_skeleton_king"
@@ -3078,7 +3078,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_queenofpain"
@@ -3133,7 +3133,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_huskar"
@@ -3188,7 +3188,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_jakiro"
@@ -3243,7 +3243,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_batrider"
@@ -3298,8 +3298,8 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-    "VisionDaytimeRange"		"350"									// Range of vision at daytime.
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+    "VisionDaytimeRange"		"0"									// Range of vision at daytime.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_warlock"
@@ -3354,7 +3354,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_alchemist"
@@ -3409,7 +3409,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_death_prophet"
@@ -3464,7 +3464,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_ursa"
@@ -3519,7 +3519,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_bounty_hunter"
@@ -3574,7 +3574,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_silencer"
@@ -3629,7 +3629,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_spirit_breaker"
@@ -3684,7 +3684,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_invoker"
@@ -3739,7 +3739,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
   
   "npc_dota_hero_clinkz"
@@ -3794,7 +3794,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_obsidian_destroyer"
@@ -3849,7 +3849,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_shadow_demon"
@@ -3904,7 +3904,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_lycan"
@@ -3959,7 +3959,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_lone_druid"
@@ -4014,7 +4014,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_brewmaster"
@@ -4069,7 +4069,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_phantom_lancer"
@@ -4124,7 +4124,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_treant"
@@ -4179,7 +4179,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_ogre_magi"
@@ -4234,7 +4234,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_chaos_knight"
@@ -4289,7 +4289,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_phantom_assassin"
@@ -4344,7 +4344,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_gyrocopter"
@@ -4399,7 +4399,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_rubick"
@@ -4454,7 +4454,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_luna"
@@ -4509,7 +4509,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_wisp"
@@ -4564,7 +4564,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_disruptor"
@@ -4619,7 +4619,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_undying"
@@ -4674,7 +4674,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_templar_assassin"
@@ -4729,7 +4729,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_naga_siren"
@@ -4784,7 +4784,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_nyx_assassin"
@@ -4839,7 +4839,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_keeper_of_the_light"
@@ -4894,7 +4894,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_visage"
@@ -4949,7 +4949,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_meepo"
@@ -5004,7 +5004,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_magnataur"
@@ -5059,7 +5059,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_centaur"
@@ -5114,7 +5114,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_slark"
@@ -5169,7 +5169,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_shredder"
@@ -5224,7 +5224,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_medusa"
@@ -5279,7 +5279,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_troll_warlord"
@@ -5334,7 +5334,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_tusk"
@@ -5389,7 +5389,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_bristleback"
@@ -5444,7 +5444,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_skywrath_mage"
@@ -5499,7 +5499,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_elder_titan"
@@ -5554,7 +5554,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_abaddon"
@@ -5609,7 +5609,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_earth_spirit"
@@ -5664,7 +5664,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_ember_spirit"
@@ -5719,7 +5719,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_legion_commander"
@@ -5774,7 +5774,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_phoenix"
@@ -5829,7 +5829,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
   "npc_dota_hero_techies"
@@ -5884,7 +5884,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
 	"npc_dota_hero_terrorblade"
@@ -5939,7 +5939,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
 	"npc_dota_hero_oracle"
@@ -5994,7 +5994,7 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 
 	"npc_dota_hero_winter_wyvern"
@@ -6049,6 +6049,6 @@
 		"StatusMana"				"500"										// Base mana.
 		"StatusManaRegen"			"100"									// Mana regeneration rate.
 
-		"VisionNighttimeRange"		"350"									// Range of vision at night time.
+		"VisionNighttimeRange"		"0"									// Range of vision at night time.
 	}
 }

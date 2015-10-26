@@ -89,62 +89,12 @@ function GameMode:OnHeroInGame(hero)
   	hero:AddNewModifier(hero, nil, "modifier_rooted", {})
   end
 
-  PlayerResource:SetOverrideSelectionEntity(hero:GetPlayerID(), hero)
+  --PlayerResource:SetOverrideSelectionEntity(hero:GetPlayerID(), hero)
 
   -- This line for example will set the starting gold of every hero to 500 unreliable gold
   hero:SetGold(0, false)
 
 end
-
-function GameMode:OnPlayerChat(keys)
-  DebugPrint("chat")
-end
-
---[[
-  This function is called once and only once when the game completely begins (about 0:00 on the clock).  At this point,
-  gold will begin to go up in ticks if configured, creeps will spawn, towers will become damageable etc.  This function
-  is useful for starting any game logic timers/thinkers, beginning the first round, etc.
-]]
-function GameMode:OnGameInProgress()
-  local time_flow = 0.0020833333
-  print("Time: " .. GameRules:GetTimeOfDay() * 480)
-  local waitTime = 10.0
-  Timers:CreateTimer(waitTime,
-    function()
-      print("Time: " .. GameRules:GetTimeOfDay() * 480)
-      GameRules:SetTimeOfDay(GameRules:GetTimeOfDay() + ((240 - waitTime) * time_flow))
-      if GameRules:IsDaytime() then
-        mode:SetFogOfWarDisabled(false)
-        local heroes = HeroList:GetAllHeroes()
-        for i=1,#heroes do
-          local hero = heroes[i]
-          local abil = hero:GetAbilityByIndex(0)
-          if abil then
-            hero:RemoveAbility(abil:GetAbilityName())
-            hero:AddAbility("SK_kill")
-            hero:GetAbilityByIndex(0):SetLevel(1)
-          end
-          --TODO: night time init
-        end
-      else
-        mode:SetFogOfWarDisabled(true)
-        local heroes = HeroList:GetAllHeroes()
-        for i=1,#heroes do
-          local hero = heroes[i]
-          local abil = hero:GetAbilityByIndex(0)
-          if abil then
-            hero:RemoveAbility(abil:GetAbilityName())
-            hero:AddAbility("barebones_empty1")
-          end
-          --TODO: night time init
-        end
-        --TODO: day time init
-      end
-      return waitTime;
-    end)
-end
-
-
 
 -- This function initializes the game mode and is called before anyone loads into the game
 -- It can be used to pre-initialize any values/tables that will be needed later
@@ -163,5 +113,102 @@ function GameMode:InitGameMode()
   PlayerSay:AllChatHandler(function(playerEntity, text)
     print(playerEntity:GetPlayerID() .. ' said "' .. text .. '" to all chat.')
   end)
+end
 
+--[[
+  This function is called once and only once when the game completely begins (about 0:00 on the clock).  At this point,
+  gold will begin to go up in ticks if configured, creeps will spawn, towers will become damageable etc.  This function
+  is useful for starting any game logic timers/thinkers, beginning the first round, etc.
+]]
+function GameMode:OnGameInProgress()
+  GameMode:SetRoles()
+
+  local waitTime = 10.0
+  GameRules:SetTimeOfDay((360 - waitTime) * (1/480))
+  Timers:CreateTimer(waitTime, function()
+    GameRules:SetTimeOfDay(GameRules:GetTimeOfDay() + ((240 - waitTime) * (1/480)))
+    Timers:CreateTimer(0.03, function()
+      if GameRules:IsDaytime() then
+        --DAYTIME
+        mode:SetFogOfWarDisabled(true)
+
+        local heroes = HeroList:GetAllHeroes()
+        for i=1,#heroes do
+          local hero = heroes[i]
+          if hero then
+            GameMode:SetSkills(hero)
+            GameMode:RoleActions(hero)
+            GameMode:CleanFlags(hero)
+          end
+        end
+      else
+        --NIGHTTIME
+        mode:SetFogOfWarDisabled(false)
+
+        local heroes = HeroList:GetAllHeroes()
+        for i=1,#heroes do
+          local hero = heroes[i]
+          if hero then
+            GameMode:SetSkills(hero)
+          end
+        end
+      end
+    end)
+  return waitTime
+  end)
+end
+
+function GameMode:SetRoles()
+  local heroes = HeroList:GetAllHeroes()
+
+  local rand = math.random(#heroes)
+  local serialKiller = table.remove(heroes, rand)
+  print("SK: " .. serialKiller:GetName())
+  serialKiller.isSerialKill = true;
+
+  rand = math.random(#heroes)
+  local doctor = table.remove(heroes, rand)
+  print("Doctor: " .. doctor:GetName())
+  doctor.isDoctor = true;
+end
+
+function GameMode:SetSkills(hero)
+  if GameRules:IsDaytime() then
+    local abil = hero:GetAbilityByIndex(0)
+    if abil then
+      hero:RemoveAbility(abil:GetAbilityName())
+      hero:AddAbility("barebones_empty1")
+    end
+  else
+    if hero.isSerialKill then
+      local abil = hero:GetAbilityByIndex(0)
+      if abil then
+        hero:RemoveAbility(abil:GetAbilityName())
+        hero:AddAbility("SK_kill")
+        hero:GetAbilityByIndex(0):SetLevel(1)
+      end
+    elseif hero.isDoctor then
+      local abil = hero:GetAbilityByIndex(0)
+      if abil then
+        hero:RemoveAbility(abil:GetAbilityName())
+        hero:AddAbility("doctor_heal")
+        hero:GetAbilityByIndex(0):SetLevel(1)
+      end
+    end
+  end
+end
+
+function GameMode:RoleActions(hero)
+  if hero.isMarkedForDeath and not hero.isHealed then
+    hero:ForceKill(false)
+    hero.killer:IncrementKills(1)
+  end
+end
+
+function GameMode:CleanFlags(hero)
+  if hero.isMarkedForDeath then
+    hero.isMarkedForDeath = false;
+  elseif hero.isHealed then
+    hero.isHealed = false;
+  end
 end
