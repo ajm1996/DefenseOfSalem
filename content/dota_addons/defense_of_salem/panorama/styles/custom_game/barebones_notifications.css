@@ -25,7 +25,7 @@
     horizontal-align: center;
     vertical-align: middle;
     animation-name: scalein;
-    animation-duration: .5s;
+    animation-duration: .4s;
     animation-timing-function: linear;
 }
 
@@ -45,11 +45,11 @@
     flow-children: down;
     horizontal-align: center;
     vertical-align: bottom;
-    width: 100%;
+    width: 75%;
     opacity: 1;
-    margin-bottom: 375px;
+    margin-bottom: 315px;
     visibility: visible;
-    border: 0px solid blue;
+    border: 0px solid black;
 }
 
 .NotificationMessage
@@ -72,7 +72,7 @@
 @keyframes 'scalein' {
   from {
     opacity:0;
-    transform: scaleX(2) scaleY(2);
+    transform: scaleX(1.4) scaleY(1.4);
   }
 
   to {

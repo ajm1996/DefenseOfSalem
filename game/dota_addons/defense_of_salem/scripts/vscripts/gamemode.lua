@@ -6,8 +6,8 @@
 BAREBONES_DEBUG_SPEW = false 
 
 if GameMode == nil then
-    DebugPrint( '[BAREBONES] creating barebones game mode' )
-    _G.GameMode = class({})
+  DebugPrint( '[BAREBONES] creating barebones game mode' )
+  _G.GameMode = class({})
 end
 
 -- This library allow for easily delayed/timed actions
@@ -47,9 +47,9 @@ require('events')
   holdout).
 
   This function should generally only be used if the Precache() function in addon_game_mode.lua is not working.
-]]
-function GameMode:PostLoadPrecache()
-  DebugPrint("[BAREBONES] Performing Post-Load precache")    
+  ]]
+  function GameMode:PostLoadPrecache()
+    DebugPrint("[BAREBONES] Performing Post-Load precache")    
   --PrecacheItemByNameAsync("item_example_item", function(...) end)
   --PrecacheItemByNameAsync("example_ability", function(...) end)
 
@@ -60,18 +60,18 @@ end
 --[[
   This function is called once and only once as soon as the first player (almost certain to be the server in local lobbies) loads in.
   It can be used to initialize state that isn't initializeable in InitGameMode() but needs to be done before everyone loads in.
-]]
-function GameMode:OnFirstPlayerLoaded()
-  DebugPrint("[BAREBONES] First Player has loaded")
-end
+  ]]
+  function GameMode:OnFirstPlayerLoaded()
+    DebugPrint("[BAREBONES] First Player has loaded")
+  end
 
 --[[
   This function is called once and only once after all players have loaded into the game, right as the hero selection time begins.
   It can be used to initialize non-hero player state or adjust the hero selection (i.e. force random etc)
-]]
-function GameMode:OnAllPlayersLoaded()
-  DebugPrint("[BAREBONES] All Players have loaded into the game")
-end
+  ]]
+  function GameMode:OnAllPlayersLoaded()
+    DebugPrint("[BAREBONES] All Players have loaded into the game")
+  end
 
 --[[
   This function is called once and only once for every player when they spawn into the game for the first time.  It is also called
@@ -79,9 +79,9 @@ end
   levels, changing the starting gold, removing/adding abilities, adding physics, etc.
 
   The hero parameter is the hero entity that just spawned in
-]]
-function GameMode:OnHeroInGame(hero)
-  DebugPrint("[BAREBONES] Hero spawned in game for first time -- " .. hero:GetUnitName())
+  ]]
+  function GameMode:OnHeroInGame(hero)
+    DebugPrint("[BAREBONES] Hero spawned in game for first time -- " .. hero:GetUnitName())
 
   PlayerSay:SendConfig(hero:GetPlayerID(), false, false)
 
@@ -107,18 +107,64 @@ function GameMode:InitGameMode()
   GameMode:_InitGameMode()
 
   PlayerSay:TeamChatHandler(function(playerEntity, text)
-    print(playerEntity:GetPlayerID() .. ' said "' .. text .. '" to their team.')
+    if text ~= "" then
+      local heroName = GameMode:ConvertEngineName(playerEntity)
+      local line_duration = 10.0
+      Notifications:BottomToAll({hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
+      Notifications:BottomToAll({text = heroName, style={color="blue",["font-size"]="20px"}, duration = line_duration, continue = true})
+      Notifications:BottomToAll({text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
+    end
   end)
 
   PlayerSay:AllChatHandler(function(playerEntity, text)
-    print(playerEntity:GetPlayerID() .. ' said "' .. text .. '" to all chat.')
+    if text ~= "" then
+      local heroName = GameMode:ConvertEngineName(playerEntity)
+      local line_duration = 10.0
+      Notifications:BottomToAll({hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
+      Notifications:BottomToAll({text = heroName, style={color="blue",["font-size"]="20px"}, duration = line_duration, continue = true})
+      Notifications:BottomToAll({text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
+    end
   end)
 end
 
+function GameMode:ConvertEngineName(playerEntity)
+  local heroEngineName = playerEntity:GetAssignedHero():GetName()
+  local heroName = string.gsub(string.gsub(string.sub(heroEngineName, 15), "_", " "), "(%l)(%w*)", function(a,b) return string.upper(a)..b end)
+
+  if heroName == "Doom Bringer" then
+    heroName = "Doom"
+  elseif heroName == "Furion" then
+    heroName = "Nature's Prophet"
+  elseif heroName == "Keeper Of The Light" then
+      heroName = "Keeper of the Light"
+  elseif heroName == "Magnataur" then
+    heroName = "Magnus"
+  elseif heroName == "Nevermore" then
+    heroName = "Shadow Fiend"
+  elseif heroName == "Obsidian Destroyer" then
+    heroName = "Outworld Devourer"
+  elseif heroName == "Queenofpain" then
+    heroName = "Queen of Pain"
+  elseif heroName == "Rattletrap" then
+    heroName = "Clockwork"
+  elseif heroName == "Shredder" then
+    heroName = "Timbersaw"
+  elseif heroName == "Rattletrap" then
+    heroName = "Clockwork"
+  elseif heroName == "Vengefulspirit" then
+    heroName = "Vengeful Spirit"
+  elseif heroName == "Windrunner" then
+    heroName = "Windranger"
+  elseif heroName == "Zuus" then
+    heroName = "Zues"
+  end
+  return heroName
+end
+
 --[[
-  This function is called once and only once when the game completely begins (about 0:00 on the clock).  At this point,
-  gold will begin to go up in ticks if configured, creeps will spawn, towers will become damageable etc.  This function
-  is useful for starting any game logic timers/thinkers, beginning the first round, etc.
+This function is called once and only once when the game completely begins (about 0:00 on the clock).  At this point,
+gold will begin to go up in ticks if configured, creeps will spawn, towers will become damageable etc.  This function
+is useful for starting any game logic timers/thinkers, beginning the first round, etc.
 ]]
 function GameMode:OnGameInProgress()
   GameMode:SetRoles()
@@ -129,33 +175,33 @@ function GameMode:OnGameInProgress()
     GameRules:SetTimeOfDay(GameRules:GetTimeOfDay() + ((240 - waitTime) * (1/480)))
     Timers:CreateTimer(0.03, function()
       if GameRules:IsDaytime() then
-        --DAYTIME
-        mode:SetFogOfWarDisabled(true)
+      --DAYTIME
+      mode:SetFogOfWarDisabled(true)
 
-        local heroes = HeroList:GetAllHeroes()
-        for i=1,#heroes do
-          local hero = heroes[i]
-          if hero then
-            GameMode:SetSkills(hero)
-            GameMode:RoleActions(hero)
-            GameMode:CleanFlags(hero)
-          end
-        end
-      else
-        --NIGHTTIME
-        mode:SetFogOfWarDisabled(false)
-
-        local heroes = HeroList:GetAllHeroes()
-        for i=1,#heroes do
-          local hero = heroes[i]
-          if hero then
-            GameMode:SetSkills(hero)
-          end
+      local heroes = HeroList:GetAllHeroes()
+      for i=1,#heroes do
+        local hero = heroes[i]
+        if hero then
+          GameMode:SetSkills(hero)
+          GameMode:RoleActions(hero)
+          GameMode:CleanFlags(hero)
         end
       end
+    else
+      --NIGHTTIME
+      mode:SetFogOfWarDisabled(false)
+
+      local heroes = HeroList:GetAllHeroes()
+      for i=1,#heroes do
+        local hero = heroes[i]
+        if hero then
+          GameMode:SetSkills(hero)
+        end
+      end
+    end
     end)
-  return waitTime
-  end)
+    return waitTime
+    end)
 end
 
 function GameMode:SetRoles()
@@ -163,13 +209,17 @@ function GameMode:SetRoles()
 
   local rand = math.random(#heroes)
   local serialKiller = table.remove(heroes, rand)
-  print("SK: " .. serialKiller:GetName())
-  serialKiller.isSerialKill = true;
+  if serialKiller then
+    print("SK: " .. serialKiller:GetName())
+    serialKiller.isSerialKill = true;
+  end
 
   rand = math.random(#heroes)
   local doctor = table.remove(heroes, rand)
-  print("Doctor: " .. doctor:GetName())
-  doctor.isDoctor = true;
+  if doctor then
+    print("Doctor: " .. doctor:GetName())
+    doctor.isDoctor = true;
+  end
 end
 
 function GameMode:SetSkills(hero)
@@ -186,13 +236,13 @@ function GameMode:SetSkills(hero)
         hero:RemoveAbility(abil:GetAbilityName())
         hero:AddAbility("SK_kill")
         hero:GetAbilityByIndex(0):SetLevel(1)
-      end
-    elseif hero.isDoctor then
-      local abil = hero:GetAbilityByIndex(0)
-      if abil then
-        hero:RemoveAbility(abil:GetAbilityName())
-        hero:AddAbility("doctor_heal")
-        hero:GetAbilityByIndex(0):SetLevel(1)
+      elseif hero.isDoctor then
+        local abil = hero:GetAbilityByIndex(0)
+        if abil then
+          hero:RemoveAbility(abil:GetAbilityName())
+          hero:AddAbility("doctor_heal")
+          hero:GetAbilityByIndex(0):SetLevel(1)
+        end
       end
     end
   end
@@ -208,7 +258,7 @@ end
 function GameMode:CleanFlags(hero)
   if hero.isMarkedForDeath then
     hero.isMarkedForDeath = false;
-  elseif hero.isHealed then
-    hero.isHealed = false;
+    elseif hero.isHealed then
+      hero.isHealed = false;
+    end
   end
-end
