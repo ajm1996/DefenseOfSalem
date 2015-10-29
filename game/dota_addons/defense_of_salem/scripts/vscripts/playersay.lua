@@ -37,11 +37,9 @@ end
 
 
 
-function PlayerSay:TeamChatHandler(fun)
-  PlayerSay.teamChatCallback = fun
-end
-function PlayerSay:AllChatHandler(fun)
+function PlayerSay:ChatHandler(fun)
   PlayerSay.allChatCallback = fun
+  PlayerSay.teamChatCallback = fun
 end
 
 function PlayerSay:SendConfigToAll(allowTeam, allowAll)

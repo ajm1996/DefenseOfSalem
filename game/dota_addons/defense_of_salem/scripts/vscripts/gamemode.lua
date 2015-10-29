@@ -34,131 +34,63 @@ require('events')
 
 
 --[[
-  This function should be used to set up Async precache calls at the beginning of the gameplay.
+This function should be used to set up Async precache calls at the beginning of the gameplay.
 
-  In this function, place all of your PrecacheItemByNameAsync and PrecacheUnitByNameAsync.  These calls will be made
-  after all players have loaded in, but before they have selected their heroes. PrecacheItemByNameAsync can also
-  be used to precache dynamically-added datadriven abilities instead of items.  PrecacheUnitByNameAsync will 
-  precache the precache{} block statement of the unit and all precache{} block statements for every Ability# 
-  defined on the unit.
+In this function, place all of your PrecacheItemByNameAsync and PrecacheUnitByNameAsync.  These calls will be made
+after all players have loaded in, but before they have selected their heroes. PrecacheItemByNameAsync can also
+be used to precache dynamically-added datadriven abilities instead of items.  PrecacheUnitByNameAsync will 
+precache the precache{} block statement of the unit and all precache{} block statements for every Ability# 
+defined on the unit.
 
-  This function should only be called once.  If you want to/need to precache more items/abilities/units at a later
-  time, you can call the functions individually (for example if you want to precache units in a new wave of
-  holdout).
+This function should only be called once.  If you want to/need to precache more items/abilities/units at a later
+time, you can call the functions individually (for example if you want to precache units in a new wave of
+holdout).
 
-  This function should generally only be used if the Precache() function in addon_game_mode.lua is not working.
-  ]]
-  function GameMode:PostLoadPrecache()
-    DebugPrint("[BAREBONES] Performing Post-Load precache")    
-  --PrecacheItemByNameAsync("item_example_item", function(...) end)
-  --PrecacheItemByNameAsync("example_ability", function(...) end)
+This function should generally only be used if the Precache() function in addon_game_mode.lua is not working.
+]]
+function GameMode:PostLoadPrecache()
+  DebugPrint("[BAREBONES] Performing Post-Load precache")    
+--PrecacheItemByNameAsync("item_example_item", function(...) end)
+--PrecacheItemByNameAsync("example_ability", function(...) end)
 
-  --PrecacheUnitByNameAsync("npc_dota_hero_viper", function(...) end)
-  --PrecacheUnitByNameAsync("npc_dota_hero_enigma", function(...) end)
+--PrecacheUnitByNameAsync("npc_dota_hero_viper", function(...) end)
+--PrecacheUnitByNameAsync("npc_dota_hero_enigma", function(...) end)
 end
 
 --[[
-  This function is called once and only once as soon as the first player (almost certain to be the server in local lobbies) loads in.
-  It can be used to initialize state that isn't initializeable in InitGameMode() but needs to be done before everyone loads in.
-  ]]
-  function GameMode:OnFirstPlayerLoaded()
-    DebugPrint("[BAREBONES] First Player has loaded")
-  end
+This function is called once and only once as soon as the first player (almost certain to be the server in local lobbies) loads in.
+It can be used to initialize state that isn't initializeable in InitGameMode() but needs to be done before everyone loads in.
+]]
+function GameMode:OnFirstPlayerLoaded()
+  DebugPrint("[BAREBONES] First Player has loaded")
+end
 
 --[[
-  This function is called once and only once after all players have loaded into the game, right as the hero selection time begins.
-  It can be used to initialize non-hero player state or adjust the hero selection (i.e. force random etc)
-  ]]
-  function GameMode:OnAllPlayersLoaded()
-    DebugPrint("[BAREBONES] All Players have loaded into the game")
-  end
+This function is called once and only once after all players have loaded into the game, right as the hero selection time begins.
+It can be used to initialize non-hero player state or adjust the hero selection (i.e. force random etc)
+]]
+function GameMode:OnAllPlayersLoaded()
+  DebugPrint("[BAREBONES] All Players have loaded into the game")
+end
 
 --[[
-  This function is called once and only once for every player when they spawn into the game for the first time.  It is also called
-  if the player's hero is replaced with a new hero for any reason.  This function is useful for initializing heroes, such as adding
-  levels, changing the starting gold, removing/adding abilities, adding physics, etc.
+This function is called once and only once for every player when they spawn into the game for the first time.  It is also called
+if the player's hero is replaced with a new hero for any reason.  This function is useful for initializing heroes, such as adding
+levels, changing the starting gold, removing/adding abilities, adding physics, etc.
 
-  The hero parameter is the hero entity that just spawned in
-  ]]
-  function GameMode:OnHeroInGame(hero)
-    DebugPrint("[BAREBONES] Hero spawned in game for first time -- " .. hero:GetUnitName())
+The hero parameter is the hero entity that just spawned in
+]]
+function GameMode:OnHeroInGame(hero)
+  DebugPrint("[BAREBONES] Hero spawned in game for first time -- " .. hero:GetUnitName())
 
   PlayerSay:SendConfig(hero:GetPlayerID(), false, false)
 
-  if not hero:HasModifier("modifier_rooted") then
-  	hero:AddNewModifier(hero, nil, "modifier_rooted", {})
-  end
+  dummy:FindAbilityByName("player_modifiers_passive"):ApplyDataDrivenModifier(dummy, hero, "modifier_general_player_passives", {})
+  dummy:FindAbilityByName("player_modifiers_passive"):ApplyDataDrivenModifier(dummy, hero, "modifier_rooted_passive", {})
+  
 
-  --PlayerResource:SetOverrideSelectionEntity(hero:GetPlayerID(), hero)
-
-  -- This line for example will set the starting gold of every hero to 500 unreliable gold
   hero:SetGold(0, false)
 
-end
-
--- This function initializes the game mode and is called before anyone loads into the game
--- It can be used to pre-initialize any values/tables that will be needed later
-function GameMode:InitGameMode()
-  GameMode = self
-
-  -- Call the internal function to set up the rules/behaviors specified in constants.lua
-  -- This also sets up event hooks for all event handlers in events.lua
-  -- Check out internals/gamemode to see/modify the exact code
-  GameMode:_InitGameMode()
-
-  PlayerSay:TeamChatHandler(function(playerEntity, text)
-    if text ~= "" then
-      local heroName = GameMode:ConvertEngineName(playerEntity)
-      local line_duration = 10.0
-      Notifications:BottomToAll({hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
-      Notifications:BottomToAll({text = heroName, style={color="blue",["font-size"]="20px"}, duration = line_duration, continue = true})
-      Notifications:BottomToAll({text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
-    end
-  end)
-
-  PlayerSay:AllChatHandler(function(playerEntity, text)
-    if text ~= "" then
-      local heroName = GameMode:ConvertEngineName(playerEntity)
-      local line_duration = 10.0
-      Notifications:BottomToAll({hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
-      Notifications:BottomToAll({text = heroName, style={color="blue",["font-size"]="20px"}, duration = line_duration, continue = true})
-      Notifications:BottomToAll({text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
-    end
-  end)
-end
-
-function GameMode:ConvertEngineName(playerEntity)
-  local heroEngineName = playerEntity:GetAssignedHero():GetName()
-  local heroName = string.gsub(string.gsub(string.sub(heroEngineName, 15), "_", " "), "(%l)(%w*)", function(a,b) return string.upper(a)..b end)
-
-  if heroName == "Doom Bringer" then
-    heroName = "Doom"
-  elseif heroName == "Furion" then
-    heroName = "Nature's Prophet"
-  elseif heroName == "Keeper Of The Light" then
-      heroName = "Keeper of the Light"
-  elseif heroName == "Magnataur" then
-    heroName = "Magnus"
-  elseif heroName == "Nevermore" then
-    heroName = "Shadow Fiend"
-  elseif heroName == "Obsidian Destroyer" then
-    heroName = "Outworld Devourer"
-  elseif heroName == "Queenofpain" then
-    heroName = "Queen of Pain"
-  elseif heroName == "Rattletrap" then
-    heroName = "Clockwork"
-  elseif heroName == "Shredder" then
-    heroName = "Timbersaw"
-  elseif heroName == "Rattletrap" then
-    heroName = "Clockwork"
-  elseif heroName == "Vengefulspirit" then
-    heroName = "Vengeful Spirit"
-  elseif heroName == "Windrunner" then
-    heroName = "Windranger"
-  elseif heroName == "Zuus" then
-    heroName = "Zues"
-  end
-  return heroName
 end
 
 --[[
@@ -258,7 +190,107 @@ end
 function GameMode:CleanFlags(hero)
   if hero.isMarkedForDeath then
     hero.isMarkedForDeath = false;
-    elseif hero.isHealed then
-      hero.isHealed = false;
-    end
+  elseif hero.isHealed then
+    hero.isHealed = false;
   end
+end
+
+function GameMode:PlayerTrial()
+  local hero = HeroList:GetHero(0)
+  local home = hero:GetAbsOrigin()
+
+  if hero:HasModifier("modifier_rooted_passive") then
+    hero:RemoveModifierByName("modifier_rooted_passive")
+  end
+
+  Timers:CreateTimer(0.03, function()
+    hero:MoveToPosition(Vector(0,0,0))
+    print(hero:GetAbsOrigin())
+    if (hero:GetAbsOrigin() - Vector(0, 0, 264.75)):Length() > 0 then
+      return .03
+    else
+      dummy:FindAbilityByName("player_modifiers_passive"):ApplyDataDrivenModifier(dummy, hero, "modifier_rooted_passive", {})
+
+      print("proc1")
+
+      Timers:CreateTimer(5, function()
+        print("proc1.5")
+        if hero:HasModifier("modifier_rooted_passive") then
+          hero:RemoveModifierByName("modifier_rooted_passive")
+        end
+        hero:MoveToPosition(home)
+        if (hero:GetAbsOrigin() - home):Length() > 0 then
+          return .03
+        else
+          print("proc2")
+          dummy:FindAbilityByName("player_modifiers_passive"):ApplyDataDrivenModifier(dummy, hero, "modifier_rooted_passive", {})
+        end
+      end)
+    end
+  end)
+end
+
+function GameMode:ConvertEngineName(heroEngineName)
+  local heroName = string.gsub(string.gsub(string.sub(heroEngineName, 15), "_", " "), "(%l)(%w*)", function(a,b) return string.upper(a)..b end)
+
+  if heroName == "Doom Bringer" then
+    heroName = "Doom"
+  elseif heroName == "Furion" then
+    heroName = "Nature's Prophet"
+  elseif heroName == "Keeper Of The Light" then
+      heroName = "Keeper of the Light"
+  elseif heroName == "Magnataur" then
+    heroName = "Magnus"
+  elseif heroName == "Nevermore" then
+    heroName = "Shadow Fiend"
+  elseif heroName == "Obsidian Destroyer" then
+    heroName = "Outworld Devourer"
+  elseif heroName == "Queenofpain" then
+    heroName = "Queen of Pain"
+  elseif heroName == "Rattletrap" then
+    heroName = "Clockwork"
+  elseif heroName == "Shredder" then
+    heroName = "Timbersaw"
+  elseif heroName == "Rattletrap" then
+    heroName = "Clockwork"
+  elseif heroName == "Vengefulspirit" then
+    heroName = "Vengeful Spirit"
+  elseif heroName == "Windrunner" then
+    heroName = "Windranger"
+  elseif heroName == "Zuus" then
+    heroName = "Zues"
+  end
+  return heroName
+end
+
+function GameMode:InitGameMode()
+  GameMode = self
+
+  -- Call the internal function to set up the rules/behaviors specified in constants.lua
+  -- This also sets up event hooks for all event handlers in events.lua
+  -- Check out internals/gamemode to see/modify the exact code
+  GameMode:_InitGameMode()
+
+  PlayerSay:ChatHandler(function(playerEntity, text)
+    if text ~= "" then
+      local heroName = GameMode:ConvertEngineName(playerEntity:GetAssignedHero():GetName())
+      local line_duration = 10.0
+      Notifications:BottomToAll({hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
+      Notifications:BottomToAll({text = heroName, style={color="blue",["font-size"]="20px"}, duration = line_duration, continue = true})
+      Notifications:BottomToAll({text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
+    end
+  end)
+
+  Convars:RegisterCommand( "vote_trial_player", Dynamic_Wrap(GameMode, 'PlayerTrial'), "A console command example", FCVAR_CHEAT )
+  Convars:RegisterCommand( "remove_root", Dynamic_Wrap(GameMode, 'RemoveRoot'), "A console command example", FCVAR_CHEAT )
+
+  dummy = CreateUnitByName("dummy_unit", Vector(0,0,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
+
+end
+
+function GameMode:RemoveRoot()
+  hero = HeroList:GetHero(0)
+  if hero:HasModifier("modifier_rooted_passive") then
+    hero:RemoveModifierByName("modifier_rooted_passive")
+  end
+end
