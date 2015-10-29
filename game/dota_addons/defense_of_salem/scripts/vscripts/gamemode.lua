@@ -93,10 +93,9 @@ function GameMode:OnHeroInGame(hero)
 
 end
 
-<<<<<<< HEAD
-=======
 -- This function initializes the game mode and is called before anyone loads into the game
 -- It can be used to pre-initialize any values/tables that will be needed later
+
 function GameMode:InitGameMode()
   GameMode = self
 
@@ -107,50 +106,19 @@ function GameMode:InitGameMode()
 
   PlayerSay:ChatHandler(function(playerEntity, text)
     if text ~= "" then
-      if GameRules:IsDaytime() then
-        local heroName = GameMode:ConvertEngineName(playerEntity)
-        local line_duration = 10.0
-        Notifications:BottomToAll({hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
-        Notifications:BottomToAll({text = " "..heroName, style={color="blue",["font-size"]="20px"}, duration = line_duration, continue = true})
-        Notifications:BottomToAll({text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
-      end
+      local heroName = GameMode:ConvertEngineName(playerEntity:GetAssignedHero():GetName())
+      local line_duration = 10.0
+      Notifications:BottomToAll({hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
+      Notifications:BottomToAll({text = heroName, style={color="blue",["font-size"]="20px"}, duration = line_duration, continue = true})
+      Notifications:BottomToAll({text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
     end
   end)
-end
 
+  Convars:RegisterCommand( "vote_trial_player", Dynamic_Wrap(GameMode, 'PlayerTrial'), "A console command example", FCVAR_CHEAT )
+  Convars:RegisterCommand( "remove_root", Dynamic_Wrap(GameMode, 'RemoveRoot'), "A console command example", FCVAR_CHEAT )
 
-function GameMode:ConvertEngineName(playerEntity)
-  local heroEngineName = playerEntity:GetAssignedHero():GetName()
-  local heroName = string.gsub(string.gsub(string.sub(heroEngineName, 15), "_", " "), "(%l)(%w*)", function(a,b) return string.upper(a)..b end)
+  dummy = CreateUnitByName("dummy_unit", Vector(0,0,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
 
-  if heroName == "Doom Bringer" then
-    heroName = "Doom"
-  elseif heroName == "Furion" then
-    heroName = "Nature's Prophet"
-  elseif heroName == "Keeper Of The Light" then
-      heroName = "Keeper of the Light"
-  elseif heroName == "Magnataur" then
-    heroName = "Magnus"
-  elseif heroName == "Nevermore" then
-    heroName = "Shadow Fiend"
-  elseif heroName == "Obsidian Destroyer" then
-    heroName = "Outworld Devourer"
-  elseif heroName == "Queenofpain" then
-    heroName = "Queen of Pain"
-  elseif heroName == "Rattletrap" then
-    heroName = "Clockwork"
-  elseif heroName == "Shredder" then
-    heroName = "Timbersaw"
-  elseif heroName == "Rattletrap" then
-    heroName = "Clockwork"
-  elseif heroName == "Vengefulspirit" then
-    heroName = "Vengeful Spirit"
-  elseif heroName == "Windrunner" then
-    heroName = "Windranger"
-  elseif heroName == "Zuus" then
-    heroName = "Zues"
-  end
-  return heroName
 end
 
 --[[
@@ -260,7 +228,6 @@ function GameMode:CleanFlags(hero)
   elseif hero.isHealed then
     hero.isHealed = false;
   end
-<<<<<<< HEAD
 end
 
 function GameMode:PlayerTrial()
@@ -273,16 +240,12 @@ function GameMode:PlayerTrial()
 
   Timers:CreateTimer(0.03, function()
     hero:MoveToPosition(Vector(0,0,0))
-    print(hero:GetAbsOrigin())
     if (hero:GetAbsOrigin() - Vector(0, 0, 264.75)):Length() > 0 then
       return .03
     else
       dummy:FindAbilityByName("player_modifiers_passive"):ApplyDataDrivenModifier(dummy, hero, "modifier_rooted_passive", {})
 
-      print("proc1")
-
       Timers:CreateTimer(5, function()
-        print("proc1.5")
         if hero:HasModifier("modifier_rooted_passive") then
           hero:RemoveModifierByName("modifier_rooted_passive")
         end
@@ -290,7 +253,6 @@ function GameMode:PlayerTrial()
         if (hero:GetAbsOrigin() - home):Length() > 0 then
           return .03
         else
-          print("proc2")
           dummy:FindAbilityByName("player_modifiers_passive"):ApplyDataDrivenModifier(dummy, hero, "modifier_rooted_passive", {})
         end
       end)
@@ -329,31 +291,6 @@ function GameMode:ConvertEngineName(heroEngineName)
     heroName = "Zues"
   end
   return heroName
-end
-
-function GameMode:InitGameMode()
-  GameMode = self
-
-  -- Call the internal function to set up the rules/behaviors specified in constants.lua
-  -- This also sets up event hooks for all event handlers in events.lua
-  -- Check out internals/gamemode to see/modify the exact code
-  GameMode:_InitGameMode()
-
-  PlayerSay:ChatHandler(function(playerEntity, text)
-    if text ~= "" then
-      local heroName = GameMode:ConvertEngineName(playerEntity:GetAssignedHero():GetName())
-      local line_duration = 10.0
-      Notifications:BottomToAll({hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
-      Notifications:BottomToAll({text = heroName, style={color="blue",["font-size"]="20px"}, duration = line_duration, continue = true})
-      Notifications:BottomToAll({text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
-    end
-  end)
-
-  Convars:RegisterCommand( "vote_trial_player", Dynamic_Wrap(GameMode, 'PlayerTrial'), "A console command example", FCVAR_CHEAT )
-  Convars:RegisterCommand( "remove_root", Dynamic_Wrap(GameMode, 'RemoveRoot'), "A console command example", FCVAR_CHEAT )
-
-  dummy = CreateUnitByName("dummy_unit", Vector(0,0,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
-
 end
 
 function GameMode:RemoveRoot()
