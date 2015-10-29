@@ -93,6 +93,66 @@ function GameMode:OnHeroInGame(hero)
 
 end
 
+<<<<<<< HEAD
+=======
+-- This function initializes the game mode and is called before anyone loads into the game
+-- It can be used to pre-initialize any values/tables that will be needed later
+function GameMode:InitGameMode()
+  GameMode = self
+
+  -- Call the internal function to set up the rules/behaviors specified in constants.lua
+  -- This also sets up event hooks for all event handlers in events.lua
+  -- Check out internals/gamemode to see/modify the exact code
+  GameMode:_InitGameMode()
+
+  PlayerSay:ChatHandler(function(playerEntity, text)
+    if text ~= "" then
+      if GameRules:IsDaytime() then
+        local heroName = GameMode:ConvertEngineName(playerEntity)
+        local line_duration = 10.0
+        Notifications:BottomToAll({hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
+        Notifications:BottomToAll({text = " "..heroName, style={color="blue",["font-size"]="20px"}, duration = line_duration, continue = true})
+        Notifications:BottomToAll({text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
+      end
+    end
+  end)
+end
+
+
+function GameMode:ConvertEngineName(playerEntity)
+  local heroEngineName = playerEntity:GetAssignedHero():GetName()
+  local heroName = string.gsub(string.gsub(string.sub(heroEngineName, 15), "_", " "), "(%l)(%w*)", function(a,b) return string.upper(a)..b end)
+
+  if heroName == "Doom Bringer" then
+    heroName = "Doom"
+  elseif heroName == "Furion" then
+    heroName = "Nature's Prophet"
+  elseif heroName == "Keeper Of The Light" then
+      heroName = "Keeper of the Light"
+  elseif heroName == "Magnataur" then
+    heroName = "Magnus"
+  elseif heroName == "Nevermore" then
+    heroName = "Shadow Fiend"
+  elseif heroName == "Obsidian Destroyer" then
+    heroName = "Outworld Devourer"
+  elseif heroName == "Queenofpain" then
+    heroName = "Queen of Pain"
+  elseif heroName == "Rattletrap" then
+    heroName = "Clockwork"
+  elseif heroName == "Shredder" then
+    heroName = "Timbersaw"
+  elseif heroName == "Rattletrap" then
+    heroName = "Clockwork"
+  elseif heroName == "Vengefulspirit" then
+    heroName = "Vengeful Spirit"
+  elseif heroName == "Windrunner" then
+    heroName = "Windranger"
+  elseif heroName == "Zuus" then
+    heroName = "Zues"
+  end
+  return heroName
+end
+
 --[[
 This function is called once and only once when the game completely begins (about 0:00 on the clock).  At this point,
 gold will begin to go up in ticks if configured, creeps will spawn, towers will become damageable etc.  This function
@@ -100,40 +160,47 @@ is useful for starting any game logic timers/thinkers, beginning the first round
 ]]
 function GameMode:OnGameInProgress()
   GameMode:SetRoles()
-
-  local waitTime = 10.0
+  
+  local waitTime = 45
   GameRules:SetTimeOfDay((360 - waitTime) * (1/480))
+
   Timers:CreateTimer(waitTime, function()
+
+    if GameRules:IsDaytime() then
+      waitTime = 30
+    else
+      waitTime = 45
+    end
     GameRules:SetTimeOfDay(GameRules:GetTimeOfDay() + ((240 - waitTime) * (1/480)))
     Timers:CreateTimer(0.03, function()
       if GameRules:IsDaytime() then
-      --DAYTIME
-      mode:SetFogOfWarDisabled(true)
+        --DAYTIME
+        mode:SetFogOfWarDisabled(true)
 
-      local heroes = HeroList:GetAllHeroes()
-      for i=1,#heroes do
-        local hero = heroes[i]
-        if hero then
-          GameMode:SetSkills(hero)
-          GameMode:RoleActions(hero)
-          GameMode:CleanFlags(hero)
+        local heroes = HeroList:GetAllHeroes()
+        for i=1,#heroes do
+          local hero = heroes[i]
+          if hero then
+            GameMode:SetSkills(hero)
+            GameMode:RoleActions(hero)
+            GameMode:CleanFlags(hero)
+          end
+        end
+      else
+        --NIGHTTIME
+        mode:SetFogOfWarDisabled(false)
+
+        local heroes = HeroList:GetAllHeroes()
+        for i=1,#heroes do
+          local hero = heroes[i]
+          if hero then
+            GameMode:SetSkills(hero)
+          end
         end
       end
-    else
-      --NIGHTTIME
-      mode:SetFogOfWarDisabled(false)
-
-      local heroes = HeroList:GetAllHeroes()
-      for i=1,#heroes do
-        local hero = heroes[i]
-        if hero then
-          GameMode:SetSkills(hero)
-        end
-      end
-    end
     end)
     return waitTime
-    end)
+  end)
 end
 
 function GameMode:SetRoles()
@@ -168,13 +235,13 @@ function GameMode:SetSkills(hero)
         hero:RemoveAbility(abil:GetAbilityName())
         hero:AddAbility("SK_kill")
         hero:GetAbilityByIndex(0):SetLevel(1)
-      elseif hero.isDoctor then
-        local abil = hero:GetAbilityByIndex(0)
-        if abil then
-          hero:RemoveAbility(abil:GetAbilityName())
-          hero:AddAbility("doctor_heal")
-          hero:GetAbilityByIndex(0):SetLevel(1)
-        end
+      end
+    elseif hero.isDoctor then
+      local abil = hero:GetAbilityByIndex(0)
+      if abil then
+        hero:RemoveAbility(abil:GetAbilityName())
+        hero:AddAbility("doctor_heal")
+        hero:GetAbilityByIndex(0):SetLevel(1)
       end
     end
   end
@@ -193,6 +260,7 @@ function GameMode:CleanFlags(hero)
   elseif hero.isHealed then
     hero.isHealed = false;
   end
+<<<<<<< HEAD
 end
 
 function GameMode:PlayerTrial()
