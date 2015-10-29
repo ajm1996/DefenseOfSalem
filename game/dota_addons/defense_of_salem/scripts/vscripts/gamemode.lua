@@ -106,26 +106,19 @@ function GameMode:InitGameMode()
   -- Check out internals/gamemode to see/modify the exact code
   GameMode:_InitGameMode()
 
-  PlayerSay:TeamChatHandler(function(playerEntity, text)
+  PlayerSay:ChatHandler(function(playerEntity, text)
     if text ~= "" then
-      local heroName = GameMode:ConvertEngineName(playerEntity)
-      local line_duration = 10.0
-      Notifications:BottomToAll({hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
-      Notifications:BottomToAll({text = heroName, style={color="blue",["font-size"]="20px"}, duration = line_duration, continue = true})
-      Notifications:BottomToAll({text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
-    end
-  end)
-
-  PlayerSay:AllChatHandler(function(playerEntity, text)
-    if text ~= "" then
-      local heroName = GameMode:ConvertEngineName(playerEntity)
-      local line_duration = 10.0
-      Notifications:BottomToAll({hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
-      Notifications:BottomToAll({text = heroName, style={color="blue",["font-size"]="20px"}, duration = line_duration, continue = true})
-      Notifications:BottomToAll({text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
+      if GameRules:IsDaytime() then
+        local heroName = GameMode:ConvertEngineName(playerEntity)
+        local line_duration = 10.0
+        Notifications:BottomToAll({hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
+        Notifications:BottomToAll({text = " "..heroName, style={color="blue",["font-size"]="20px"}, duration = line_duration, continue = true})
+        Notifications:BottomToAll({text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
+      end
     end
   end)
 end
+
 
 function GameMode:ConvertEngineName(playerEntity)
   local heroEngineName = playerEntity:GetAssignedHero():GetName()
@@ -168,40 +161,47 @@ is useful for starting any game logic timers/thinkers, beginning the first round
 ]]
 function GameMode:OnGameInProgress()
   GameMode:SetRoles()
-
-  local waitTime = 10.0
+  
+  local waitTime = 45
   GameRules:SetTimeOfDay((360 - waitTime) * (1/480))
+
   Timers:CreateTimer(waitTime, function()
+
+    if GameRules:IsDaytime() then
+      waitTime = 30
+    else
+      waitTime = 45
+    end
     GameRules:SetTimeOfDay(GameRules:GetTimeOfDay() + ((240 - waitTime) * (1/480)))
     Timers:CreateTimer(0.03, function()
       if GameRules:IsDaytime() then
-      --DAYTIME
-      mode:SetFogOfWarDisabled(true)
+        --DAYTIME
+        mode:SetFogOfWarDisabled(true)
 
-      local heroes = HeroList:GetAllHeroes()
-      for i=1,#heroes do
-        local hero = heroes[i]
-        if hero then
-          GameMode:SetSkills(hero)
-          GameMode:RoleActions(hero)
-          GameMode:CleanFlags(hero)
+        local heroes = HeroList:GetAllHeroes()
+        for i=1,#heroes do
+          local hero = heroes[i]
+          if hero then
+            GameMode:SetSkills(hero)
+            GameMode:RoleActions(hero)
+            GameMode:CleanFlags(hero)
+          end
+        end
+      else
+        --NIGHTTIME
+        mode:SetFogOfWarDisabled(false)
+
+        local heroes = HeroList:GetAllHeroes()
+        for i=1,#heroes do
+          local hero = heroes[i]
+          if hero then
+            GameMode:SetSkills(hero)
+          end
         end
       end
-    else
-      --NIGHTTIME
-      mode:SetFogOfWarDisabled(false)
-
-      local heroes = HeroList:GetAllHeroes()
-      for i=1,#heroes do
-        local hero = heroes[i]
-        if hero then
-          GameMode:SetSkills(hero)
-        end
-      end
-    end
     end)
     return waitTime
-    end)
+  end)
 end
 
 function GameMode:SetRoles()
@@ -236,13 +236,13 @@ function GameMode:SetSkills(hero)
         hero:RemoveAbility(abil:GetAbilityName())
         hero:AddAbility("SK_kill")
         hero:GetAbilityByIndex(0):SetLevel(1)
-      elseif hero.isDoctor then
-        local abil = hero:GetAbilityByIndex(0)
-        if abil then
-          hero:RemoveAbility(abil:GetAbilityName())
-          hero:AddAbility("doctor_heal")
-          hero:GetAbilityByIndex(0):SetLevel(1)
-        end
+      end
+    elseif hero.isDoctor then
+      local abil = hero:GetAbilityByIndex(0)
+      if abil then
+        hero:RemoveAbility(abil:GetAbilityName())
+        hero:AddAbility("doctor_heal")
+        hero:GetAbilityByIndex(0):SetLevel(1)
       end
     end
   end
@@ -258,7 +258,7 @@ end
 function GameMode:CleanFlags(hero)
   if hero.isMarkedForDeath then
     hero.isMarkedForDeath = false;
-    elseif hero.isHealed then
-      hero.isHealed = false;
-    end
+  elseif hero.isHealed then
+    hero.isHealed = false;
   end
+end
