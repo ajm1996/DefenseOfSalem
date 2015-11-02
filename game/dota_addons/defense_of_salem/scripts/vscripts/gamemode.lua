@@ -49,12 +49,7 @@ holdout).
 This function should generally only be used if the Precache() function in addon_game_mode.lua is not working.
 ]]
 function GameMode:PostLoadPrecache()
-  DebugPrint("[BAREBONES] Performing Post-Load precache")    
---PrecacheItemByNameAsync("item_example_item", function(...) end)
---PrecacheItemByNameAsync("example_ability", function(...) end)
-
---PrecacheUnitByNameAsync("npc_dota_hero_viper", function(...) end)
---PrecacheUnitByNameAsync("npc_dota_hero_enigma", function(...) end)
+  DebugPrint("[BAREBONES] Performing Post-Load precache")
 end
 
 --[[
@@ -85,9 +80,10 @@ function GameMode:OnHeroInGame(hero)
 
   PlayerSay:SendConfig(hero:GetPlayerID(), false, false)
 
-  dummy:FindAbilityByName("player_modifiers_passive"):ApplyDataDrivenModifier(dummy, hero, "modifier_general_player_passives", {})
-  dummy:FindAbilityByName("player_modifiers_passive"):ApplyDataDrivenModifier(dummy, hero, "modifier_rooted_passive", {})
-  
+  --add player to alive players
+
+  self.dummy:FindAbilityByName("player_modifiers_passive"):ApplyDataDrivenModifier(self.dummy, hero, "modifier_general_player_passives", {})
+  self.dummy:FindAbilityByName("player_modifiers_passive"):ApplyDataDrivenModifier(self.dummy, hero, "modifier_rooted_passive", {})
 
   hero:SetGold(0, false)
 
@@ -114,10 +110,11 @@ function GameMode:InitGameMode()
     end
   end)
 
-  Convars:RegisterCommand( "vote_trial_player", Dynamic_Wrap(GameMode, 'PlayerTrial'), "A console command example", FCVAR_CHEAT )
-  Convars:RegisterCommand( "remove_root", Dynamic_Wrap(GameMode, 'RemoveRoot'), "A console command example", FCVAR_CHEAT )
-
-  dummy = CreateUnitByName("dummy_unit", Vector(0,0,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
+  self.dummy = CreateUnitByName("dummy_unit", Vector(0,0,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
+  self.alivePlayers = {}
+  self.roleList = {}
+  self.gameState = nil
+  self.votedPlayer = nil
 
 end
 
@@ -127,48 +124,217 @@ gold will begin to go up in ticks if configured, creeps will spawn, towers will 
 is useful for starting any game logic timers/thinkers, beginning the first round, etc.
 ]]
 function GameMode:OnGameInProgress()
-  GameMode:SetRoles()
-  
-  local waitTime = 45
-  GameRules:SetTimeOfDay((360 - waitTime) * (1/480))
+  GameMode:StartPhase(-1)
+end
 
-  Timers:CreateTimer(waitTime, function()
+function GameMode:StartPhase(phase)
+  if phase == -1 then     --PREGAME
+    self.gameState = -1
+    local timeLength = 5
+    GameRules:SetTimeOfDay((360 - timeLength) * (1/480))
 
-    if GameRules:IsDaytime() then
-      waitTime = 30
-    else
-      waitTime = 45
+    --force heroes to spawn?
+    self.alivePlayers = HeroList:GetAllHeroes()
+    GameMode:SetRoles()
+
+    --opening messages
+
+    Timers:CreateTimer(timeLength, function()
+      GameMode:StartPhase(0)
+    end)
+
+  elseif phase == 0 then  --NIGHTTIME
+    print("night phase")
+    local timeLength = 5
+    self.gameState = 0
+
+    GameRules:SetTimeOfDay(GameRules:GetTimeOfDay() + ((240 - timeLength) * (1/480)))
+    mode:SetFogOfWarDisabled(false)
+
+    for i=1,#self.alivePlayers do
+      local hero = self.alivePlayers[i]
+      if hero then
+        GameMode:RoleActions(hero)
+        GameMode:SetSkills(hero)
+        GameMode:SetChatPermission(hero)
+        GameMode:CleanFlags(hero)
+      end
     end
-    GameRules:SetTimeOfDay(GameRules:GetTimeOfDay() + ((240 - waitTime) * (1/480)))
-    Timers:CreateTimer(0.03, function()
-      if GameRules:IsDaytime() then
-        --DAYTIME
-        mode:SetFogOfWarDisabled(true)
 
-        local heroes = HeroList:GetAllHeroes()
-        for i=1,#heroes do
-          local hero = heroes[i]
-          if hero then
-            GameMode:SetSkills(hero)
-            GameMode:RoleActions(hero)
-            GameMode:CleanFlags(hero)
-          end
-        end
+    Timers:CreateTimer(timeLength, function()
+      GameMode:StartPhase(1)
+    end)
+
+  elseif phase == 1 then  --DAYTIME/DISCUSSION
+    print("day phase")
+    self.gameState = 1
+    local timeLength = 5
+
+    GameRules:SetTimeOfDay(GameRules:GetTimeOfDay() + ((240 - timeLength - 20) * (1/480))) --30 from vote time
+    mode:SetFogOfWarDisabled(true)
+
+    for i=1,#self.alivePlayers do
+      local hero = self.alivePlayers[i]
+      if hero then
+        GameMode:RoleActions(hero)
+        GameMode:SetSkills(hero)
+        GameMode:SetChatPermission(hero)
+        GameMode:CleanFlags(hero)
+      end
+    end
+
+    self.votedPlayer = nil
+
+    Timers:CreateTimer(timeLength, function()
+      GameMode:StartPhase(2)
+    end)
+
+  elseif phase == 2 then  --VOTING
+    print("voting phase")
+    self.gameState = 2
+    local timeLength = 20
+
+    for i=1,#self.alivePlayers do
+      local hero = self.alivePlayers[i]
+      if hero then
+        GameMode:SetSkills(hero)
+      end
+    end
+
+    local flag = false
+    Timers:CreateTimer(timeLength, function()
+      flag = true
+    end)
+    
+    Timers:CreateTimer(function()
+      if self.votedPlayer then
+        GameMode:StartPhase(3)
+      elseif flag then
+        GameMode:StartPhase(0)
       else
-        --NIGHTTIME
-        mode:SetFogOfWarDisabled(false)
+        return 0.03
+      end
+    end)
 
-        local heroes = HeroList:GetAllHeroes()
-        for i=1,#heroes do
-          local hero = heroes[i]
-          if hero then
-            GameMode:SetSkills(hero)
+  elseif phase == 3 then  --DEFENSE
+    print("defense phase")
+    self.gameState = 3
+    local timeLength = 10
+
+    GameRules:SetTimeOfDay(GameRules:GetTimeOfDay() - ((timeLength + 10 + 5) * (1/480))) --20 and 10 from judgement and last words
+
+    --check if day < 4 and save remaining time if true
+
+    for i=1,#self.alivePlayers do
+      local hero = self.alivePlayers[i]
+      if hero then
+        GameMode:SetSkills(hero)
+        GameMode:SetChatPermission(hero)
+      end
+    end
+
+    self.votedPlayer.home = self.votedPlayer:GetAbsOrigin()
+    if self.votedPlayer:HasModifier("modifier_rooted_passive") then
+      self.votedPlayer:RemoveModifierByName("modifier_rooted_passive")
+    end
+
+    Timers:CreateTimer(0.03, function()
+      self.votedPlayer:MoveToPosition(Vector(0,0,0))
+      if (self.votedPlayer:GetAbsOrigin() - Vector(0, 0, 264.75)):Length() > 0.001 then
+        return .03
+      else
+        self.dummy:FindAbilityByName("player_modifiers_passive"):ApplyDataDrivenModifier(self.dummy, self.votedPlayer, "modifier_rooted_passive", {})
+        --ask for defense
+        Timers:CreateTimer(timeLength, function()
+          GameMode:StartPhase(4)
+        end)
+      end
+    end)
+
+  elseif phase == 4 then  --JUDGEMENT
+    print("judgement phase")
+    self.gameState = 4
+    local timeLength = 10
+
+    --ask for votes
+
+    for i=1,#self.alivePlayers do
+      local hero = self.alivePlayers[i]
+      if hero then
+        GameMode:SetSkills(hero)
+        GameMode:SetChatPermission(hero)
+      end
+    end
+
+    Timers:CreateTimer(timeLength, function()
+      local guilty = 0
+      local innocent = 0
+      local abstain = 0
+
+      for i=0,#self.alivePlayers do
+        local hero = self.alivePlayers[i]
+        if hero then
+          if hero.vote == "innocent" then
+            --show message of players vote
+            innocent = innocent + 1
+          elseif hero.vote == "guilty" then
+            --show message of players vote
+            guilty = guilty + 1
+          elseif hero.vote == "abstain" then
+            --show message of players vote
+            abstain = abstain + 1
           end
         end
       end
+
+      if innocent >= guilty then
+        if self.votedPlayer:HasModifier("modifier_rooted_passive") then
+          self.votedPlayer:RemoveModifierByName("modifier_rooted_passive")
+        end
+        Timers:CreateTimer(function()
+          self.votedPlayer:MoveToPosition(self.votedPlayer.home)
+          if (self.votedPlayer:GetAbsOrigin() - self.votedPlayer.home):Length() > 0.001 then
+            return .03
+          else
+            self.dummy:FindAbilityByName("player_modifiers_passive"):ApplyDataDrivenModifier(self.dummy, self.votedPlayer, "modifier_rooted_passive", {})
+            --check if day < 4
+            GameMode:StartPhase(0)
+          end
+        end)
+      else
+        GameMode:StartPhase(5)
+      end
     end)
-    return waitTime
-  end)
+
+  elseif phase == 5 then  --LAST WORDS
+    print("last words phase")
+    self.gameState = 5
+    local timeLength = 5
+
+    for i=1,#self.alivePlayers do
+      local hero = self.alivePlayers[i]
+      if hero then
+        GameMode:SetSkills(hero)
+        GameMode:SetChatPermission(hero)
+      end
+    end
+
+    --ask for final words
+
+    Timers:CreateTimer(timeLength, function()
+      for i=1, #self.alivePlayers do
+        if self.alivePlayers[i] == self.votedPlayer then
+          table.remove(self.alivePlayers, i)
+        end
+      end
+      self.votedPlayer:ForceKill(false)
+      Timers:CreateTimer(2, function()
+        FindClearSpaceForUnit(self.votedPlayer, self.votedPlayer.home, false)
+        --check if day < 4
+        GameMode:StartPhase(0)
+      end)
+    end)
+  end
 end
 
 function GameMode:SetRoles()
@@ -178,86 +344,109 @@ function GameMode:SetRoles()
   local serialKiller = table.remove(heroes, rand)
   if serialKiller then
     print("SK: " .. serialKiller:GetName())
-    serialKiller.isSerialKill = true;
+    serialKiller.isSerialKill = true
+    serialKiller.skills = {"SK_kill"}
   end
 
   rand = math.random(#heroes)
   local doctor = table.remove(heroes, rand)
   if doctor then
     print("Doctor: " .. doctor:GetName())
-    doctor.isDoctor = true;
+    doctor.isDoctor = true
+    doctor.skills = {"doctor_heal"}
   end
 end
 
 function GameMode:SetSkills(hero)
-  if GameRules:IsDaytime() then
-    local abil = hero:GetAbilityByIndex(0)
-    if abil then
-      hero:RemoveAbility(abil:GetAbilityName())
-      hero:AddAbility("barebones_empty1")
-    end
-  else
-    if hero.isSerialKill then
-      local abil = hero:GetAbilityByIndex(0)
+  if self.gameState == 0 then
+    for i=1, 4 do
+      local abil = hero:GetAbilityByIndex(i - 1)
       if abil then
         hero:RemoveAbility(abil:GetAbilityName())
-        hero:AddAbility("SK_kill")
-        hero:GetAbilityByIndex(0):SetLevel(1)
       end
-    elseif hero.isDoctor then
-      local abil = hero:GetAbilityByIndex(0)
+      if hero.skills and i <= #hero.skills then
+        hero:AddAbility(hero.skills[i])
+        hero:GetAbilityByIndex(i - 1):SetLevel(1)
+      end
+    end
+
+  elseif self.gameState == 1 then
+    for i=1, 4 do
+      local abil = hero:GetAbilityByIndex(i - 1)
       if abil then
         hero:RemoveAbility(abil:GetAbilityName())
-        hero:AddAbility("doctor_heal")
-        hero:GetAbilityByIndex(0):SetLevel(1)
+        --Check if jailer, etc
+      end
+    end
+
+  elseif self.gameState == 2 then
+    for i=1, 4 do
+      local abil = hero:GetAbilityByIndex(i - 1)
+      if abil then
+        hero:RemoveAbility(abil:GetAbilityName())
+      end
+      if i == 1 then
+        hero:AddAbility("vote_for_trial")
+        hero:GetAbilityByIndex(i - 1):SetLevel(1)
+      end
+    end
+
+  elseif self.gameState == 3 or self.gameState == 5 then
+    for i=1, 4 do
+      local abil = hero:GetAbilityByIndex(i - 1)
+      if abil then
+        hero:RemoveAbility(abil:GetAbilityName())
+      end
+    end
+
+  elseif self.gameState == 4 then
+    for i=1, 4 do
+      local abil = hero:GetAbilityByIndex(i - 1)
+      if abil then
+        hero:RemoveAbility(abil:GetAbilityName())
+      end
+      if i == 1 then
+        hero:AddAbility("trial_vote_yes")
+        hero:GetAbilityByIndex(i - 1):SetLevel(1)
+      elseif i == 2 then
+        hero:AddAbility("trial_vote_no")
+        hero:GetAbilityByIndex(i - 1):SetLevel(1)
       end
     end
   end
+
+end
+
+function GameMode:SetChatPermission(hero)
+
 end
 
 function GameMode:RoleActions(hero)
-  if hero.isMarkedForDeath and not hero.isHealed then
-    hero:ForceKill(false)
-    hero.killer:IncrementKills(1)
-  end
-end
-
-function GameMode:CleanFlags(hero)
-  if hero.isMarkedForDeath then
-    hero.isMarkedForDeath = false;
-  elseif hero.isHealed then
-    hero.isHealed = false;
-  end
-end
-
-function GameMode:PlayerTrial()
-  local hero = HeroList:GetHero(0)
-  local home = hero:GetAbsOrigin()
-
-  if hero:HasModifier("modifier_rooted_passive") then
-    hero:RemoveModifierByName("modifier_rooted_passive")
-  end
-
-  Timers:CreateTimer(0.03, function()
-    hero:MoveToPosition(Vector(0,0,0))
-    if (hero:GetAbsOrigin() - Vector(0, 0, 264.75)):Length() > 0 then
-      return .03
-    else
-      dummy:FindAbilityByName("player_modifiers_passive"):ApplyDataDrivenModifier(dummy, hero, "modifier_rooted_passive", {})
-
-      Timers:CreateTimer(5, function()
-        if hero:HasModifier("modifier_rooted_passive") then
-          hero:RemoveModifierByName("modifier_rooted_passive")
+  if self.gameState == 1 then
+    if hero.isMarkedForDeath and not hero.isHealed then
+      hero:RemoveModifierByName("modifier_general_player_passives")
+      hero:SetCustomHealthLabel(GameMode:ConvertEngineName(hero:GetName()) .. '\n"'.. GameMode:GetRole(hero)..'"', 0, 0, 0)
+      for i=1, #self.alivePlayers do
+        if self.alivePlayers[i] == hero then
+          table.remove(self.alivePlayers, i)
         end
-        hero:MoveToPosition(home)
-        if (hero:GetAbsOrigin() - home):Length() > 0 then
-          return .03
-        else
-          dummy:FindAbilityByName("player_modifiers_passive"):ApplyDataDrivenModifier(dummy, hero, "modifier_rooted_passive", {})
-        end
-      end)
+      end
+      hero:ForceKill(false)
+      hero.killer:IncrementKills(1)
     end
-  end)
+  elseif self.gameState == 2 then
+
+  end
+end
+ 
+function GameMode:CleanFlags(hero)
+  if self.gameState == 1 then
+    hero.vote = "abstain"
+    hero.votes = 0
+    hero.votedFor = nil
+    hero.isMarkedForDeath = false
+    hero.isHealed = false
+  end
 end
 
 function GameMode:ConvertEngineName(heroEngineName)
@@ -281,6 +470,8 @@ function GameMode:ConvertEngineName(heroEngineName)
     heroName = "Clockwork"
   elseif heroName == "Shredder" then
     heroName = "Timbersaw"
+  elseif heroName == "Skeleton King" then
+    heroName = "Wraith King"
   elseif heroName == "Rattletrap" then
     heroName = "Clockwork"
   elseif heroName == "Vengefulspirit" then
@@ -293,9 +484,12 @@ function GameMode:ConvertEngineName(heroEngineName)
   return heroName
 end
 
-function GameMode:RemoveRoot()
-  hero = HeroList:GetHero(0)
-  if hero:HasModifier("modifier_rooted_passive") then
-    hero:RemoveModifierByName("modifier_rooted_passive")
+function GameMode:GetRole(hero)
+  if hero.isSerialKill then
+    return "Serial Killer"
+  elseif hero.isDoctor then
+    return "Doctor"
+  else
+    return "No Role"
   end
 end
