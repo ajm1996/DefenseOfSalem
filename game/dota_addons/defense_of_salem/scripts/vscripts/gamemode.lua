@@ -328,6 +328,7 @@ function GameMode:StartPhase(phase)
         end
       end
       self.votedPlayer:ForceKill(false)
+      self.votedPlayer:SetTeam(1)
       Timers:CreateTimer(2, function()
         FindClearSpaceForUnit(self.votedPlayer, self.votedPlayer.home, false)
         --check if day < 4
@@ -341,11 +342,11 @@ function GameMode:SetRoles()
   local heroes = HeroList:GetAllHeroes()
 
   local rand = math.random(#heroes)
-  local serialKiller = table.remove(heroes, rand)
-  if serialKiller then
-    print("SK: " .. serialKiller:GetName())
-    serialKiller.isSerialKill = true
-    serialKiller.skills = {"SK_kill"}
+  local sheriff = table.remove(heroes, rand)
+  if sheriff then
+    print("Sheriff: " .. sheriff:GetName())
+    sheriff.isSheriff = true
+    sheriff.skills = {"sheriff_investigate"}
   end
 
   rand = math.random(#heroes)
@@ -355,6 +356,163 @@ function GameMode:SetRoles()
     doctor.isDoctor = true
     doctor.skills = {"doctor_heal"}
   end
+
+  rand = math.random(#heroes)
+  local investigator = table.remove(heroes, rand)
+  if investigator then
+    print("Investigator: " .. investigator:GetName())
+    investigator.isInvestigator = true
+    investigator.skills = {"investigator_investigate"}
+  end
+
+  rand = math.random(#heroes)
+  local jailor = table.remove(heroes, rand)
+  if jailor then
+    print("Jailor: " .. jailor:GetName())
+    jailor.isJailor = true
+    jailor.skills = {"jailor_execute"}
+    jailor.daySkills = {"jailor_jail"}
+  end
+
+  rand = math.random(#heroes)
+  local medium = table.remove(heroes, rand)
+  if medium then
+    print("Medium: " .. medium:GetName())
+    medium.isMedium = true
+    medium.skills = {"medium_passive"}
+    medium.daySkills = {"medium_passive"}
+  end
+
+  rand = math.random(#heroes)
+  local godfather = table.remove(heroes, rand)
+  if godfather then
+    print("Godfather: " .. godfather:GetName())
+    godfather.isInvestigator = true
+    godfather.isMafia = true
+    godfather.skills = {"godfather_kill"}
+  end
+
+  rand = math.random(#heroes)
+  local framer = table.remove(heroes, rand)
+  if framer then
+    print("Framer: " .. framer:GetName())
+    framer.isFramer = true
+    framer.isMafia = true
+    framer.skills = {"framer_frame"}
+  end
+
+  rand = math.random(#heroes)
+  local executioner = table.remove(heroes, rand)
+  if executioner then
+    print("Executioner: " .. executioner:GetName())
+    executioner.isExecutioner = true
+    executioner.skills = {"executioner_passive"}
+    executioner.daySkills = {"executioner_passive"}
+  end
+
+  rand = math.random(#heroes)
+  local escort = table.remove(heroes, rand)
+  if escort then
+    print("Escort: " .. escort:GetName())
+    escort.isEscort = true
+    escort.skills = {"escorter_escort"}
+  end
+
+  rand = math.random(#heroes)
+  local mafioso = table.remove(heroes, rand)
+  if mafioso then
+    print("Mafioso: " .. mafioso:GetName())
+    mafioso.isMafioso = true
+    mafioso.isMafia = true
+    mafioso.skills = {"mafioso_kill"}
+  end
+
+  rand = math.random(#heroes)
+  local lookout = table.remove(heroes, rand)
+  if lookout then
+    print("Lookout: " .. lookout:GetName())
+    lookout.isLookout = true
+    lookout.skills = {"lookout_investigate"}
+  end
+
+  rand = math.random(#heroes)
+  local serialKiller = table.remove(heroes, rand)
+  if serialKiller then
+    print("Serial Killer: " .. serialKiller:GetName())
+    serialKiller.isSerialKill = true
+    serialKiller.daySkills = {"serial_killer_kill"}
+  end
+
+  rand = math.random(#heroes)
+  local townKilling = table.remove(heroes, rand)
+  if townKilling then
+    if math.random() > 0.5 then
+      townKilling.isVeteran = true
+      townKilling.daySkills = {"veteran_alert"}
+      print("Veteran (Town Killing): " .. townKilling:GetName())
+    else
+      townKilling.isVigilante = true
+      townKilling.skills = {"vigilante_shoot"}
+      print("Vigilante (Town Killing): " .. townKilling:GetName())
+    end
+  end
+
+  rand = math.random(#heroes)
+  local randomTown = table.remove(heroes, rand)
+  if randomTown then
+
+    local town = 8
+    if randomTown.isVeteran then
+      town = 7
+      print("Town Killing is veteran, random town can no longer be Veteran")
+    end
+
+    rand = math.random(town)
+
+    if rand == 1  then
+      randomTown.isSheriff = true
+      randomTown.skills = {"sheriff_investigate"}
+      print("Sheriff (Random Town): " .. randomTown:GetName())
+    elseif rand == 2 then
+      townKilling.isDoctor = true
+      townKilling.skills = {"doctor_heal"}
+      print("Doctor (Random Town): " .. randomTown:GetName())
+    elseif rand == 3 then
+      townKilling.isInvestigator = true
+      townKilling.skills = {"investigator_investigate"}
+      print("Investigator (Random Town): " .. randomTown:GetName())
+    elseif rand == 4 then
+      townKilling.medium = true
+      townKilling.skills = {"medium_passive"}
+      print("Medium (Random Town): " .. randomTown:GetName())
+    elseif rand == 5 then
+      townKilling.isEscort = true
+      townKilling.skills = {"escorter_escort"}
+      print("Escort (Random Town): " .. randomTown:GetName())
+    elseif rand == 6 then
+      townKilling.isLookout = true
+      townKilling.skills = {"lookout_investigate"}
+      print("Lookout (Random Town): " .. randomTown:GetName())
+    elseif rand == 7 then
+      townKilling.isVigilante = true
+      townKilling.skills = {"vigilante_shoot"}
+      print("Vigilante (Random Town): " .. randomTown:GetName())
+    elseif rand == 8 then
+      townKilling.isVeteran = true
+      townKilling.skills = {"veteran_alert"}
+      print("Veteran (Random Town): " .. randomTown:GetName())
+    end
+  end
+
+  rand = math.random(#heroes)
+  local jester = table.remove(heroes, rand)
+  if jester then
+    print("Jester: " .. jester:GetName())
+    jester.isJester = true
+    jester.skills = {"jester_passive"}
+    jester.daySkills = {"jester_passive"}
+  end
+
 end
 
 function GameMode:SetSkills(hero)
@@ -375,7 +533,10 @@ function GameMode:SetSkills(hero)
       local abil = hero:GetAbilityByIndex(i - 1)
       if abil then
         hero:RemoveAbility(abil:GetAbilityName())
-        --Check if jailer, etc
+      end
+      if hero.daySkills and i <= #hero.daySkills then
+        hero:AddAbility(hero.daySkills[i])
+        hero:GetAbilityByIndex(i - 1):SetLevel(1)
       end
     end
 
@@ -432,6 +593,7 @@ function GameMode:RoleActions(hero)
         end
       end
       hero:ForceKill(false)
+      hero:SetTeam(1)
       hero.killer:IncrementKills(1)
     end
   elseif self.gameState == 2 then

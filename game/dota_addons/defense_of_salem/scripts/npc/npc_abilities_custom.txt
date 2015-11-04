@@ -1,11 +1,10 @@
 "DOTAAbilities"
 {
-
-	"SK_kill"
+	"sheriff_investigate"
 	{
 		"BaseClass"					"ability_datadriven"
 		"MaxLevel"					"1"
-		"AbilityTextureName"		"phantom_assassin_coup_de_grace"
+		"AbilityTextureName"		"rubick_empty1"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
@@ -18,7 +17,7 @@
 			"RunScript"
 			{
 				"ScriptFile"		"scripts/vscripts/abilities.lua"
-				"Function"			"serialKillerKill"
+				"Function"			"SheriffInvestigate"
 			}
 	    }
 	    "Modifiers"
@@ -51,7 +50,7 @@
 			"RunScript"
 			{
 				"ScriptFile"		"scripts/vscripts/abilities.lua"
-				"Function"			"doctorHeal"
+				"Function"			"DoctorHeal"
 			}
 	    }
 	    "Modifiers"
@@ -68,11 +67,387 @@
 		}
 	}
 
+	"investigator_investigate"
+	{
+		"BaseClass"					"ability_datadriven"
+		"MaxLevel"					"1"
+		"AbilityTextureName"		"rubick_empty1"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"CastFilterRejectCaster"	"1"
+
+		"AbilityCastAnimation"		"ACT_IDLE"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities.lua"
+				"Function"			"InvestigatorInvestigate"
+			}
+	    }
+	    "Modifiers"
+	    {
+	    	"modifier_no_turn"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+			    "Properties"
+			    {
+			    	"MODIFIER_PROPERTY_IGNORE_CAST_ANGLE"		"1"
+			    }
+			}
+		}
+	}
+
+	"jailor_jail"
+	{
+		"BaseClass"					"ability_datadriven"
+		"MaxLevel"					"1"
+		"AbilityTextureName"		"rubick_empty1"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"CastFilterRejectCaster"	"1"
+
+		"AbilityCastAnimation"		"ACT_IDLE"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities.lua"
+				"Function"			"JailorJail"
+			}
+	    }
+	    "Modifiers"
+	    {
+	    	"modifier_no_turn"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+			    "Properties"
+			    {
+			    	"MODIFIER_PROPERTY_IGNORE_CAST_ANGLE"		"1"
+			    }
+			}
+		}
+	}
+
+	"jailor_execute"
+	{
+		"BaseClass"					"ability_datadriven"
+		"MaxLevel"					"1"
+		"AbilityTextureName"		"rubick_empty1"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_TOGGLE"
+	
+		"OnToggleOn"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities.lua"
+				"Function"			"JailorExecuteOn"
+			}
+	    }
+	    "OnToggleOff"
+	    {
+	    	"ScriptFile"		"scripts/vscripts/abilities.lua"
+			"Function"			"JailorExecuteOff"
+	    }
+	}
+
+	"medium_passive"
+	{
+		"BaseClass"					"ability_datadriven"
+		"MaxLevel"					"1"
+		"AbilityTextureName"		"rubick_empty1"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	}
+
+	"godfather_kill"
+	{
+		"BaseClass"					"ability_datadriven"
+		"MaxLevel"					"1"
+		"AbilityTextureName"		"rubick_empty1"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"CastFilterRejectCaster"	"1"
+
+		"AbilityCastAnimation"		"ACT_IDLE"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities.lua"
+				"Function"			"GodfatherKill"
+			}
+	    }
+	    "Modifiers"
+	    {
+	    	"modifier_no_turn"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+			    "Properties"
+			    {
+			    	"MODIFIER_PROPERTY_IGNORE_CAST_ANGLE"		"1"
+			    }
+			}
+		}
+	}
+
+	"framer_frame"
+	{
+		"BaseClass"					"ability_datadriven"
+		"MaxLevel"					"1"
+		"AbilityTextureName"		"rubick_empty1"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"CastFilterRejectCaster"	"1"
+
+		"AbilityCastAnimation"		"ACT_IDLE"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities.lua"
+				"Function"			"FramerFrame"
+			}
+	    }
+	    "Modifiers"
+	    {
+	    	"modifier_no_turn"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+			    "Properties"
+			    {
+			    	"MODIFIER_PROPERTY_IGNORE_CAST_ANGLE"		"1"
+			    }
+			}
+		}
+	}
+
+	"executioner_passive"
+	{
+		"BaseClass"					"ability_datadriven"
+		"MaxLevel"					"1"
+		"AbilityTextureName"		"rubick_empty1"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	}
+
+	"escorter_escort"
+	{
+		"BaseClass"					"ability_datadriven"
+		"MaxLevel"					"1"
+		"AbilityTextureName"		"rubick_empty1"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"CastFilterRejectCaster"	"1"
+
+		"AbilityCastAnimation"		"ACT_IDLE"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities.lua"
+				"Function"			"EscorterEscrot"
+			}
+	    }
+	    "Modifiers"
+	    {
+	    	"modifier_no_turn"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+			    "Properties"
+			    {
+			    	"MODIFIER_PROPERTY_IGNORE_CAST_ANGLE"		"1"
+			    }
+			}
+		}
+	}
+
+	"mafioso_kill"
+	{
+		"BaseClass"					"ability_datadriven"
+		"MaxLevel"					"1"
+		"AbilityTextureName"		"rubick_empty1"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"CastFilterRejectCaster"	"1"
+
+		"AbilityCastAnimation"		"ACT_IDLE"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities.lua"
+				"Function"			"MafiosoKill"
+			}
+	    }
+	    "Modifiers"
+	    {
+	    	"modifier_no_turn"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+			    "Properties"
+			    {
+			    	"MODIFIER_PROPERTY_IGNORE_CAST_ANGLE"		"1"
+			    }
+			}
+		}
+	}
+
+	"lookout_investigate"
+	{
+		"BaseClass"					"ability_datadriven"
+		"MaxLevel"					"1"
+		"AbilityTextureName"		"rubick_empty1"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"CastFilterRejectCaster"	"1"
+
+		"AbilityCastAnimation"		"ACT_IDLE"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities.lua"
+				"Function"			"LookoutInvestigate"
+			}
+	    }
+	    "Modifiers"
+	    {
+	    	"modifier_no_turn"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+			    "Properties"
+			    {
+			    	"MODIFIER_PROPERTY_IGNORE_CAST_ANGLE"		"1"
+			    }
+			}
+		}
+	}
+
+	"serial_killer_kill"
+	{
+		"BaseClass"					"ability_datadriven"
+		"MaxLevel"					"1"
+		"AbilityTextureName"		"phantom_assassin_coup_de_grace"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"CastFilterRejectCaster"	"1"
+
+		"AbilityCastAnimation"		"ACT_IDLE"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities.lua"
+				"Function"			"SerialKillerKill"
+			}
+	    }
+	    "Modifiers"
+	    {
+	    	"modifier_no_turn"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+			    "Properties"
+			    {
+			    	"MODIFIER_PROPERTY_IGNORE_CAST_ANGLE"		"1"
+			    }
+			}
+		}
+	}
+
+	"veteran_alert"
+	{
+		"BaseClass"					"ability_datadriven"
+		"MaxLevel"					"1"
+		"AbilityTextureName"		"rubick_empty1"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_TOGGLE"
+	
+		"OnToggleOn"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities.lua"
+				"Function"			"VeteranAlertOn"
+			}
+	    }
+	    "OnToggleOff"
+	    {
+	    	"ScriptFile"		"scripts/vscripts/abilities.lua"
+			"Function"			"VeteranAlertOff"
+	    }
+	}
+
+	"vigilante_shoot"
+	{
+		"BaseClass"					"ability_datadriven"
+		"MaxLevel"					"1"
+		"AbilityTextureName"		"rubick_empty1"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"CastFilterRejectCaster"	"1"
+
+		"AbilityCastAnimation"		"ACT_IDLE"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities.lua"
+				"Function"			"VigilanteShoot"
+			}
+	    }
+	    "Modifiers"
+	    {
+	    	"modifier_no_turn"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+			    "Properties"
+			    {
+			    	"MODIFIER_PROPERTY_IGNORE_CAST_ANGLE"		"1"
+			    }
+			}
+		}
+	}
+
+	"jester_passive"
+	{
+		"BaseClass"					"ability_datadriven"
+		"MaxLevel"					"1"
+		"AbilityTextureName"		"rubick_empty1"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	}
+
+
+
 	"vote_for_trial"
 	{
 		"BaseClass"					"ability_datadriven"
 		"MaxLevel"					"1"
-		"AbilityTextureName"		"lion_finger_of_death"
+		"AbilityTextureName"		"rubick_empty1"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
@@ -106,7 +481,7 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"MaxLevel"					"1"
-		"AbilityTextureName"		"rubick_spell_steal"
+		"AbilityTextureName"		"rubick_empty1"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_TOGGLE"
 	
 		"OnToggleOn"
@@ -128,7 +503,7 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"MaxLevel"					"1"
-		"AbilityTextureName"		"rubick_null_field"
+		"AbilityTextureName"		"rubick_empty1"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_TOGGLE"
 	
 		"OnToggleOn"
@@ -183,9 +558,9 @@
 	"dummy_passive"
 	{
 		"AbilityBehavior" 			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"BaseClass" 					"ability_datadriven"
-		"AbilityTextureName"            "rubick_empty1"
-		"MaxLevel"                      "1"
+		"BaseClass" 				"ability_datadriven"
+		"AbilityTextureName"		"rubick_empty1"
+		"MaxLevel"					"1"
 
 		"Modifiers"
 		{
