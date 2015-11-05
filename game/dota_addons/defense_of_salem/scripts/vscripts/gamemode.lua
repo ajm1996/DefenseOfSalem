@@ -105,17 +105,17 @@ function GameMode:InitGameMode()
       local heroName = GameMode:ConvertEngineName(playerEntity:GetAssignedHero():GetName())
       local line_duration = 10.0
       Notifications:BottomToAll({hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
-      Notifications:BottomToAll({text = heroName, style={color="blue",["font-size"]="20px"}, duration = line_duration, continue = true})
+      Notifications:BottomToAll({text = heroName, style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
       Notifications:BottomToAll({text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
     end
   end)
 
-  self.dummy = CreateUnitByName("dummy_unit", Vector(0,0,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
+  self.valveTime = nil
   self.alivePlayers = {}
-  self.roleList = {}
   self.gameState = nil
+  self.dayNum = nil
   self.votedPlayer = nil
-
+  self.dummy = CreateUnitByName("dummy_unit", Vector(0,0,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
 end
 
 --[[
@@ -125,19 +125,42 @@ is useful for starting any game logic timers/thinkers, beginning the first round
 ]]
 function GameMode:OnGameInProgress()
   GameMode:StartPhase(-1)
+  self.valveTime = GameRules:GetGameTime()
 end
 
 function GameMode:StartPhase(phase)
   if phase == -1 then     --PREGAME
     self.gameState = -1
-    local timeLength = 5
+    local timeLength = 30
+
     GameRules:SetTimeOfDay((360 - timeLength) * (1/480))
+    self.dayNum = 1
+
+    Notifications:TopToAll({text = "Day 1", style={["font-size"]="50px"}, duration = 5, continue = true})
 
     --force heroes to spawn?
     self.alivePlayers = HeroList:GetAllHeroes()
     GameMode:SetRoles()
 
-    --opening messages
+    for i=1,#self.alivePlayers do
+      local hero = self.alivePlayers[i]
+      if hero then
+        GameMode:SetSkills(hero)
+        local message = "You are "
+        local first = string.sub(GameMode:GetRole(hero), 1, 1)
+        if first == "A" or first == "E" or first == "I" or first == "O" or first == "U" then
+          message = message .. "an "
+        else
+          message = message .. "a "
+        end
+        message = message .. GameMode:GetRole(hero)
+        print(hero:GetName()..": " .. message)
+        ShowGenericPopupToPlayer(hero, message, "TODO: Role Description", "", "", DOTA_SHOWGENERICPOPUP_TINT_SCREEN)
+      end
+    end
+    Timers:CreateTimer(0.03, function()
+      GameRules:SendCustomMessage("Night 1 starts at  <bold><font color='#DF0101'>".. GameMode:GetGameTime(timeLength) .. "</font></bold>", 2, timeLength)
+    end)
 
     Timers:CreateTimer(timeLength, function()
       GameMode:StartPhase(0)
@@ -145,11 +168,14 @@ function GameMode:StartPhase(phase)
 
   elseif phase == 0 then  --NIGHTTIME
     print("night phase")
-    local timeLength = 5
+    local timeLength = 40
     self.gameState = 0
 
-    GameRules:SetTimeOfDay(GameRules:GetTimeOfDay() + ((240 - timeLength) * (1/480)))
+    GameRules:SetTimeOfDay((120 - timeLength) * (1/480))
     mode:SetFogOfWarDisabled(false)
+
+    Notifications:TopToAll({text = "Night "..self.dayNum, style={["font-size"]="50px"}, duration = 5, continue = true})
+    GameRules:SendCustomMessage("Day ".. self.dayNum + 1 .." starts at  <bold><font color='#DF0101'>".. GameMode:GetGameTime(timeLength) .. "</font></bold>", 2, timeLength)
 
     for i=1,#self.alivePlayers do
       local hero = self.alivePlayers[i]
@@ -168,10 +194,14 @@ function GameMode:StartPhase(phase)
   elseif phase == 1 then  --DAYTIME/DISCUSSION
     print("day phase")
     self.gameState = 1
-    local timeLength = 5
+    local timeLength = 45
 
-    GameRules:SetTimeOfDay(GameRules:GetTimeOfDay() + ((240 - timeLength - 20) * (1/480))) --30 from vote time
+    GameRules:SetTimeOfDay((360 - timeLength - 30) * (1/480)) --30 from vote time
     mode:SetFogOfWarDisabled(true)
+    self.dayNum = self.dayNum + 1
+
+    Notifications:TopToAll({text = "Day "..self.dayNum, style={["font-size"]="50px"}, duration = 5, continue = true})
+    GameRules:SendCustomMessage("Voting starts at  <bold><font color='#DF0101'>".. GameMode:GetGameTime(timeLength) .. "</font></bold>", 2, timeLength)
 
     for i=1,#self.alivePlayers do
       local hero = self.alivePlayers[i]
@@ -192,7 +222,14 @@ function GameMode:StartPhase(phase)
   elseif phase == 2 then  --VOTING
     print("voting phase")
     self.gameState = 2
-    local timeLength = 20
+    local timeLength = 30
+
+    Notifications:TopToAll({text = "Today's public vote and trial will now begin.", style={["font-size"]="40px"}, duration = 3, continue = true})
+    GameRules:SendCustomMessage("Voting ends at  <bold><font color='#DF0101'>".. GameMode:GetGameTime(timeLength) .. "</font></bold>", 2, timeLength)
+
+    Timers:CreateTimer(4, function()
+      Notifications:TopToAll({text = math.ceil(#self.alivePlayers / 2) .. " votes are needed to send someone to trial.", style={["font-size"]="40px"}, duration = 5})
+    end)
 
     for i=1,#self.alivePlayers do
       local hero = self.alivePlayers[i]
@@ -219,9 +256,14 @@ function GameMode:StartPhase(phase)
   elseif phase == 3 then  --DEFENSE
     print("defense phase")
     self.gameState = 3
-    local timeLength = 10
+    local timeLength = 20
 
-    GameRules:SetTimeOfDay(GameRules:GetTimeOfDay() - ((timeLength + 10 + 5) * (1/480))) --20 and 10 from judgement and last words
+    GameRules:SetTimeOfDay((360 - timeLength - 20 - 9) * (1/480)) --20 from judgement and 4.5 * 2 from walking
+
+    Notifications:TopToAll({text = "The town has decided to put ", style={["font-size"]="40px"}, duration = 5})
+    Notifications:TopToAll({text = GameMode:ConvertEngineName(self.votedPlayer:GetName()).." ", style={color="red", ["font-size"]="40px"}, duration = 5, continue = true})
+    Notifications:TopToAll({text = "on trial.", style={["font-size"]="40px"}, duration = 5, continue = true})
+    GameRules:SendCustomMessage("Defense ends at  <bold><font color='#DF0101'>".. GameMode:GetGameTime(timeLength) .. "</font></bold>", 2, timeLength)
 
     --check if day < 4 and save remaining time if true
 
@@ -244,7 +286,11 @@ function GameMode:StartPhase(phase)
         return .03
       else
         self.dummy:FindAbilityByName("player_modifiers_passive"):ApplyDataDrivenModifier(self.dummy, self.votedPlayer, "modifier_rooted_passive", {})
-        --ask for defense
+        
+        Notifications:TopToAll({text = GameMode:ConvertEngineName(self.votedPlayer:GetName()), style={color="red", ["font-size"]="40px"}, duration = 5})
+        Notifications:TopToAll({text = ", you are on trial for conspiracy against the town.", style={["font-size"]="40px"}, duration = 5, continue = true})
+        Notifications:TopToAll({text = "What is your defense?", style={color="red", ["font-size"]="40px"}, duration = 5})
+        
         Timers:CreateTimer(timeLength, function()
           GameMode:StartPhase(4)
         end)
@@ -254,7 +300,11 @@ function GameMode:StartPhase(phase)
   elseif phase == 4 then  --JUDGEMENT
     print("judgement phase")
     self.gameState = 4
-    local timeLength = 10
+    local timeLength = 20
+
+    Notifications:TopToAll({text = "The town may now vote on the fate of ", style={["font-size"]="40px"}, duration = 5})
+    Notifications:TopToAll({text = GameMode:ConvertEngineName(self.votedPlayer:GetName()), style={color="red", ["font-size"]="40px"}, duration = 5, continue = true})
+    GameRules:SendCustomMessage("Judgement ends at  <bold><font color='#DF0101'>".. GameMode:GetGameTime(timeLength) .. "</font></bold>", 2, timeLength)
 
     --ask for votes
 
@@ -275,13 +325,13 @@ function GameMode:StartPhase(phase)
         local hero = self.alivePlayers[i]
         if hero then
           if hero.vote == "innocent" then
-            --show message of players vote
+            GameRules:SendCustomMessage(GameMode:ConvertEngineName(hero:GetName()).. " voted <bold><font color='#04B404'>innocent</font></bold>", 2, 5)
             innocent = innocent + 1
           elseif hero.vote == "guilty" then
-            --show message of players vote
+            GameRules:SendCustomMessage(GameMode:ConvertEngineName(hero:GetName()).. " voted <bold><font color='#DF0101'>guilty</font></bold>", 2, 5)
             guilty = guilty + 1
           elseif hero.vote == "abstain" then
-            --show message of players vote
+            GameRules:SendCustomMessage(GameMode:ConvertEngineName(hero:GetName()).. " <bold><font color='#0080FF'>abstained</font></bold>", 2, 5)
             abstain = abstain + 1
           end
         end
@@ -309,7 +359,12 @@ function GameMode:StartPhase(phase)
   elseif phase == 5 then  --LAST WORDS
     print("last words phase")
     self.gameState = 5
-    local timeLength = 5
+    local timeLength = 10
+
+    GameRules:SetTimeOfDay((360 - timeLength - 3) * (1/480))  --3 from dramatic kill delay
+
+    Notifications:TopToAll({text = GameMode:ConvertEngineName(self.votedPlayer:GetName()), style={color="red", ["font-size"]="40px"}, duration = timeLength - 3})
+    Notifications:TopToAll({text = ", do you have any last words?", style={["font-size"]="40px"}, duration = timeLength - 3, continue = true})
 
     for i=1,#self.alivePlayers do
       local hero = self.alivePlayers[i]
@@ -321,7 +376,10 @@ function GameMode:StartPhase(phase)
 
     --ask for final words
 
-    Timers:CreateTimer(timeLength, function()
+    Timers:CreateTimer(timeLength - 3, function()
+      Notifications:TopToAll({text = "May god have mercy on your soul, ", style={["font-size"]="40px"}, duration = 3})
+      Notifications:TopToAll({text = GameMode:ConvertEngineName(self.votedPlayer:GetName()), style={color="red", ["font-size"]="40px"}, duration = 3, continue = true})
+
       for i=1, #self.alivePlayers do
         if self.alivePlayers[i] == self.votedPlayer then
           table.remove(self.alivePlayers, i)
@@ -329,7 +387,7 @@ function GameMode:StartPhase(phase)
       end
       self.votedPlayer:ForceKill(false)
       self.votedPlayer:SetTeam(1)
-      Timers:CreateTimer(2, function()
+      Timers:CreateTimer(3, function()
         FindClearSpaceForUnit(self.votedPlayer, self.votedPlayer.home, false)
         --check if day < 4
         GameMode:StartPhase(0)
@@ -387,7 +445,7 @@ function GameMode:SetRoles()
   local godfather = table.remove(heroes, rand)
   if godfather then
     print("Godfather: " .. godfather:GetName())
-    godfather.isInvestigator = true
+    godfather.isGodfather = true
     godfather.isMafia = true
     godfather.skills = {"godfather_kill"}
   end
@@ -439,20 +497,23 @@ function GameMode:SetRoles()
   local serialKiller = table.remove(heroes, rand)
   if serialKiller then
     print("Serial Killer: " .. serialKiller:GetName())
-    serialKiller.isSerialKill = true
-    serialKiller.daySkills = {"serial_killer_kill"}
+    serialKiller.isSerialKiller = true
+    serialKiller.skills = {"serial_killer_kill"}
   end
 
   rand = math.random(#heroes)
   local townKilling = table.remove(heroes, rand)
+  local townKillingIsVeteran = false
   if townKilling then
     if math.random() > 0.5 then
       townKilling.isVeteran = true
       townKilling.daySkills = {"veteran_alert"}
+      townKillingIsVeteran = true
       print("Veteran (Town Killing): " .. townKilling:GetName())
     else
       townKilling.isVigilante = true
       townKilling.skills = {"vigilante_shoot"}
+      townKillingIsVeteran = false
       print("Vigilante (Town Killing): " .. townKilling:GetName())
     end
   end
@@ -462,44 +523,43 @@ function GameMode:SetRoles()
   if randomTown then
 
     local town = 8
-    if randomTown.isVeteran then
+    if townKillingIsVeteran then
       town = 7
-      print("Town Killing is veteran, random town can no longer be Veteran")
     end
 
     rand = math.random(town)
 
-    if rand == 1  then
+    if rand == 1 then
       randomTown.isSheriff = true
       randomTown.skills = {"sheriff_investigate"}
       print("Sheriff (Random Town): " .. randomTown:GetName())
     elseif rand == 2 then
-      townKilling.isDoctor = true
-      townKilling.skills = {"doctor_heal"}
+      randomTown.isDoctor = true
+      randomTown.skills = {"doctor_heal"}
       print("Doctor (Random Town): " .. randomTown:GetName())
     elseif rand == 3 then
-      townKilling.isInvestigator = true
-      townKilling.skills = {"investigator_investigate"}
+      randomTown.isInvestigator = true
+      randomTown.skills = {"investigator_investigate"}
       print("Investigator (Random Town): " .. randomTown:GetName())
     elseif rand == 4 then
-      townKilling.medium = true
-      townKilling.skills = {"medium_passive"}
+      randomTown.medium = true
+      randomTown.skills = {"medium_passive"}
       print("Medium (Random Town): " .. randomTown:GetName())
     elseif rand == 5 then
-      townKilling.isEscort = true
-      townKilling.skills = {"escorter_escort"}
+      randomTown.isEscort = true
+      randomTown.skills = {"escorter_escort"}
       print("Escort (Random Town): " .. randomTown:GetName())
     elseif rand == 6 then
-      townKilling.isLookout = true
-      townKilling.skills = {"lookout_investigate"}
+      randomTown.isLookout = true
+      randomTown.skills = {"lookout_investigate"}
       print("Lookout (Random Town): " .. randomTown:GetName())
     elseif rand == 7 then
-      townKilling.isVigilante = true
-      townKilling.skills = {"vigilante_shoot"}
+      randomTown.isVigilante = true
+      randomTown.skills = {"vigilante_shoot"}
       print("Vigilante (Random Town): " .. randomTown:GetName())
     elseif rand == 8 then
-      townKilling.isVeteran = true
-      townKilling.skills = {"veteran_alert"}
+      randomTown.isVeteran = true
+      randomTown.skills = {"veteran_alert"}
       print("Veteran (Random Town): " .. randomTown:GetName())
     end
   end
@@ -528,7 +588,7 @@ function GameMode:SetSkills(hero)
       end
     end
 
-  elseif self.gameState == 1 then
+  elseif self.gameState == -1 or self.gameState == 1 or self.gameState == 3 or self.gameState == 5 then
     for i=1, 4 do
       local abil = hero:GetAbilityByIndex(i - 1)
       if abil then
@@ -552,24 +612,16 @@ function GameMode:SetSkills(hero)
       end
     end
 
-  elseif self.gameState == 3 or self.gameState == 5 then
-    for i=1, 4 do
-      local abil = hero:GetAbilityByIndex(i - 1)
-      if abil then
-        hero:RemoveAbility(abil:GetAbilityName())
-      end
-    end
-
   elseif self.gameState == 4 then
     for i=1, 4 do
       local abil = hero:GetAbilityByIndex(i - 1)
       if abil then
         hero:RemoveAbility(abil:GetAbilityName())
       end
-      if i == 1 then
+      if i == 1 and self.votedPlayer ~= hero then
         hero:AddAbility("trial_vote_yes")
         hero:GetAbilityByIndex(i - 1):SetLevel(1)
-      elseif i == 2 then
+      elseif i == 2 and self.votedPlayer ~= hero then
         hero:AddAbility("trial_vote_no")
         hero:GetAbilityByIndex(i - 1):SetLevel(1)
       end
@@ -611,6 +663,17 @@ function GameMode:CleanFlags(hero)
   end
 end
 
+function GameMode:GetGameTime(timeLength)
+  local time = GameRules:GetGameTime() - self.valveTime + timeLength
+  local mins = math.floor(time / 60)
+  local seconds = math.floor(time % 60)
+  if seconds < 10 then
+    seconds = "0"..seconds
+  end
+  time = mins..":"..seconds
+  return time
+end
+
 function GameMode:ConvertEngineName(heroEngineName)
   local heroName = string.gsub(string.gsub(string.sub(heroEngineName, 15), "_", " "), "(%l)(%w*)", function(a,b) return string.upper(a)..b end)
 
@@ -647,10 +710,36 @@ function GameMode:ConvertEngineName(heroEngineName)
 end
 
 function GameMode:GetRole(hero)
-  if hero.isSerialKill then
-    return "Serial Killer"
+  if hero.isSheriff then
+    return "Sheriff"
   elseif hero.isDoctor then
     return "Doctor"
+  elseif hero.isInvestigator then
+    return "Investigator"
+  elseif hero.isJailor then
+    return "Jailor"
+  elseif hero.isMedium then
+    return "Medium"
+  elseif hero.isGodfather then
+    return "Godfather"
+  elseif hero.isFramer then
+    return "Framer"
+  elseif hero.isExecutioner then
+    return "Executioner"
+  elseif hero.isEscort then
+    return "Escort"
+  elseif hero.isMafioso then
+    return "Mafioso"
+  elseif hero.isLookout then
+    return "Lookout"
+  elseif hero.isSerialKiller then
+    return "Serial Killer"
+  elseif hero.isVeteran then
+    return "Veteran"
+  elseif hero.isVigilante then
+    return "Vigilante"
+  elseif hero.isJester then
+    return "Jester"
   else
     return "No Role"
   end

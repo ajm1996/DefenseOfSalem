@@ -5,8 +5,8 @@
 		
 		"override_hero"			"npc_dota_hero_ancient_apparition"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -62,8 +62,8 @@
 		
 		"override_hero"			"npc_dota_hero_antimage"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -119,8 +119,8 @@
 		
 		"override_hero"			"npc_dota_hero_axe"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -176,8 +176,8 @@
 		
 		"override_hero"			"npc_dota_hero_bane"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -233,8 +233,8 @@
 		
 		"override_hero"			"npc_dota_hero_beastmaster"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -290,8 +290,8 @@
 		
 		"override_hero"			"npc_dota_hero_bloodseeker"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -347,8 +347,9 @@
 		
 		"override_hero"			"npc_dota_hero_chen"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
+    	"Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -404,8 +405,8 @@
 		
 		"override_hero"			"npc_dota_hero_crystal_maiden"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -461,8 +462,8 @@
 		
 		"override_hero"			"npc_dota_hero_dark_seer"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -518,8 +519,8 @@
 		
 		"override_hero"			"npc_dota_hero_dazzle"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -575,8 +576,8 @@
 		
 		"override_hero"			"npc_dota_hero_dragon_knight"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -632,8 +633,8 @@
 		
 		"override_hero"			"npc_dota_hero_doom_bringer"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -689,8 +690,8 @@
 		
 		"override_hero"			"npc_dota_hero_drow_ranger"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -746,8 +747,8 @@
 		
 		"override_hero"			"npc_dota_hero_earthshaker"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -803,8 +804,8 @@
 		
 		"override_hero"			"npc_dota_hero_enchantress"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -860,8 +861,8 @@
 		
 		"override_hero"			"npc_dota_hero_enigma"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -917,8 +918,8 @@
 		
 		"override_hero"			"npc_dota_hero_faceless_void"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -974,8 +975,8 @@
 		
 		"override_hero"			"npc_dota_hero_furion"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -1031,8 +1032,8 @@
 		
 		"override_hero"			"npc_dota_hero_juggernaut"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -1088,8 +1089,8 @@
 		
 		"override_hero"			"npc_dota_hero_kunkka"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -1145,8 +1146,8 @@
 		
 		"override_hero"			"npc_dota_hero_leshrac"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -1202,8 +1203,8 @@
 		
 		"override_hero"			"npc_dota_hero_lich"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -1259,8 +1260,8 @@
 		
 		"override_hero"			"npc_dota_hero_life_stealer"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -1316,8 +1317,8 @@
 		
 		"override_hero"			"npc_dota_hero_lina"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -1373,8 +1374,8 @@
 		
 		"override_hero"			"npc_dota_hero_lion"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -1430,8 +1431,8 @@
 		
 		"override_hero"			"npc_dota_hero_mirana"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -1487,8 +1488,8 @@
 		
 		"override_hero"			"npc_dota_hero_morphling"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -1544,8 +1545,8 @@
 		
 		"override_hero"			"npc_dota_hero_necrolyte"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -1601,8 +1602,8 @@
 		
 		"override_hero"			"npc_dota_hero_nevermore"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -1658,8 +1659,8 @@
 		
 		"override_hero"			"npc_dota_hero_night_stalker"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -1716,8 +1717,8 @@
 		
 		"override_hero"			"npc_dota_hero_omniknight"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -1773,8 +1774,8 @@
 		
 		"override_hero"			"npc_dota_hero_puck"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -1830,8 +1831,8 @@
 		
 		"override_hero"			"npc_dota_hero_pudge"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -1887,8 +1888,8 @@
 		
 		"override_hero"			"npc_dota_hero_pugna"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -1944,8 +1945,8 @@
 		
 		"override_hero"			"npc_dota_hero_rattletrap"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -2001,8 +2002,8 @@
 		
 		"override_hero"			"npc_dota_hero_razor"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -2058,8 +2059,8 @@
 		
 		"override_hero"			"npc_dota_hero_riki"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -2115,8 +2116,8 @@
 		
 		"override_hero"			"npc_dota_hero_sand_king"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -2172,8 +2173,8 @@
 		
 		"override_hero"			"npc_dota_hero_shadow_shaman"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -2229,8 +2230,8 @@
 		
 		"override_hero"			"npc_dota_hero_slardar"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -2286,8 +2287,8 @@
 		
 		"override_hero"			"npc_dota_hero_sniper"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -2343,8 +2344,8 @@
 		
 		"override_hero"			"npc_dota_hero_spectre"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -2400,8 +2401,8 @@
 		
 		"override_hero"			"npc_dota_hero_storm_spirit"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -2457,8 +2458,8 @@
 		
 		"override_hero"			"npc_dota_hero_sven"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -2514,8 +2515,8 @@
 		
 		"override_hero"			"npc_dota_hero_tidehunter"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -2571,8 +2572,8 @@
 		
 		"override_hero"			"npc_dota_hero_tinker"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -2628,8 +2629,8 @@
 		
 		"override_hero"			"npc_dota_hero_tiny"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -2685,8 +2686,8 @@
 		
 		"override_hero"			"npc_dota_hero_vengefulspirit"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -2742,8 +2743,8 @@
 		
 		"override_hero"			"npc_dota_hero_venomancer"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -2799,8 +2800,8 @@
 		
 		"override_hero"			"npc_dota_hero_viper"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -2856,8 +2857,8 @@
 		
 		"override_hero"			"npc_dota_hero_weaver"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -2913,8 +2914,8 @@
 		
 		"override_hero"			"npc_dota_hero_windrunner"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -2970,8 +2971,8 @@
 		
 		"override_hero"			"npc_dota_hero_witch_doctor"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -3027,8 +3028,8 @@
 		
 		"override_hero"			"npc_dota_hero_zuus"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -3084,8 +3085,8 @@
 		
 		"override_hero"			"npc_dota_hero_broodmother"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -3141,8 +3142,8 @@
 		
 		"override_hero"			"npc_dota_hero_skeleton_king"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -3198,8 +3199,8 @@
 		
 		"override_hero"			"npc_dota_hero_queenofpain"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -3255,8 +3256,8 @@
 		
 		"override_hero"			"npc_dota_hero_huskar"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -3312,8 +3313,8 @@
 		
 		"override_hero"			"npc_dota_hero_jakiro"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -3369,8 +3370,8 @@
 		
 		"override_hero"			"npc_dota_hero_batrider"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -3427,8 +3428,8 @@
 		
 		"override_hero"			"npc_dota_hero_warlock"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -3484,8 +3485,8 @@
 		
 		"override_hero"			"npc_dota_hero_alchemist"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -3541,8 +3542,8 @@
 		
 		"override_hero"			"npc_dota_hero_death_prophet"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -3598,8 +3599,8 @@
 		
 		"override_hero"			"npc_dota_hero_ursa"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -3655,8 +3656,8 @@
 		
 		"override_hero"			"npc_dota_hero_bounty_hunter"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -3712,8 +3713,8 @@
 		
 		"override_hero"			"npc_dota_hero_silencer"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -3769,8 +3770,8 @@
 		
 		"override_hero"			"npc_dota_hero_spirit_breaker"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -3826,8 +3827,8 @@
 		
 		"override_hero"			"npc_dota_hero_invoker"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -3883,8 +3884,8 @@
 		
 		"override_hero"			"npc_dota_hero_clinkz"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -3940,8 +3941,8 @@
 		
 		"override_hero"			"npc_dota_hero_obsidian_destroyer"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -3997,8 +3998,8 @@
 		
 		"override_hero"			"npc_dota_hero_shadow_demon"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -4054,8 +4055,8 @@
 		
 		"override_hero"			"npc_dota_hero_lycan"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -4111,8 +4112,8 @@
 		
 		"override_hero"			"npc_dota_hero_lone_druid"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -4168,8 +4169,8 @@
 		
 		"override_hero"			"npc_dota_hero_brewmaster"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -4225,8 +4226,8 @@
 		
 		"override_hero"			"npc_dota_hero_phantom_lancer"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -4282,8 +4283,8 @@
 		
 		"override_hero"			"npc_dota_hero_treant"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -4339,8 +4340,8 @@
 		
 		"override_hero"			"npc_dota_hero_ogre_magi"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -4396,8 +4397,8 @@
 		
 		"override_hero"			"npc_dota_hero_chaos_knight"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -4453,8 +4454,8 @@
 		
 		"override_hero"			"npc_dota_hero_phantom_assassin"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -4510,8 +4511,8 @@
 		
 		"override_hero"			"npc_dota_hero_gyrocopter"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -4567,8 +4568,8 @@
 		
 		"override_hero"			"npc_dota_hero_rubick"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -4624,8 +4625,8 @@
 		
 		"override_hero"			"npc_dota_hero_luna"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -4681,6 +4682,7 @@
 		
 		"override_hero"			"npc_dota_hero_wisp"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
@@ -4737,8 +4739,8 @@
 		
 		"override_hero"			"npc_dota_hero_disruptor"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -4794,8 +4796,8 @@
 		
 		"override_hero"			"npc_dota_hero_undying"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -4851,8 +4853,8 @@
 		
 		"override_hero"			"npc_dota_hero_templar_assassin"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -4908,8 +4910,8 @@
 		
 		"override_hero"			"npc_dota_hero_naga_siren"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -4965,8 +4967,8 @@
 		
 		"override_hero"			"npc_dota_hero_nyx_assassin"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -5022,8 +5024,8 @@
 		
 		"override_hero"			"npc_dota_hero_keeper_of_the_light"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -5079,8 +5081,8 @@
 		
 		"override_hero"			"npc_dota_hero_visage"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -5136,8 +5138,8 @@
 		
 		"override_hero"			"npc_dota_hero_meepo"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -5193,8 +5195,8 @@
 		
 		"override_hero"			"npc_dota_hero_magnataur"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -5250,8 +5252,8 @@
 		
 		"override_hero"			"npc_dota_hero_centaur"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -5307,8 +5309,8 @@
 		
 		"override_hero"			"npc_dota_hero_slark"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -5364,8 +5366,8 @@
 		
 		"override_hero"			"npc_dota_hero_shredder"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -5421,8 +5423,8 @@
 		
 		"override_hero"			"npc_dota_hero_medusa"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -5478,8 +5480,8 @@
 		
 		"override_hero"			"npc_dota_hero_troll_warlord"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -5535,8 +5537,8 @@
 		
 		"override_hero"			"npc_dota_hero_tusk"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -5592,8 +5594,8 @@
 		
 		"override_hero"			"npc_dota_hero_bristleback"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -5649,8 +5651,8 @@
 		
 		"override_hero"			"npc_dota_hero_skywrath_mage"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -5706,8 +5708,8 @@
 		
 		"override_hero"			"npc_dota_hero_elder_titan"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -5763,8 +5765,8 @@
 		
 		"override_hero"			"npc_dota_hero_abaddon"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -5820,8 +5822,8 @@
 		
 		"override_hero"			"npc_dota_hero_earth_spirit"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -5877,8 +5879,8 @@
 		
 		"override_hero"			"npc_dota_hero_ember_spirit"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -5934,8 +5936,8 @@
 		
 		"override_hero"			"npc_dota_hero_legion_commander"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -5991,8 +5993,8 @@
 		
 		"override_hero"			"npc_dota_hero_phoenix"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -6048,8 +6050,8 @@
 		
 		"override_hero"			"npc_dota_hero_techies"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -6105,8 +6107,8 @@
 		
 		"override_hero"			"npc_dota_hero_terrorblade"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -6162,8 +6164,8 @@
 		
 		"override_hero"			"npc_dota_hero_oracle"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""
@@ -6219,8 +6221,8 @@
 		
 		"override_hero"			"npc_dota_hero_winter_wyvern"
 		"SoundSet"					"0"	
+		"AbilityLayout"				"4"
 		"Ability1"        "" 
-    "Ability1"        "" 
     	"Ability2"        "" 
     	"Ability3"        "" 
     	"Ability4"        ""

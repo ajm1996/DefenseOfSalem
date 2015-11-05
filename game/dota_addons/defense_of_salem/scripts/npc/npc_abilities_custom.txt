@@ -152,8 +152,11 @@
 	    }
 	    "OnToggleOff"
 	    {
-	    	"ScriptFile"		"scripts/vscripts/abilities.lua"
-			"Function"			"JailorExecuteOff"
+	    	"RunScript"
+			{
+	    		"ScriptFile"		"scripts/vscripts/abilities.lua"
+				"Function"			"JailorExecuteOff"
+			}
 	    }
 	}
 
@@ -394,8 +397,11 @@
 	    }
 	    "OnToggleOff"
 	    {
-	    	"ScriptFile"		"scripts/vscripts/abilities.lua"
-			"Function"			"VeteranAlertOff"
+	    	"RunScript"
+			{
+		    	"ScriptFile"		"scripts/vscripts/abilities.lua"
+				"Function"			"VeteranAlertOff"
+			}
 	    }
 	}
 
@@ -494,8 +500,11 @@
 	    }
 	    "OnToggleOff"
 	    {
-	    	"ScriptFile"		"scripts/vscripts/abilities.lua"
-			"Function"			"TrialVoteOff"
+	    	"RunScript"
+			{
+		    	"ScriptFile"		"scripts/vscripts/abilities.lua"
+				"Function"			"TrialVoteOff"
+			}
 	    }
 	}
 
@@ -516,8 +525,11 @@
 	    }
 	    "OnToggleOff"
 	    {
-	    	"ScriptFile"		"scripts/vscripts/abilities.lua"
-			"Function"			"TrialVoteOff"
+	    	"RunScript"
+			{
+		    	"ScriptFile"		"scripts/vscripts/abilities.lua"
+				"Function"			"TrialVoteOff"
+			}
 	    }
 	}
 

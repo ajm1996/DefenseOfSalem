@@ -256,13 +256,24 @@ function VigilanteShoot(keys)
 	caster.killed = target
 end
 
+
+
 function VoteForTrial(keys)
 	local target = keys.target
 	local caster = keys.caster
-	print("voted for " .. target:GetName())
+	
+	--allow to cancel vote and display message, show different messages for first vote and change vote
+	if caster.votedFor == target then
+		caster.votedFor = nil
+		GameRules:SendCustomMessage("<bold><font color='#04B404'>"..GameMode:ConvertEngineName(caster:GetName()).. "</bold></font> has canceled their vote", 2, 5)
+		return
+	end
 
 	if caster.votedFor then
 		caster.votedFor.votes = caster.votedFor.votes - 1
+		GameRules:SendCustomMessage("<bold><font color='#04B404'>"..GameMode:ConvertEngineName(caster:GetName()).. "</bold></font> has changed their vote to <bold><font color='#DF0101'>"..GameMode:ConvertEngineName(target:GetName()), 2, 5)
+	else
+		GameRules:SendCustomMessage("<bold><font color='#04B404'>"..GameMode:ConvertEngineName(caster:GetName()).. "</bold></font> voted for <bold><font color='#DF0101'>"..GameMode:ConvertEngineName(target:GetName()), 2, 5)
 	end
 
 	caster.votedFor = target
@@ -270,7 +281,7 @@ function VoteForTrial(keys)
 	target.votes = target.votes + 1
 	--send message about caster voting for taret
 
-	if target.votes > (#GameMode.alivePlayers / 2 - 5) then
+	if target.votes > (#GameMode.alivePlayers / 2) then
 		GameMode.votedPlayer = target
 	end
 end
@@ -280,8 +291,12 @@ function TrialVoteYes(keys)
 	local abil = caster:GetAbilityByIndex(1)
 	if caster and abil and abil:GetName() == "trial_vote_no" and abil:GetToggleState() then
 		abil:ToggleAbility()
+		GameRules:SendCustomMessage("<bold><font color='#04B404'>"..GameMode:ConvertEngineName(caster:GetName()).. "</bold></font> has changed their vote", 2, 5)
+	else
+		GameRules:SendCustomMessage("<bold><font color='#04B404'>"..GameMode:ConvertEngineName(caster:GetName()).. "</bold></font> has voted", 2, 5)
 	end
 	caster.vote = "guilty"
+
 end
 
 function TrialVoteNo(keys)
@@ -289,11 +304,15 @@ function TrialVoteNo(keys)
 	local abil = caster:GetAbilityByIndex(0)
 	if caster and abil and abil:GetName() == "trial_vote_yes" and abil:GetToggleState() then
 		abil:ToggleAbility()
+		GameRules:SendCustomMessage("<bold><font color='#04B404'>"..GameMode:ConvertEngineName(caster:GetName()).. "</bold></font> has changed their vote", 2, 5)
+	else
+		GameRules:SendCustomMessage("<bold><font color='#04B404'>"..GameMode:ConvertEngineName(caster:GetName()).. "</bold></font> has voted", 2, 5)
 	end
 	caster.vote = "innocent"
 end
 
 function TrialVoteOff(keys)
-	local caster = target.caster
+	local caster = keys.caster
 	caster.vote = "abstain"
+	GameRules:SendCustomMessage("<bold><font color='#04B404'>"..GameMode:ConvertEngineName(caster:GetName()).. "</bold></font> has canceled their vote", 2, 5)
 end
