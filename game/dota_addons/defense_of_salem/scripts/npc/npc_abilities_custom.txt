@@ -312,7 +312,7 @@
 		}
 	}
 
-	"lookout_investigate"
+	"lookout_watch"
 	{
 		"BaseClass"					"ability_datadriven"
 		"MaxLevel"					"1"
@@ -329,7 +329,7 @@
 			"RunScript"
 			{
 				"ScriptFile"		"scripts/vscripts/abilities.lua"
-				"Function"			"LookoutInvestigate"
+				"Function"			"LookoutWatch"
 			}
 	    }
 	    "Modifiers"
@@ -447,6 +447,39 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	}
 
+	"jester_kill"
+	{
+		"BaseClass"					"ability_datadriven"
+		"MaxLevel"					"1"
+		"AbilityTextureName"		"rubick_empty1"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"CastFilterRejectCaster"	"1"
+
+		"AbilityCastAnimation"		"ACT_IDLE"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities.lua"
+				"Function"			"JesterKill"
+			}
+	    }
+	    "Modifiers"
+	    {
+	    	"modifier_no_turn"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+			    "Properties"
+			    {
+			    	"MODIFIER_PROPERTY_IGNORE_CAST_ANGLE"		"1"
+			    }
+			}
+		}
+	}
 
 
 	"vote_for_trial"

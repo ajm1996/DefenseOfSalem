@@ -192,7 +192,7 @@ function MafiosoKill(keys)
 	end
 end
 
-function LookoutInvestigate(keys)
+function LookoutWatch(keys)
 	local target = keys.target
 	local caster = keys.caster
 	
@@ -200,14 +200,14 @@ function LookoutInvestigate(keys)
 		return
 	end
 
-	if caster.investigated then
-    	caster.investigated.investigatedByLookout = false
-    	caster.investigated.investigator = nil
+	if caster.watched then
+    	caster.watched.watchedByLookout = false
+    	caster.watched.investigator = nil
     end
 
-    target.investigatedByLookout = true
+    target.watchedByLookout = true
     target.lookout = caster
-    caster.investigated = target
+    caster.watched = target
 end
 
 function SerialKillerKill(keys)
@@ -256,6 +256,24 @@ function VigilanteShoot(keys)
 	caster.killed = target
 end
 
+function JesterKill(keys)
+	local target = keys.target
+	local caster = keys.caster
+	
+	if caster == nil or target == nil then
+		return
+	end
+
+	if caster.killed then
+		caster.killed.isKilledByJester = false
+		caster.killed.jesterKiller = nil
+	end
+	
+	target.isKilledByJester = true
+	target.jesterKiller = caster
+	caster.killed = target
+end
+
 
 
 function VoteForTrial(keys)
@@ -281,7 +299,7 @@ function VoteForTrial(keys)
 	target.votes = target.votes + 1
 	--send message about caster voting for taret
 
-	if target.votes > (#GameMode.alivePlayers / 2) then
+	if target.votes > (#GameMode.alivePlayers / 2 - 6) then
 		GameMode.votedPlayer = target
 	end
 end

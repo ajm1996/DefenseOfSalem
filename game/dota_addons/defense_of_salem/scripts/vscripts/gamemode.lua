@@ -86,7 +86,7 @@ function GameMode:OnHeroInGame(hero)
   self.dummy:FindAbilityByName("player_modifiers_passive"):ApplyDataDrivenModifier(self.dummy, hero, "modifier_rooted_passive", {})
 
   hero:SetGold(0, false)
-
+  PlayerResource:SetCustomPlayerColor(hero:GetPlayerID(), 255, 255, 255)
 end
 
 -- This function initializes the game mode and is called before anyone loads into the game
@@ -109,6 +109,7 @@ function GameMode:InitGameMode()
       Notifications:BottomToAll({text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
     end
   end)
+  UTIL_ResetMessageTextAll()
 
   self.valveTime = nil
   self.alivePlayers = {}
@@ -131,12 +132,12 @@ end
 function GameMode:StartPhase(phase)
   if phase == -1 then     --PREGAME
     self.gameState = -1
-    local timeLength = 30
+    local timeLength = 10
 
     GameRules:SetTimeOfDay((360 - timeLength) * (1/480))
     self.dayNum = 1
 
-    Notifications:TopToAll({text = "Day 1", style={["font-size"]="50px"}, duration = 5, continue = true})
+    Notifications:TopToAll({text = "Day 1", style={["font-size"]="50px"}, duration = 5})
 
     --force heroes to spawn?
     self.alivePlayers = HeroList:GetAllHeroes()
@@ -154,8 +155,15 @@ function GameMode:StartPhase(phase)
           message = message .. "a "
         end
         message = message .. GameMode:GetRole(hero)
-        print(hero:GetName()..": " .. message)
-        ShowGenericPopupToPlayer(hero, message, "TODO: Role Description", "", "", DOTA_SHOWGENERICPOPUP_TINT_SCREEN)
+
+        Notifications:TopToAll({text = message, style={color="red", ["font-size"]="50px"}, duration = 10})
+        if hero.description then
+          Notifications:TopToAll({text = hero.description, style={["font-size"]="30px"}, duration =10})
+        end
+        if hero.goal then
+          Notifications:TopToAll({text = hero.goal, style={color="yellow", ["font-size"]="30px"}, duration =10})
+        end
+
       end
     end
     Timers:CreateTimer(0.03, function()
@@ -168,13 +176,13 @@ function GameMode:StartPhase(phase)
 
   elseif phase == 0 then  --NIGHTTIME
     print("night phase")
-    local timeLength = 40
+    local timeLength = 10
     self.gameState = 0
 
     GameRules:SetTimeOfDay((120 - timeLength) * (1/480))
     mode:SetFogOfWarDisabled(false)
 
-    Notifications:TopToAll({text = "Night "..self.dayNum, style={["font-size"]="50px"}, duration = 5, continue = true})
+    Notifications:TopToAll({text = "Night "..self.dayNum, style={["font-size"]="50px"}, duration = 5})
     GameRules:SendCustomMessage("Day ".. self.dayNum + 1 .." starts at  <bold><font color='#DF0101'>".. GameMode:GetGameTime(timeLength) .. "</font></bold>", 2, timeLength)
 
     for i=1,#self.alivePlayers do
@@ -182,10 +190,10 @@ function GameMode:StartPhase(phase)
       if hero then
         GameMode:RoleActions(hero)
         GameMode:SetSkills(hero)
-        GameMode:SetChatPermission(hero)
         GameMode:CleanFlags(hero)
       end
     end
+    GameMode:ChatHandler()
 
     Timers:CreateTimer(timeLength, function()
       GameMode:StartPhase(1)
@@ -194,24 +202,25 @@ function GameMode:StartPhase(phase)
   elseif phase == 1 then  --DAYTIME/DISCUSSION
     print("day phase")
     self.gameState = 1
-    local timeLength = 45
+    local timeLength = 5
 
-    GameRules:SetTimeOfDay((360 - timeLength - 30) * (1/480)) --30 from vote time
+    GameRules:SetTimeOfDay((360 - timeLength - 15) * (1/480)) --30 from vote time
     mode:SetFogOfWarDisabled(true)
     self.dayNum = self.dayNum + 1
 
-    Notifications:TopToAll({text = "Day "..self.dayNum, style={["font-size"]="50px"}, duration = 5, continue = true})
+    Notifications:TopToAll({text = "Day "..self.dayNum, style={["font-size"]="50px"}, duration = 5})
     GameRules:SendCustomMessage("Voting starts at  <bold><font color='#DF0101'>".. GameMode:GetGameTime(timeLength) .. "</font></bold>", 2, timeLength)
+
 
     for i=1,#self.alivePlayers do
       local hero = self.alivePlayers[i]
       if hero then
         GameMode:RoleActions(hero)
         GameMode:SetSkills(hero)
-        GameMode:SetChatPermission(hero)
         GameMode:CleanFlags(hero)
       end
     end
+    GameMode:ChatHandler()
 
     self.votedPlayer = nil
 
@@ -222,9 +231,9 @@ function GameMode:StartPhase(phase)
   elseif phase == 2 then  --VOTING
     print("voting phase")
     self.gameState = 2
-    local timeLength = 30
+    local timeLength = 15
 
-    Notifications:TopToAll({text = "Today's public vote and trial will now begin.", style={["font-size"]="40px"}, duration = 3, continue = true})
+    Notifications:TopToAll({text = "Today's public vote and trial will now begin.", style={["font-size"]="40px"}, duration = 3})
     GameRules:SendCustomMessage("Voting ends at  <bold><font color='#DF0101'>".. GameMode:GetGameTime(timeLength) .. "</font></bold>", 2, timeLength)
 
     Timers:CreateTimer(4, function()
@@ -256,9 +265,9 @@ function GameMode:StartPhase(phase)
   elseif phase == 3 then  --DEFENSE
     print("defense phase")
     self.gameState = 3
-    local timeLength = 20
+    local timeLength = 5
 
-    GameRules:SetTimeOfDay((360 - timeLength - 20 - 9) * (1/480)) --20 from judgement and 4.5 * 2 from walking
+    GameRules:SetTimeOfDay((360 - timeLength - 5 - 9) * (1/480)) --20 from judgement and 4.5 * 2 from walking
 
     Notifications:TopToAll({text = "The town has decided to put ", style={["font-size"]="40px"}, duration = 5})
     Notifications:TopToAll({text = GameMode:ConvertEngineName(self.votedPlayer:GetName()).." ", style={color="red", ["font-size"]="40px"}, duration = 5, continue = true})
@@ -271,9 +280,9 @@ function GameMode:StartPhase(phase)
       local hero = self.alivePlayers[i]
       if hero then
         GameMode:SetSkills(hero)
-        GameMode:SetChatPermission(hero)
       end
     end
+    GameMode:ChatHandler()
 
     self.votedPlayer.home = self.votedPlayer:GetAbsOrigin()
     if self.votedPlayer:HasModifier("modifier_rooted_passive") then
@@ -300,7 +309,7 @@ function GameMode:StartPhase(phase)
   elseif phase == 4 then  --JUDGEMENT
     print("judgement phase")
     self.gameState = 4
-    local timeLength = 20
+    local timeLength = 5
 
     Notifications:TopToAll({text = "The town may now vote on the fate of ", style={["font-size"]="40px"}, duration = 5})
     Notifications:TopToAll({text = GameMode:ConvertEngineName(self.votedPlayer:GetName()), style={color="red", ["font-size"]="40px"}, duration = 5, continue = true})
@@ -312,9 +321,9 @@ function GameMode:StartPhase(phase)
       local hero = self.alivePlayers[i]
       if hero then
         GameMode:SetSkills(hero)
-        GameMode:SetChatPermission(hero)
       end
     end
+    GameMode:ChatHandler()
 
     Timers:CreateTimer(timeLength, function()
       local guilty = 0
@@ -323,7 +332,7 @@ function GameMode:StartPhase(phase)
 
       for i=0,#self.alivePlayers do
         local hero = self.alivePlayers[i]
-        if hero then
+        if hero and hero ~= self.votedPlayer then
           if hero.vote == "innocent" then
             GameRules:SendCustomMessage(GameMode:ConvertEngineName(hero:GetName()).. " voted <bold><font color='#04B404'>innocent</font></bold>", 2, 5)
             innocent = innocent + 1
@@ -359,24 +368,24 @@ function GameMode:StartPhase(phase)
   elseif phase == 5 then  --LAST WORDS
     print("last words phase")
     self.gameState = 5
-    local timeLength = 10
+    local timeLength = 5
 
-    GameRules:SetTimeOfDay((360 - timeLength - 3) * (1/480))  --3 from dramatic kill delay
+    GameRules:SetTimeOfDay((360 - timeLength - 3) * (1/480))  --3 from kill delay
 
-    Notifications:TopToAll({text = GameMode:ConvertEngineName(self.votedPlayer:GetName()), style={color="red", ["font-size"]="40px"}, duration = timeLength - 3})
-    Notifications:TopToAll({text = ", do you have any last words?", style={["font-size"]="40px"}, duration = timeLength - 3, continue = true})
+    Notifications:TopToAll({text = GameMode:ConvertEngineName(self.votedPlayer:GetName()), style={color="red", ["font-size"]="40px"}, duration = timeLength})
+    Notifications:TopToAll({text = ", do you have any last words?", style={["font-size"]="40px"}, duration = timeLength, continue = true})
 
     for i=1,#self.alivePlayers do
       local hero = self.alivePlayers[i]
       if hero then
         GameMode:SetSkills(hero)
-        GameMode:SetChatPermission(hero)
       end
     end
+    GameMode:ChatHandler()
 
     --ask for final words
 
-    Timers:CreateTimer(timeLength - 3, function()
+    Timers:CreateTimer(timeLength, function()
       Notifications:TopToAll({text = "May god have mercy on your soul, ", style={["font-size"]="40px"}, duration = 3})
       Notifications:TopToAll({text = GameMode:ConvertEngineName(self.votedPlayer:GetName()), style={color="red", ["font-size"]="40px"}, duration = 3, continue = true})
 
@@ -505,17 +514,24 @@ function GameMode:SetRoles()
   local townKilling = table.remove(heroes, rand)
   local townKillingIsVeteran = false
   if townKilling then
-    if math.random() > 0.5 then
+    rand = math.random(3)
+    if rand == 1 then
       townKilling.isVeteran = true
       townKilling.daySkills = {"veteran_alert"}
       townKillingIsVeteran = true
       print("Veteran (Town Killing): " .. townKilling:GetName())
-    else
+    elseif rand == 2 then
       townKilling.isVigilante = true
       townKilling.skills = {"vigilante_shoot"}
       townKillingIsVeteran = false
       print("Vigilante (Town Killing): " .. townKilling:GetName())
-    end
+    elseif rand == 3 then
+      print("Jailor: " .. jailor:GetName())
+      townKilling.isJailor = true
+      townKilling.skills = {"jailor_execute"}
+      townKilling.daySkills = {"jailor_jail"}
+      townKilling.description = ""
+      townKilling.goal = ""
   end
 
   rand = math.random(#heroes)
@@ -630,8 +646,76 @@ function GameMode:SetSkills(hero)
 
 end
 
-function GameMode:SetChatPermission(hero)
+function GameMode:ChatHandler()
 
+  local line_duration = 10.0
+
+  if self.gameState == 1 or self.gameState == 4 then
+
+    PlayerSay:ChatHandler(function(playerEntity, text)
+    if text ~= "" then
+      local heroName = GameMode:ConvertEngineName(playerEntity:GetAssignedHero():GetName())
+      Notifications:BottomToAll({hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
+      Notifications:BottomToAll({text = heroName, style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
+      Notifications:BottomToAll({text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
+    end
+  end)
+
+  elseif self.gameState == 0 then
+    PlayerSay:ChatHandler(function(playerEntity, text)
+      if text ~= "" and not playerEntity:GetAssignedHero().isMafia and not playerEntity:GetAssignedHero().isJailor and not playerEntity:GetAssignedHero().jailed then
+        Notifications:Bottom(playerEntity:GetPlayerID(), {text = "No one can hear you", style={color="red",["font-size"]="20px"}, duration = line_duration})
+      elseif text ~= "" and playerEntity:GetAssignedHero().isMafia then
+
+        for i=1,#self.alivePlayers do
+          local hero = self.alivePlayers[i]
+          if hero.isMafia then
+
+            local heroName = GameMode:ConvertEngineName(playerEntity:GetAssignedHero():GetName())
+            Notifications:Bottom(hero:GetPlayerID(), {hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
+            Notifications:Bottom(hero:GetPlayerID(), {text = "(Mafia) "..heroName, style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
+            Notifications:Bottom(hero:GetPlayerID(), {text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
+          end
+        end
+
+      elseif text ~= "" and playerEntity:GetAssignedHero().isJailor then
+
+        Notifications:Bottom(playerEntity:GetPlayerID(), {hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
+        Notifications:Bottom(playerEntity:GetPlayerID(), {text = "Jailor", style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
+        Notifications:Bottom(playerEntity:GetPlayerID(), {text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
+
+        Notifications:Bottom(playerEntity:GetAssignedHero().prisoner:GetPlayerID(), {hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
+        Notifications:Bottom(playerEntity:GetAssignedHero().prisoner:GetPlayerID(), {text = "Jailor", style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
+        Notifications:Bottom(playerEntity:GetAssignedHero().prisoner:GetPlayerID(), {text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
+      
+      elseif playerEntity:GetAssignedHero().jailed then
+
+        local heroName = GameMode:ConvertEngineName(playerEntity:GetAssignedHero():GetName())
+        Notifications:Bottom(playerEntity:GetPlayerID(), {hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
+        Notifications:Bottom(playerEntity:GetPlayerID(), {text = heroName, style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
+        Notifications:Bottom(playerEntity:GetPlayerID(), {text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
+
+        Notifications:Bottom(playerEntity:GetAssignedHero().prisoner:GetPlayerID(), {hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
+        Notifications:Bottom(playerEntity:GetAssignedHero().prisoner:GetPlayerID(), {text = heroName, style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
+        Notifications:Bottom(playerEntity:GetAssignedHero().prisoner:GetPlayerID(), {text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
+
+      end
+    end)
+
+  elseif self.gameState == 3 or self.gameState == 5 then
+    PlayerSay:ChatHandler(function(playerEntity, text)
+      if text ~= "" and playerEntity:GetAssignedHero() ~= self.votedPlayer then
+        Notifications:Bottom(playerEntity:GetPlayerID(), {text = "No one can hear you", style={color="red",["font-size"]="20px"}, duration = line_duration})
+      
+      elseif text ~= "" and playerEntity:GetAssignedHero() == self.votedPlayer then
+        local heroName = GameMode:ConvertEngineName(playerEntity:GetAssignedHero():GetName())
+        Notifications:BottomToAll({hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
+        Notifications:BottomToAll({text = heroName, style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
+        Notifications:BottomToAll({text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
+      end
+    end)
+    
+  end
 end
 
 function GameMode:RoleActions(hero)
