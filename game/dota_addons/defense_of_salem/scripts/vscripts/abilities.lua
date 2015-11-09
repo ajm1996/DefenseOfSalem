@@ -91,40 +91,52 @@ function JailorExecuteOff(keys)
 	end
 end
 
-function GodfatherKill(keys)
+function GodfatherOrderToKill(keys)
 	local target = keys.target
 	local caster = keys.caster
-	local mafioso
 
 	if caster == nil or target == nil then
 		return
 	end
 
-	local heroes = GameMode.alivePlayers
-    for i=1,#heroes do
-        local hero = heroes[i]
-        if hero.isMafioso then
-        	mafioso = hero
-        end
+	if not caster.mafioso then
+
+		local heroes = GameMode.alivePlayers
+	    for i=1,#heroes do
+	        local hero = heroes[i]
+	        if hero.isMafioso then
+	        	caster.mafioso = hero
+	        end
+	    end
+	end
+
+    if caster.mafioso.killed then
+    	caster.mafioso.killed.isKilledByMafioso = false
+    	caster.mafioso.killed.mafiosoKiller= nil
     end
 
-    if mafioso.killed then
-    	mafioso.killed.isKilledByMafia = false
-    	mafioso.killed.mafiaKiller = nil
-    end
-    if caster.killed then
-    	caster.killed.isKilledByMafia = false
-    	caster.killed.mafiaKiller = nil
-    end
+    target.isKilledByMafioso = true
+    caster.mafioso.killed = target
+    target.mafiosoKiller = caster.mafioso
+    
+end
 
-    target.isKilledByMafia = true
-    if mafioso then
-    	mafioso.killed = target
-    	target.mafiaKiller = mafioso
-    else
-    	caster.killed = target
-    	target.mafiaKiller = caster
-    end
+function GodfatherKill(keys)
+	local target = keys.target
+	local caster = keys.caster
+	
+	if caster == nil or target == nil then
+		return
+	end
+
+	if caster.killed then
+		caster.killed.isKilledByGodfather = false
+		caster.killed.godfatherKiller = nil
+	end
+	
+	target.isKilledByGodfather = true
+	target.godfatherKiller = caster
+	caster.killed = target
 end
 
 function FramerFrame(keys)
@@ -180,16 +192,8 @@ function MafiosoKill(keys)
         end
     end
 
-    if godfather then
-    	--send message suggesting target
-    else
-    	if caster.killed then
-    		caster.killed.isKilledByMafia = false
-    		caster.killed.mafiaKiller = nil
-    	end
-	    hero.isKilledByMafia = true
-	    hero.mafiaKiller = caster
-	end
+    target.isSuggestedByMafioso = true
+    caster.suggested = target
 end
 
 function LookoutWatch(keys)
@@ -228,12 +232,12 @@ function SerialKillerKill(keys)
 	caster.killed = target
 end
 
-function VeteranAlertOn(key)
+function VeteranAlertOn(keys)
 	local caster = keys.caster
 	caster.alert = true
 end
 
-function VeteranAlertOff(key)
+function VeteranAlertOff(keys)
 	local caster = keys.caster
 	caster.alert = false
 end

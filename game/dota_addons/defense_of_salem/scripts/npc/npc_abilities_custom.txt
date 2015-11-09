@@ -4,7 +4,7 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"MaxLevel"					"1"
-		"AbilityTextureName"		"rubick_empty1"
+		"AbilityTextureName"		"bounty_hunter_wind_walk"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
@@ -71,7 +71,7 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"MaxLevel"					"1"
-		"AbilityTextureName"		"rubick_empty1"
+		"AbilityTextureName"		"zuus_static_field"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
@@ -105,7 +105,7 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"MaxLevel"					"1"
-		"AbilityTextureName"		"rubick_empty1"
+		"AbilityTextureName"		"treant_overgrowth"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
@@ -139,7 +139,7 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"MaxLevel"					"1"
-		"AbilityTextureName"		"rubick_empty1"
+		"AbilityTextureName"		"axe_culling_blade"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_TOGGLE"
 	
 		"OnToggleOn"
@@ -164,15 +164,49 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"MaxLevel"					"1"
-		"AbilityTextureName"		"rubick_empty1"
+		"AbilityTextureName"		"death_prophet_witchcraft"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	}
+
+	"godfather_order_to_kill"
+	{
+		"BaseClass"					"ability_datadriven"
+		"MaxLevel"					"1"
+		"AbilityTextureName"		"lion_finger_of_death"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"CastFilterRejectCaster"	"1"
+
+		"AbilityCastAnimation"		"ACT_IDLE"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities.lua"
+				"Function"			"GodfatherOrderToKill"
+			}
+	    }
+	    "Modifiers"
+	    {
+	    	"modifier_no_turn"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+			    "Properties"
+			    {
+			    	"MODIFIER_PROPERTY_IGNORE_CAST_ANGLE"		"1"
+			    }
+			}
+		}
 	}
 
 	"godfather_kill"
 	{
 		"BaseClass"					"ability_datadriven"
 		"MaxLevel"					"1"
-		"AbilityTextureName"		"rubick_empty1"
+		"AbilityTextureName"		"chaos_knight_phantasm"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
@@ -206,7 +240,7 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"MaxLevel"					"1"
-		"AbilityTextureName"		"rubick_empty1"
+		"AbilityTextureName"		"terrorblade_reflection"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
@@ -240,7 +274,7 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"MaxLevel"					"1"
-		"AbilityTextureName"		"rubick_empty1"
+		"AbilityTextureName"		"winter_wyvern_winters_curse"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	}
 
@@ -248,7 +282,7 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"MaxLevel"					"1"
-		"AbilityTextureName"		"rubick_empty1"
+		"AbilityTextureName"		"lina_fiery_soul"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
@@ -282,7 +316,7 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"MaxLevel"					"1"
-		"AbilityTextureName"		"rubick_empty1"
+		"AbilityTextureName"		"phantom_assassin_coup_de_grace"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
@@ -316,7 +350,7 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"MaxLevel"					"1"
-		"AbilityTextureName"		"rubick_empty1"
+		"AbilityTextureName"		"bounty_hunter_track"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
@@ -350,7 +384,7 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"MaxLevel"					"1"
-		"AbilityTextureName"		"phantom_assassin_coup_de_grace"
+		"AbilityTextureName"		"pudge_dismember"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
@@ -384,7 +418,7 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"MaxLevel"					"1"
-		"AbilityTextureName"		"rubick_empty1"
+		"AbilityTextureName"		"nyx_assassin_spiked_carapace"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_TOGGLE"
 	
 		"OnToggleOn"
@@ -409,7 +443,7 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"MaxLevel"					"1"
-		"AbilityTextureName"		"rubick_empty1"
+		"AbilityTextureName"		"sniper_assassinate"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
@@ -443,7 +477,7 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"MaxLevel"					"1"
-		"AbilityTextureName"		"rubick_empty1"
+		"AbilityTextureName"		"skeleton_king_reincarnation"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	}
 
@@ -451,7 +485,7 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"MaxLevel"					"1"
-		"AbilityTextureName"		"rubick_empty1"
+		"AbilityTextureName"		"death_prophet_exorcism"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
@@ -486,7 +520,7 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"MaxLevel"					"1"
-		"AbilityTextureName"		"rubick_empty1"
+		"AbilityTextureName"		"warlock_fatal_bonds"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
@@ -520,7 +554,7 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"MaxLevel"					"1"
-		"AbilityTextureName"		"rubick_empty1"
+		"AbilityTextureName"		"shadow_demon_shadow_poison"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_TOGGLE"
 	
 		"OnToggleOn"
@@ -545,7 +579,7 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"MaxLevel"					"1"
-		"AbilityTextureName"		"rubick_empty1"
+		"AbilityTextureName"		"rubick_spell_steal"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_TOGGLE"
 	
 		"OnToggleOn"

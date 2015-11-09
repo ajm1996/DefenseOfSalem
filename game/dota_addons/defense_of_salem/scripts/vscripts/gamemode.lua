@@ -101,13 +101,11 @@ function GameMode:InitGameMode()
   GameMode:_InitGameMode()
 
   PlayerSay:ChatHandler(function(playerEntity, text)
-    if text ~= "" then
-      local heroName = GameMode:ConvertEngineName(playerEntity:GetAssignedHero():GetName())
-      local line_duration = 10.0
-      Notifications:BottomToAll({hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
-      Notifications:BottomToAll({text = heroName, style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
-      Notifications:BottomToAll({text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
-    end
+    local heroName = GameMode:ConvertEngineName(playerEntity:GetAssignedHero():GetName())
+    local line_duration = 10.0
+    Notifications:BottomToAll({hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
+    Notifications:BottomToAll({text = heroName, style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
+    Notifications:BottomToAll({text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
   end)
   UTIL_ResetMessageTextAll()
 
@@ -116,7 +114,7 @@ function GameMode:InitGameMode()
   self.gameState = nil
   self.dayNum = nil
   self.votedPlayer = nil
-  self.dummy = CreateUnitByName("dummy_unit", Vector(0,0,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
+  self.dummy = CreateUnitByName("dummy_unit", Vector(0,0,0), true, nil, nil, DOTA_TEAM_BADGUYS)
 end
 
 --[[
@@ -142,6 +140,7 @@ function GameMode:StartPhase(phase)
     --force heroes to spawn?
     self.alivePlayers = HeroList:GetAllHeroes()
     GameMode:SetRoles()
+    GameMode:ChatHandler()
 
     for i=1,#self.alivePlayers do
       local hero = self.alivePlayers[i]
@@ -156,12 +155,12 @@ function GameMode:StartPhase(phase)
         end
         message = message .. GameMode:GetRole(hero)
 
-        Notifications:TopToAll({text = message, style={color="red", ["font-size"]="50px"}, duration = 10})
+        Notifications:Top(hero:GetPlayerID(), {text = message, style={color="red", ["font-size"]="50px"}, duration = 10})
         if hero.description then
-          Notifications:TopToAll({text = hero.description, style={["font-size"]="30px"}, duration =10})
+          Notifications:Top(hero:GetPlayerID(), {text = hero.description, style={["font-size"]="30px"}, duration =10})
         end
         if hero.goal then
-          Notifications:TopToAll({text = hero.goal, style={color="yellow", ["font-size"]="30px"}, duration =10})
+          Notifications:Top(hero:GetPlayerID(), {text = hero.goal, style={color="yellow", ["font-size"]="30px"}, duration =10})
         end
 
       end
@@ -193,7 +192,6 @@ function GameMode:StartPhase(phase)
         GameMode:CleanFlags(hero)
       end
     end
-    GameMode:ChatHandler()
 
     Timers:CreateTimer(timeLength, function()
       GameMode:StartPhase(1)
@@ -220,7 +218,6 @@ function GameMode:StartPhase(phase)
         GameMode:CleanFlags(hero)
       end
     end
-    GameMode:ChatHandler()
 
     self.votedPlayer = nil
 
@@ -282,7 +279,6 @@ function GameMode:StartPhase(phase)
         GameMode:SetSkills(hero)
       end
     end
-    GameMode:ChatHandler()
 
     self.votedPlayer.home = self.votedPlayer:GetAbsOrigin()
     if self.votedPlayer:HasModifier("modifier_rooted_passive") then
@@ -323,7 +319,6 @@ function GameMode:StartPhase(phase)
         GameMode:SetSkills(hero)
       end
     end
-    GameMode:ChatHandler()
 
     Timers:CreateTimer(timeLength, function()
       local guilty = 0
@@ -381,7 +376,6 @@ function GameMode:StartPhase(phase)
         GameMode:SetSkills(hero)
       end
     end
-    GameMode:ChatHandler()
 
     --ask for final words
 
@@ -395,7 +389,7 @@ function GameMode:StartPhase(phase)
         end
       end
       self.votedPlayer:ForceKill(false)
-      self.votedPlayer:SetTeam(1)
+      self.votedPlayer:SetTeam(DOTA_TEAM_BADGUYS)
       Timers:CreateTimer(3, function()
         FindClearSpaceForUnit(self.votedPlayer, self.votedPlayer.home, false)
         --check if day < 4
@@ -414,6 +408,8 @@ function GameMode:SetRoles()
     print("Sheriff: " .. sheriff:GetName())
     sheriff.isSheriff = true
     sheriff.skills = {"sheriff_investigate"}
+    sheriff.description = "#sheriff_description"
+    sheriff.goal = "#sheriff_goal"
   end
 
   rand = math.random(#heroes)
@@ -422,6 +418,8 @@ function GameMode:SetRoles()
     print("Doctor: " .. doctor:GetName())
     doctor.isDoctor = true
     doctor.skills = {"doctor_heal"}
+    doctor.description ="#doctor_description"
+    doctor.goal = "#doctor_goal"
   end
 
   rand = math.random(#heroes)
@@ -430,6 +428,8 @@ function GameMode:SetRoles()
     print("Investigator: " .. investigator:GetName())
     investigator.isInvestigator = true
     investigator.skills = {"investigator_investigate"}
+    investigator.description ="#investigator_description"
+    investigator.goal = "#investigator_goal"
   end
 
   rand = math.random(#heroes)
@@ -439,6 +439,8 @@ function GameMode:SetRoles()
     jailor.isJailor = true
     jailor.skills = {"jailor_execute"}
     jailor.daySkills = {"jailor_jail"}
+    jailor.description ="#jailor_description"
+    jailor.goal = "#jailor_goal"
   end
 
   rand = math.random(#heroes)
@@ -448,6 +450,8 @@ function GameMode:SetRoles()
     medium.isMedium = true
     medium.skills = {"medium_passive"}
     medium.daySkills = {"medium_passive"}
+    medium.description ="#medium_description"
+    medium.goal = "#medium_goal"
   end
 
   rand = math.random(#heroes)
@@ -457,6 +461,8 @@ function GameMode:SetRoles()
     godfather.isGodfather = true
     godfather.isMafia = true
     godfather.skills = {"godfather_kill"}
+    godfather.description ="#godfather_description"
+    godfather.goal = "#godfather_goal"
   end
 
   rand = math.random(#heroes)
@@ -466,6 +472,8 @@ function GameMode:SetRoles()
     framer.isFramer = true
     framer.isMafia = true
     framer.skills = {"framer_frame"}
+    framer.description ="#framer_description"
+    framer.goal = "#framer_goal"
   end
 
   rand = math.random(#heroes)
@@ -475,6 +483,8 @@ function GameMode:SetRoles()
     executioner.isExecutioner = true
     executioner.skills = {"executioner_passive"}
     executioner.daySkills = {"executioner_passive"}
+    executioner.description ="#executioner_description"
+    executioner.goal = "#executioner_goal"
   end
 
   rand = math.random(#heroes)
@@ -483,6 +493,8 @@ function GameMode:SetRoles()
     print("Escort: " .. escort:GetName())
     escort.isEscort = true
     escort.skills = {"escorter_escort"}
+    escort.description ="#escort_description"
+    escort.goal = "#escort_goal"
   end
 
   rand = math.random(#heroes)
@@ -492,6 +504,8 @@ function GameMode:SetRoles()
     mafioso.isMafioso = true
     mafioso.isMafia = true
     mafioso.skills = {"mafioso_kill"}
+    mafioso.description ="#mafioso_description"
+    mafioso.goal = "#mafioso_goal"
   end
 
   rand = math.random(#heroes)
@@ -499,7 +513,9 @@ function GameMode:SetRoles()
   if lookout then
     print("Lookout: " .. lookout:GetName())
     lookout.isLookout = true
-    lookout.skills = {"lookout_investigate"}
+    lookout.skills = {"lookout_watch"}
+    lookout.description ="#lookout_description"
+    lookout.goal = "#lookout_goal"
   end
 
   rand = math.random(#heroes)
@@ -508,6 +524,8 @@ function GameMode:SetRoles()
     print("Serial Killer: " .. serialKiller:GetName())
     serialKiller.isSerialKiller = true
     serialKiller.skills = {"serial_killer_kill"}
+    serialKiller.description ="#serial_killer_description"
+    serialKiller.goal = "#serial_killer_goal"
   end
 
   rand = math.random(#heroes)
@@ -516,22 +534,27 @@ function GameMode:SetRoles()
   if townKilling then
     rand = math.random(3)
     if rand == 1 then
+      print("Veteran (Town Killing): " .. townKilling:GetName())
       townKilling.isVeteran = true
       townKilling.daySkills = {"veteran_alert"}
       townKillingIsVeteran = true
-      print("Veteran (Town Killing): " .. townKilling:GetName())
+      townKilling.description ="#veteran_description"
+      townKilling.goal = "#veteran_goal"
     elseif rand == 2 then
+      print("Vigilante (Town Killing): " .. townKilling:GetName())
       townKilling.isVigilante = true
       townKilling.skills = {"vigilante_shoot"}
       townKillingIsVeteran = false
-      print("Vigilante (Town Killing): " .. townKilling:GetName())
+      townKilling.description ="#vigilante_description"
+      townKilling.goal = "#vigilante_goal"
     elseif rand == 3 then
-      print("Jailor: " .. jailor:GetName())
+      print("Jailor (Town Killing): " .. townKilling:GetName())
       townKilling.isJailor = true
       townKilling.skills = {"jailor_execute"}
       townKilling.daySkills = {"jailor_jail"}
-      townKilling.description = ""
-      townKilling.goal = ""
+      townKilling.description ="#jailor_description"
+      townKilling.goal = "#jailor_goal"
+    end
   end
 
   rand = math.random(#heroes)
@@ -546,37 +569,54 @@ function GameMode:SetRoles()
     rand = math.random(town)
 
     if rand == 1 then
+      print("Sheriff (Random Town): " .. randomTown:GetName())
       randomTown.isSheriff = true
       randomTown.skills = {"sheriff_investigate"}
-      print("Sheriff (Random Town): " .. randomTown:GetName())
+      randomTown.description ="#sheriff_description"
+      randomTown.goal = "#sheriff_goal"
     elseif rand == 2 then
+      print("Doctor (Random Town): " .. randomTown:GetName())
       randomTown.isDoctor = true
       randomTown.skills = {"doctor_heal"}
-      print("Doctor (Random Town): " .. randomTown:GetName())
+      randomTown.description ="#doctor_description"
+      randomTown.goal = "#doctor_goal"
     elseif rand == 3 then
+      print("Investigator (Random Town): " .. randomTown:GetName())
       randomTown.isInvestigator = true
       randomTown.skills = {"investigator_investigate"}
-      print("Investigator (Random Town): " .. randomTown:GetName())
+      randomTown.description ="#investigator_description"
+      randomTown.goal = "#investigator_goal"
     elseif rand == 4 then
+      print("Medium (Random Town): " .. randomTown:GetName())
       randomTown.medium = true
       randomTown.skills = {"medium_passive"}
-      print("Medium (Random Town): " .. randomTown:GetName())
+      randomTown.daySkills = {"medium_passive"}
+      randomTown.description ="#medium_description"
+      randomTown.goal = "#medium_goal"
     elseif rand == 5 then
+      print("Escort (Random Town): " .. randomTown:GetName())
       randomTown.isEscort = true
       randomTown.skills = {"escorter_escort"}
-      print("Escort (Random Town): " .. randomTown:GetName())
+      randomTown.description ="#escort_description"
+      randomTown.goal = "#escort_goal"
     elseif rand == 6 then
-      randomTown.isLookout = true
-      randomTown.skills = {"lookout_investigate"}
       print("Lookout (Random Town): " .. randomTown:GetName())
+      randomTown.isLookout = true
+      randomTown.skills = {"lookout_watch"}
+      randomTown.description ="#lookout_description"
+      randomTown.goal = "#lookout_goal"
     elseif rand == 7 then
+      print("Vigilante (Random Town): " .. randomTown:GetName())
       randomTown.isVigilante = true
       randomTown.skills = {"vigilante_shoot"}
-      print("Vigilante (Random Town): " .. randomTown:GetName())
+      randomTown.description ="#vigilante_description"
+      randomTown.goal = "#vigilante_goal"
     elseif rand == 8 then
+      print("Veteran (Random Town): " .. randomTown:GetName())
       randomTown.isVeteran = true
       randomTown.skills = {"veteran_alert"}
-      print("Veteran (Random Town): " .. randomTown:GetName())
+      randomTown.description ="#veteran_description"
+      randomTown.goal = "#veteran_goal"
     end
   end
 
@@ -587,6 +627,8 @@ function GameMode:SetRoles()
     jester.isJester = true
     jester.skills = {"jester_passive"}
     jester.daySkills = {"jester_passive"}
+    jester.description ="#jester_description"
+    jester.goal = "#jester_goal"
   end
 
 end
@@ -635,10 +677,10 @@ function GameMode:SetSkills(hero)
         hero:RemoveAbility(abil:GetAbilityName())
       end
       if i == 1 and self.votedPlayer ~= hero then
-        hero:AddAbility("trial_vote_yes")
+        hero:AddAbility("trial_vote_no")
         hero:GetAbilityByIndex(i - 1):SetLevel(1)
       elseif i == 2 and self.votedPlayer ~= hero then
-        hero:AddAbility("trial_vote_no")
+        hero:AddAbility("trial_vote_yes")
         hero:GetAbilityByIndex(i - 1):SetLevel(1)
       end
     end
@@ -647,50 +689,66 @@ function GameMode:SetSkills(hero)
 end
 
 function GameMode:ChatHandler()
+  PlayerSay:ChatHandler(function(playerEntity, text)
 
-  local line_duration = 10.0
+    if text == "" or not playerEntity:GetAssignedHero() then
+      return
+    end
 
-  if self.gameState == 1 or self.gameState == 4 then
+    local heroName = GameMode:ConvertEngineName(playerEntity:GetAssignedHero():GetName())
+    local line_duration = 10.0
 
-    PlayerSay:ChatHandler(function(playerEntity, text)
-    if text ~= "" then
-      local heroName = GameMode:ConvertEngineName(playerEntity:GetAssignedHero():GetName())
+    if playerEntity:GetAssignedHero():GetTeam() == 3 then
+
+      local heroes = HeroList:GetAllHeroes()
+      for i=1,#heroes do
+        local hero = heroes[i]
+        if not hero:IsAlive() then
+          Notifications:Bottom(hero:GetPlayerID(), {hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
+          Notifications:Bottom(hero:GetPlayerID(), {text = heroName, style={color="grey",["font-size"]="20px"}, duration = line_duration, continue = true})
+          Notifications:Bottom(hero:GetPlayerID(), {text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
+        end
+      end
+
+      if self.gameState == 0 then
+        for i=1,#self.alivePlayers do
+          local hero = self.alivePlayers[i]
+          if hero.isMedium then
+            Notifications:Bottom(hero:GetPlayerID(), {hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
+            Notifications:Bottom(hero:GetPlayerID(), {text = heroName, style={color="grey",["font-size"]="20px"}, duration = line_duration, continue = true})
+            Notifications:Bottom(hero:GetPlayerID(), {text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
+          end
+        end
+      end
+
+
+    elseif self.gameState == -1 or self.gameState == 1 or self.gameState == 4 then
+
       Notifications:BottomToAll({hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
       Notifications:BottomToAll({text = heroName, style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
       Notifications:BottomToAll({text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
-    end
-  end)
 
-  elseif self.gameState == 0 then
-    PlayerSay:ChatHandler(function(playerEntity, text)
-      if text ~= "" and not playerEntity:GetAssignedHero().isMafia and not playerEntity:GetAssignedHero().isJailor and not playerEntity:GetAssignedHero().jailed then
-        Notifications:Bottom(playerEntity:GetPlayerID(), {text = "No one can hear you", style={color="red",["font-size"]="20px"}, duration = line_duration})
-      elseif text ~= "" and playerEntity:GetAssignedHero().isMafia then
 
+    elseif self.gameState == 0 then
+
+      if playerEntity:GetAssignedHero().isMafia then
         for i=1,#self.alivePlayers do
           local hero = self.alivePlayers[i]
           if hero.isMafia then
-
-            local heroName = GameMode:ConvertEngineName(playerEntity:GetAssignedHero():GetName())
             Notifications:Bottom(hero:GetPlayerID(), {hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
             Notifications:Bottom(hero:GetPlayerID(), {text = "(Mafia) "..heroName, style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
             Notifications:Bottom(hero:GetPlayerID(), {text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
           end
         end
 
-      elseif text ~= "" and playerEntity:GetAssignedHero().isJailor then
-
-        Notifications:Bottom(playerEntity:GetPlayerID(), {hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
+      elseif playerEntity:GetAssignedHero().isJailor then
         Notifications:Bottom(playerEntity:GetPlayerID(), {text = "Jailor", style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
         Notifications:Bottom(playerEntity:GetPlayerID(), {text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
 
-        Notifications:Bottom(playerEntity:GetAssignedHero().prisoner:GetPlayerID(), {hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
         Notifications:Bottom(playerEntity:GetAssignedHero().prisoner:GetPlayerID(), {text = "Jailor", style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
         Notifications:Bottom(playerEntity:GetAssignedHero().prisoner:GetPlayerID(), {text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
       
       elseif playerEntity:GetAssignedHero().jailed then
-
-        local heroName = GameMode:ConvertEngineName(playerEntity:GetAssignedHero():GetName())
         Notifications:Bottom(playerEntity:GetPlayerID(), {hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
         Notifications:Bottom(playerEntity:GetPlayerID(), {text = heroName, style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
         Notifications:Bottom(playerEntity:GetPlayerID(), {text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
@@ -699,23 +757,36 @@ function GameMode:ChatHandler()
         Notifications:Bottom(playerEntity:GetAssignedHero().prisoner:GetPlayerID(), {text = heroName, style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
         Notifications:Bottom(playerEntity:GetAssignedHero().prisoner:GetPlayerID(), {text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
 
-      end
-    end)
+      elseif playerEntity:GetAssignedHero().isMedium then
+        Notifications:Bottom(playerEntity:GetPlayerID(), {hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
+        Notifications:Bottom(playerEntity:GetPlayerID(), {text = "Medium", style={color="yellow",["font-size"]="20px"}, duration = line_duration, continue = true})
+        Notifications:Bottom(playerEntity:GetPlayerID(), {text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
 
-  elseif self.gameState == 3 or self.gameState == 5 then
-    PlayerSay:ChatHandler(function(playerEntity, text)
-      if text ~= "" and playerEntity:GetAssignedHero() ~= self.votedPlayer then
-        Notifications:Bottom(playerEntity:GetPlayerID(), {text = "No one can hear you", style={color="red",["font-size"]="20px"}, duration = line_duration})
-      
-      elseif text ~= "" and playerEntity:GetAssignedHero() == self.votedPlayer then
-        local heroName = GameMode:ConvertEngineName(playerEntity:GetAssignedHero():GetName())
+        for i=1,#heroes do
+          local hero = heroes[i]
+          if not hero:IsAlive() then
+            Notifications:Bottom(hero:GetPlayerID(), {hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
+            Notifications:Bottom(hero:GetPlayerID(), {text = "Medium", style={color="grey",["font-size"]="20px"}, duration = line_duration, continue = true})
+            Notifications:Bottom(hero:GetPlayerID(), {text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
+          end
+        end
+
+      else
+        Notifications:Bottom(playerEntity:GetPlayerID(), {text = "No one can hear you", style={color="red",["font-size"]="20px"}, duration = line_duration / 2})
+      end
+
+
+    elseif self.gameState == 3 or self.gameState == 5 then
+      if playerEntity:GetAssignedHero() == self.votedPlayer then
         Notifications:BottomToAll({hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
         Notifications:BottomToAll({text = heroName, style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
         Notifications:BottomToAll({text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
+
+      else
+        Notifications:Bottom(playerEntity:GetPlayerID(), {text = "No one can hear you", style={color="red",["font-size"]="20px"}, duration = line_duration / 2})
       end
-    end)
-    
-  end
+    end
+  end)
 end
 
 function GameMode:RoleActions(hero)
@@ -729,7 +800,7 @@ function GameMode:RoleActions(hero)
         end
       end
       hero:ForceKill(false)
-      hero:SetTeam(1)
+      hero:SetTeam(DOTA_TEAM_BADGUYS)
       hero.killer:IncrementKills(1)
     end
   elseif self.gameState == 2 then
@@ -788,7 +859,7 @@ function GameMode:ConvertEngineName(heroEngineName)
   elseif heroName == "Windrunner" then
     heroName = "Windranger"
   elseif heroName == "Zuus" then
-    heroName = "Zues"
+    heroName = "Zeus"
   end
   return heroName
 end
