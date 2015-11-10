@@ -742,26 +742,27 @@ function GameMode:ChatHandler()
         end
 
       elseif playerEntity:GetAssignedHero().isJailor then
-        Notifications:Bottom(playerEntity:GetPlayerID(), {text = "Jailor", style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
+        Notifications:Bottom(playerEntity:GetPlayerID(), {text = "Jailor", style={color="red",["font-size"]="20px"}, duration = line_duration})
         Notifications:Bottom(playerEntity:GetPlayerID(), {text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
 
-        Notifications:Bottom(playerEntity:GetAssignedHero().prisoner:GetPlayerID(), {text = "Jailor", style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
+        Notifications:Bottom(playerEntity:GetAssignedHero().prisoner:GetPlayerID(), {text = "Jailor", style={color="red",["font-size"]="20px"}, duration = line_duration})
         Notifications:Bottom(playerEntity:GetAssignedHero().prisoner:GetPlayerID(), {text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
       
       elseif playerEntity:GetAssignedHero().jailed then
         Notifications:Bottom(playerEntity:GetPlayerID(), {hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
-        Notifications:Bottom(playerEntity:GetPlayerID(), {text = heroName, style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
+        Notifications:Bottom(playerEntity:GetPlayerID(), {text = heroName, style={color="red",["font-size"]="20px"}, duration = line_duration})
         Notifications:Bottom(playerEntity:GetPlayerID(), {text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
 
         Notifications:Bottom(playerEntity:GetAssignedHero().prisoner:GetPlayerID(), {hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
-        Notifications:Bottom(playerEntity:GetAssignedHero().prisoner:GetPlayerID(), {text = heroName, style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
+        Notifications:Bottom(playerEntity:GetAssignedHero().prisoner:GetPlayerID(), {text = heroName, style={color="red",["font-size"]="20px"}, duration = line_duration})
         Notifications:Bottom(playerEntity:GetAssignedHero().prisoner:GetPlayerID(), {text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
 
       elseif playerEntity:GetAssignedHero().isMedium then
         Notifications:Bottom(playerEntity:GetPlayerID(), {hero = playerEntity:GetAssignedHero():GetName(), duration = line_duration})
-        Notifications:Bottom(playerEntity:GetPlayerID(), {text = "Medium", style={color="yellow",["font-size"]="20px"}, duration = line_duration, continue = true})
+        Notifications:Bottom(playerEntity:GetPlayerID(), {text = "Medium", style={color="yellow",["font-size"]="20px"}, duration = line_duration})
         Notifications:Bottom(playerEntity:GetPlayerID(), {text = ": " .. text, style = {["font-size"] = "20px"}, duration = line_duration, continue = true})
 
+        local heroes = HeroList:GetAllHeroes()
         for i=1,#heroes do
           local hero = heroes[i]
           if not hero:IsAlive() then
