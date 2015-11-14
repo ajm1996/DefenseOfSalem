@@ -409,7 +409,7 @@ function LookoutWatch(keys)
 	
 	elseif caster.watched then
     	caster.watched.isWatchedByLookout = false
-    	caster.watched.lookout = nil
+		caster.watched.lookout = nil
 		caster.watched = nil
     end
 

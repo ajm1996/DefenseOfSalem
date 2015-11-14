@@ -811,11 +811,68 @@ end
  
 function GameMode:CleanFlags(hero)
   if self.gameState == 1 then
-    hero.vote = "abstain"
-    hero.votes = 0
-    hero.votedFor = nil
-    hero.isMarkedForDeath = false
+    hero.isInvestigatedBySheriff = false
+    hero.sheriff = nil
+    hero.investigated = nil
+
     hero.isHealed = false
+    hero.doctor = nil
+    hero.healed = nil
+
+    hero.isInvestigatedByInvestigator = false
+    hero.investigator = nil
+    hero.investigated = nil
+
+    hero.isJailed = false
+    hero.jailor = nil
+    hero.jailed = nil
+
+    hero.isExecuted = false
+    hero.executor = nil
+    hero.executed = nil
+
+    hero.isKilledByMafioso = false
+    hero.mafiosoKiller = nil
+
+    hero.isKilledByGodfather = false
+    hero.godfatherKiller = nil
+    hero.killed = nil
+
+    hero.isFramed = false
+    hero.framer = nil
+    hero.framed = nil
+
+    hero.isEscorted = false
+    hero.escorter = nil
+    hero.escorted = nil
+
+    hero.isSuggestedByMafioso = false
+    hero.mafiosoSuggestor = nil
+    hero.suggested = nil
+
+    hero.isWatchedByLookout = false
+    hero.lookout = nil
+    hero.watched = nil
+
+    hero.isKilledBySK = false
+    hero.skKiller = nil
+    hero.killed = nil
+
+    hero.alert = false
+
+    hero.isKilledByVig = false
+    hero.vigKiller = nil
+    hero.killed = nil
+
+    hero.isKilledByJester = false
+    hero.jesterKiller = nil
+    hero.killed = nil
+
+  elseif self.gameState == 0 then
+    hero.votedFor = nil
+    hero.votes = 0
+    hero.vote = "abstain"
+    self.votedPlayer = nil
   end
 end
 
