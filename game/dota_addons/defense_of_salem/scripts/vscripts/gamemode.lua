@@ -417,6 +417,7 @@ function GameMode:SetRoles()
   if doctor then
     print("Doctor: " .. doctor:GetName())
     doctor.isDoctor = true
+    doctor.selfHeals = 1
     doctor.skills = {"doctor_heal"}
     doctor.description ="#doctor_description"
     doctor.goal = "#doctor_goal"
@@ -437,6 +438,7 @@ function GameMode:SetRoles()
   if jailor then
     print("Jailor: " .. jailor:GetName())
     jailor.isJailor = true
+    jailor.executions = 3
     jailor.skills = {"jailor_execute"}
     jailor.daySkills = {"jailor_jail"}
     jailor.description ="#jailor_description"
@@ -536,13 +538,15 @@ function GameMode:SetRoles()
     if rand == 1 then
       print("Veteran (Town Killing): " .. townKilling:GetName())
       townKilling.isVeteran = true
+      townKilling.alerts = 3
       townKilling.daySkills = {"veteran_alert"}
-      townKillingIsVeteran = true
       townKilling.description ="#veteran_description"
       townKilling.goal = "#veteran_goal"
     elseif rand == 2 then
       print("Vigilante (Town Killing): " .. townKilling:GetName())
       townKilling.isVigilante = true
+      townKilling.bullets = 3
+      townKilling.suicide = false
       townKilling.skills = {"vigilante_shoot"}
       townKillingIsVeteran = false
       townKilling.description ="#vigilante_description"
@@ -550,6 +554,7 @@ function GameMode:SetRoles()
     elseif rand == 3 then
       print("Jailor (Town Killing): " .. townKilling:GetName())
       townKilling.isJailor = true
+      townKilling.executions = 3
       townKilling.skills = {"jailor_execute"}
       townKilling.daySkills = {"jailor_jail"}
       townKilling.description ="#jailor_description"
@@ -577,6 +582,7 @@ function GameMode:SetRoles()
     elseif rand == 2 then
       print("Doctor (Random Town): " .. randomTown:GetName())
       randomTown.isDoctor = true
+      randomTown.selfHeals = 1
       randomTown.skills = {"doctor_heal"}
       randomTown.description ="#doctor_description"
       randomTown.goal = "#doctor_goal"
@@ -608,12 +614,15 @@ function GameMode:SetRoles()
     elseif rand == 7 then
       print("Vigilante (Random Town): " .. randomTown:GetName())
       randomTown.isVigilante = true
+      randomTown.bullets = 3
+      randomTown.suicide = false
       randomTown.skills = {"vigilante_shoot"}
       randomTown.description ="#vigilante_description"
       randomTown.goal = "#vigilante_goal"
     elseif rand == 8 then
       print("Veteran (Random Town): " .. randomTown:GetName())
       randomTown.isVeteran = true
+      randomTown.alerts = 3
       randomTown.skills = {"veteran_alert"}
       randomTown.description ="#veteran_description"
       randomTown.goal = "#veteran_goal"
@@ -792,6 +801,83 @@ end
 
 function GameMode:RoleActions(hero)
   if self.gameState == 1 then
+
+    if hero.isVeteran then
+      Notifications:Bottom(hero:GetPlayerID(), {"You have ".. hero.alerts .." alerts left", style={color="red",["font-size"]="20px"}, duration = 5})
+    end
+    
+    if hero.isInvestigatedBySheriff then
+      if hero.isSheriff or hero.isDoctor or hero.isInvestigator or hero.isJailor or hero.isMedium or hero.isGodfather or hero.isExecutioner or hero.isEscort or hero.isLookout or hero.isVigilante or hero.isVeteran or hero.isJester then
+        Notifications:Bottom(hero.sheriff:GetPlayerID(), {text = "Your target is not suspicious", style={["font-size"]="20px"}, duration = 5})
+      elseif hero.isFramer or hero.isMafioso then
+        Notifications:Bottom(hero.sheriff:GetPlayerID(), {text = "Your target is a member of the Mafia", style={["font-size"]="20px"}, duration = 5})
+      elseif hero.isSerialKiller then
+        Notifications:Bottom(hero.sheriff:GetPlayerID(), {text = "Your target is a Serial Killer", style={["font-size"]="20px"}, duration = 5})
+      end
+
+    end
+
+
+    if hero.isInvestigatedByInvestigator then
+
+      if hero.isSheriff or hero.isExecutioner then
+        Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target seeks justice. Therefore your target must be a Sheriff or Executioner.", style={["font-size"]="20px"}, duration = 5})
+      end
+
+      if hero.isDoctor or hero.isSerialKiller then
+        Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target is covered in blood. They must be a Doctor or Serial Killer", style={["font-size"]="20px"}, duration = 5})
+      end
+
+      if hero.isInvestigator then
+        Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target gathers information. They must be an Investigator.", style={["font-size"]="20px"}, duration = 5})
+      end
+
+      if hero.isJailor or hero.isLookout then
+        Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target is a protector. They must be a Jailor or a Lookout.", style={["font-size"]="20px"}, duration = 5})
+      end
+
+      if hero.isMedium then
+        Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target works with dead bodies. They must be a Medium.", style={["font-size"]="20px"}, duration = 5})
+      end
+
+      if hero.isGodfather then
+        Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target takes charge. They could be a Godfather.", style={["font-size"]="20px"}, duration = 5})
+      end
+
+      if hero.isFramer then
+        Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target is good with documents. They could be a Framer.", style={["font-size"]="20px"}, duration = 5})
+      end
+
+      if hero.isEscort then
+        Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target is a manipulative beauty. They must be an Escort.", style={["font-size"]="20px"}, duration = 5})
+      end
+
+      if hero.isMafioso or hero.isVigilante or hero.isVeteran then
+        Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target works with weapons. They must be a Vigilante, Veteran, or Mafioso.", style={["font-size"]="20px"}, duration = 5})
+      end
+
+      if hero.isJester then
+        Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target enjoys tricking people. They must be a Jester.", style={["font-size"]="20px"}, duration = 5})
+      end
+
+    end
+
+    if hero.isExecuted then
+      hero.executor.executes = hero.executor.executes - 1
+      hero:RemoveModifierByName("modifier_general_player_passives")
+      hero:SetCustomHealthLabel(GameMode:ConvertEngineName(hero:GetName()) .. '\n"'.. GameMode:GetRole(hero)..'"', 0, 0, 0)
+      for i=1, #self.alivePlayers do
+        if self.alivePlayers[i] == hero then
+          table.remove(self.alivePlayers, i)
+        end
+      end
+      hero:ForceKill(false)
+      hero:SetTeam(DOTA_TEAM_BADGUYS)
+      hero.killer:IncrementKills(1)
+    end
+
+
+
     if hero.isMarkedForDeath and not hero.isHealed then
       hero:RemoveModifierByName("modifier_general_player_passives")
       hero:SetCustomHealthLabel(GameMode:ConvertEngineName(hero:GetName()) .. '\n"'.. GameMode:GetRole(hero)..'"', 0, 0, 0)
@@ -804,7 +890,22 @@ function GameMode:RoleActions(hero)
       hero:SetTeam(DOTA_TEAM_BADGUYS)
       hero.killer:IncrementKills(1)
     end
-  elseif self.gameState == 2 then
+
+
+
+  elseif self.gameState == 0 then
+
+    if hero.isVigilante then
+      Notifications:Bottom(hero:GetPlayerID(), {"You have ".. hero.bullets .." bullets left", style={color="red",["font-size"]="20px"}, duration = 5})
+    end
+
+    if hero.isJailor then
+      Notifications:Bottom(hero:GetPlayerID(), {"You have ".. hero.executions .." executions left", style={color="red",["font-size"]="20px"}, duration = 5})
+    end
+
+    if hero.isJailed then
+      Notifications:Bottom(hero:GetPlayerID(), {"You were jailed for the night", style={color="red",["font-size"]="20px"}, duration = 5})
+    end
 
   end
 end
