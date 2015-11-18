@@ -390,6 +390,12 @@ function GameMode:StartPhase(phase)
       end
       self.votedPlayer:ForceKill(false)
       self.votedPlayer:SetTeam(DOTA_TEAM_BADGUYS)
+
+      if self.votedPlayer.isExecutionerTarget then
+        self.votedPlayer.executioner.targetLynched = true
+        Notifications:Bottom(hero:GetPlayerID(), {"Your target was successfully lynched", style={color="red",["font-size"]="20px"}, duration = 5})
+      end
+
       Timers:CreateTimer(3, function()
         FindClearSpaceForUnit(self.votedPlayer, self.votedPlayer.home, false)
         --check if day < 4
@@ -483,6 +489,10 @@ function GameMode:SetRoles()
   if executioner then
     print("Executioner: " .. executioner:GetName())
     executioner.isExecutioner = true
+    executioner.targetLynched = false
+    executioner.target = HeroList:GetHero(math.random(#HeroList:GetAllHeroes()))
+    executioner.target.isExecutionerTarget = true
+    executioner.target.executioner = executioner
     executioner.skills = {"executioner_passive"}
     executioner.daySkills = {"executioner_passive"}
     executioner.description ="#executioner_description"
@@ -817,47 +827,51 @@ function GameMode:RoleActions(hero)
     end
 
     if hero.isInvestigatedByInvestigator and not hero.investigator.isEscorted then
+      if not hero.isFramed then
 
-      if hero.isSheriff or hero.isExecutioner then
-        Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target seeks justice. Therefore your target must be a Sheriff or Executioner.", style={["font-size"]="20px"}, duration = 5})
+        if hero.isSheriff or hero.isExecutioner then
+          Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target seeks justice. Therefore your target must be a Sheriff or Executioner.", style={["font-size"]="20px"}, duration = 5})
+        end
+
+        if hero.isDoctor or hero.isSerialKiller then
+          Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target is covered in blood. They must be a Doctor or Serial Killer", style={["font-size"]="20px"}, duration = 5})
+        end
+
+        if hero.isInvestigator then
+          Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target gathers information. They must be an Investigator.", style={["font-size"]="20px"}, duration = 5})
+        end
+
+        if hero.isJailor or hero.isLookout then
+          Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target is a protector. They must be a Jailor or a Lookout.", style={["font-size"]="20px"}, duration = 5})
+        end
+
+        if hero.isMedium then
+          Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target works with dead bodies. They must be a Medium.", style={["font-size"]="20px"}, duration = 5})
+        end
+
+        if hero.isGodfather then
+          Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target takes charge. They must be a Godfather.", style={["font-size"]="20px"}, duration = 5})
+        end
+
+        if hero.isFramer then
+          Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target is good with documents. They must be a Framer.", style={["font-size"]="20px"}, duration = 5})
+        end
+
+        if hero.isEscort then
+          Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target is a manipulative beauty. They must be an Escort.", style={["font-size"]="20px"}, duration = 5})
+        end
+
+        if hero.isMafioso or hero.isVigilante or hero.isVeteran then
+          Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target works with weapons. They must be a Vigilante, Veteran, or Mafioso.", style={["font-size"]="20px"}, duration = 5})
+        end
+
+        if hero.isJester then
+          Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target enjoys tricking people. They must be a Jester.", style={["font-size"]="20px"}, duration = 5})
+        end
+
+      else 
+        Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target is good with documents. They must be a Framer.", style={["font-size"]="20px"}, duration = 5})
       end
-
-      if hero.isDoctor or hero.isSerialKiller then
-        Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target is covered in blood. They must be a Doctor or Serial Killer", style={["font-size"]="20px"}, duration = 5})
-      end
-
-      if hero.isInvestigator then
-        Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target gathers information. They must be an Investigator.", style={["font-size"]="20px"}, duration = 5})
-      end
-
-      if hero.isJailor or hero.isLookout then
-        Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target is a protector. They must be a Jailor or a Lookout.", style={["font-size"]="20px"}, duration = 5})
-      end
-
-      if hero.isMedium then
-        Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target works with dead bodies. They must be a Medium.", style={["font-size"]="20px"}, duration = 5})
-      end
-
-      if hero.isGodfather then
-        Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target takes charge. They could be a Godfather.", style={["font-size"]="20px"}, duration = 5})
-      end
-
-      if hero.isFramer then
-        Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target is good with documents. They could be a Framer.", style={["font-size"]="20px"}, duration = 5})
-      end
-
-      if hero.isEscort then
-        Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target is a manipulative beauty. They must be an Escort.", style={["font-size"]="20px"}, duration = 5})
-      end
-
-      if hero.isMafioso or hero.isVigilante or hero.isVeteran then
-        Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target works with weapons. They must be a Vigilante, Veteran, or Mafioso.", style={["font-size"]="20px"}, duration = 5})
-      end
-
-      if hero.isJester then
-        Notifications:Bottom(hero.investigator:GetPlayerID(), {text = "Your target enjoys tricking people. They must be a Jester.", style={["font-size"]="20px"}, duration = 5})
-      end
-
     end
 
 
@@ -977,6 +991,21 @@ function GameMode:RoleActions(hero)
     end
     ]]
 
+    if hero.isExecutioner then
+      if hero.target:IsAlive() then
+        Notifications:Bottom(hero:GetPlayerID(), {"Your target, ".. GameMode:ConvertEngineName(hero.target:GetName()) ..", is still alive", style={color="red",["font-size"]="20px"}, duration = 5})
+      else
+        Notifications:Bottom(hero:GetPlayerID(), {"Your target, ".. GameMode:ConvertEngineName(hero.target:GetName()) ..", has died during the night, you are now a jester", style={color="red",["font-size"]="20px"}, duration = 5})
+        
+        hero.isExecutioner = false
+        hero.skills = {"executioner_passive"}
+        hero.daySkills = {"executioner_passive"}
+
+        hero.isJester = true
+        hero.skills = {"jester_passive"}
+        hero.daySkills = {"jester_passive"}
+      end
+    end
 
   elseif self.gameState == 0 then
 
