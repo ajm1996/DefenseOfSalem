@@ -6,12 +6,16 @@ function SheriffInvestigate(keys)
 		return
 	end
 
+	if caster.investigated == target then
+		caster.investigated.isInvestigatedBySheriff = false
+    	caster.investigated = nil
+
+    	local targetName = GameMode:ConvertEngineName(target:GetName())
+		Notifications:Bottom(caster:GetPlayerID(), {text = "You have changed your mind", style={color="red",["font-size"]="20px"}, duration = 10})
+		return
+	end
+
 	if caster.investigated then
-		if caster.investigated == target then
-			caster.investigated.isInvestigatedBySheriff = false
-        	caster.investigated = nil
-			return
-		end
         caster.investigated.isInvestigatedBySheriff = false
         caster.investigated = nil
     end
@@ -36,6 +40,9 @@ function DoctorHeal(keys)
 		if caster.healed == target then
     		caster.healed.healed = false
     		caster.healed.healer = nil
+
+        	local targetName = GameMode:ConvertEngineName(target:GetName())
+    		Notifications:Bottom(caster:GetPlayerID(), {text = "You have changed your mind", style={color="red",["font-size"]="20px"}, duration = 10})
     		return
     	end
     	caster.healed.healed = false
@@ -62,6 +69,9 @@ function InvestigatorInvestigate(keys)
 		if caster.investigated == target then
 			caster.investigated.isInvestigatedByInvestigator = false
     		caster.investigated.investigator = nil
+
+        	local targetName = GameMode:ConvertEngineName(target:GetName())
+    		Notifications:Bottom(caster:GetPlayerID(), {text = "You have changed your mind", style={color="red",["font-size"]="20px"}, duration = 10})
     		return
     	end
     	caster.investigated.isInvestigatedByInvestigator = false
@@ -88,7 +98,10 @@ function JailorJail(keys)
 		if caster.prisoner == target then
 			caster.prisoner.isJailed = false
     		caster.prisoner.jailor = nil
-			return
+
+        	local targetName = GameMode:ConvertEngineName(target:GetName())
+    		Notifications:Bottom(caster:GetPlayerID(), {text = "You have changed your mind", style={color="red",["font-size"]="20px"}, duration = 10})
+    		return
 		end
     	caster.prisoner.isJailed = false
     	caster.prisoner.jailor = nil
@@ -128,8 +141,8 @@ function JailorExecuteOff(keys)
 	end
 
 	local targetName = GameMode:ConvertEngineName(target:GetName())
-    Notifications:Bottom(caster:GetPlayerID(), {text = "You have decided not to execute "..targetName, style={color="red",["font-size"]="20px"}, duration = 10})
-    Notifications:Bottom(prisoner:GetPlayerID(), {text = "Jailor has decided not to execute you", style={color="red",["font-size"]="20px"}, duration = 10})
+    Notifications:Bottom(caster:GetPlayerID(), {text = "You have changed your mind", style={color="red",["font-size"]="20px"}, duration = 10})
+    Notifications:Bottom(prisoner:GetPlayerID(), {text = "Jailor has changed their mind", style={color="red",["font-size"]="20px"}, duration = 10})
 end
 
 function GodfatherOrderToKill(keys)
@@ -157,6 +170,12 @@ function GodfatherOrderToKill(keys)
     	if caster.mafioso.killed == target then
     		caster.mafioso.killed.isKilledByMafioso = false
     		caster.mafioso.killed.mafiosoKiller= nil
+
+    		Notifications:Bottom(caster:GetPlayerID(), {text = casterName.." has changed their mind", style={color="red",["font-size"]="20px"}, duration = line_duration})
+
+    		Notifications:Bottom(caster.mafioso:GetPlayerID(), {text = casterName.." has changed their mind", style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
+
+    		Notifications:Bottom(caster.framer:GetPlayerID(), {text = casterName.." has changed their mind", style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
     		return
     	end
     	caster.mafioso.killed.isKilledByMafioso = false
@@ -198,6 +217,10 @@ function GodfatherKill(keys)
 		if caster.killed == target then
 			caster.killed.isKilledByGodfather = false
 			caster.killed.godfatherKiller = nil
+
+			Notifications:Bottom(caster:GetPlayerID(), {text = casterName.." has changed their mind", style={color="red",["font-size"]="20px"}, duration = line_duration})
+
+    		Notifications:Bottom(caster.framer:GetPlayerID(), {text = casterName.." has changed their mind", style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
 			return
 		end
 		caster.killed.isKilledByGodfather = false
@@ -229,6 +252,8 @@ function FramerFrame(keys)
 	        local hero = heroes[i]
 	        if hero.isGodfather then
 	        	caster.godfather = hero
+	        elseif hero.isMafioso then
+	        	caster.godfather.mafioso = hero
 	        end
 	    end
 	end
@@ -237,6 +262,12 @@ function FramerFrame(keys)
 		if caster.framed == target then
 			caster.framed.isFramed = false
 			caster.framed.framer = nil
+
+			Notifications:Bottom(caster:GetPlayerID(), {text = casterName.." has changed their mind", style={color="red",["font-size"]="20px"}, duration = line_duration})
+
+    		Notifications:Bottom(caster.godfather:GetPlayerID(), {text = casterName.." has changed their mind", style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
+
+    		Notifications:Bottom(caster.godfather.mafioso:GetPlayerID(), {text = casterName.." has changed their mind", style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
 			return
 		end
 		caster.framed.isFramed = false
@@ -268,6 +299,9 @@ function EscorterEscrot(keys)
 		if caster.escorted == target then
 			caster.escorted.isEscorted = false
 			caster.escorted.escorter = nil
+
+			local targetName = GameMode:ConvertEngineName(target:GetName())
+    		Notifications:Bottom(caster:GetPlayerID(), {text = "You have changed your mind", style={color="red",["font-size"]="20px"}, duration = 10})
 			return
 		end
 		caster.escorted.isEscorted = false
@@ -296,6 +330,8 @@ function MafiosoKill(keys)
 	        local hero = heroes[i]
 	        if hero.isGodfather then
 	        	caster.godfather = hero
+	        elseif hero.isFramer then
+	        	caster.godfather.framer = hero
 	        end
 	    end
 	end
@@ -304,6 +340,12 @@ function MafiosoKill(keys)
 		if caster.suggested == target then
 			caster.suggested.isSuggestedByMafioso = false
 			caster.suggested.mafiosoSuggestor = nil
+
+			Notifications:Bottom(caster:GetPlayerID(), {text = casterName.." has changed their mind", style={color="red",["font-size"]="20px"}, duration = line_duration})
+
+    		Notifications:Bottom(caster.godfather:GetPlayerID(), {text = casterName.." has changed their mind", style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
+
+    		Notifications:Bottom(caster.godfather.framer:GetPlayerID(), {text = casterName.." has changed their mind", style={color="red",["font-size"]="20px"}, duration = line_duration, continue = true})
 			return
 		end
 		caster.suggested.isSuggestedByMafioso = false
@@ -336,6 +378,9 @@ function LookoutWatch(keys)
 		if caster.watched == target then
 			caster.watched.isWatchedByLookout = false
     		caster.watched.lookout = nil
+
+    		local targetName = GameMode:ConvertEngineName(target:GetName())
+    		Notifications:Bottom(caster:GetPlayerID(), {text = "You have changed your mind", style={color="red",["font-size"]="20px"}, duration = 10})
     		return
     	end
     	caster.watched.isWatchedByLookout = false
@@ -362,6 +407,9 @@ function SerialKillerKill(keys)
 		if caster.killed == target then
 			caster.killed.isKilledBySK = false
 			caster.killed.skKiller = nil
+
+			local targetName = GameMode:ConvertEngineName(target:GetName())
+    		Notifications:Bottom(caster:GetPlayerID(), {text = "You have changed your mind", style={color="red",["font-size"]="20px"}, duration = 10})
 			return
 		end
 		caster.killed.isKilledBySK = false
@@ -389,7 +437,7 @@ function VeteranAlertOff(keys)
 	caster.alert = false
 
     local targetName = GameMode:ConvertEngineName(target:GetName())
-    Notifications:Bottom(caster:GetPlayerID(), {text = "You have decided to not go on alert tonight", style={color="red",["font-size"]="20px"}, duration = 10})
+    Notifications:Bottom(caster:GetPlayerID(), {text = "You have changed your mind", style={color="red",["font-size"]="20px"}, duration = 10})
 end
 
 function VigilanteShoot(keys)
@@ -404,6 +452,9 @@ function VigilanteShoot(keys)
 		if caster.killed == target then
 			caster.killed.isKilledByVig = false
 			caster.killed.vigKiller = nil
+
+			local targetName = GameMode:ConvertEngineName(target:GetName())
+    		Notifications:Bottom(caster:GetPlayerID(), {text = "You have changed your mind", style={color="red",["font-size"]="20px"}, duration = 10})
 			return
 		end
 		caster.killed.isKilledByVig = false
@@ -430,6 +481,9 @@ function JesterKill(keys)
 		if caster.killed == target then
 			caster.killed.isKilledByJester = false
 			caster.killed.jesterKiller = nil
+
+			local targetName = GameMode:ConvertEngineName(target:GetName())
+    		Notifications:Bottom(caster:GetPlayerID(), {text = "You have changed your mind", style={color="red",["font-size"]="20px"}, duration = 10})
 			return
 		end
 		caster.killed.isKilledByJester = false
