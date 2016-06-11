@@ -6,24 +6,20 @@ function SheriffInvestigate(keys)
 		return
 	end
 
-	if caster.investigated == target then
-		caster.investigated.isInvestigatedBySheriff = false
-        caster.investigated.sheriff = nil
-        caster.investigated = nil
+	if caster.affected == target then
+		table.remove(target.effects, {"Sheriff", caster})
+		caster.affected = nil
 
 		Notifications:Bottom(caster:GetPlayerID(), {text = "You have changed your mind", style={color="red",["font-size"]="20px"}, duration = 10})
 		return
 	end
 
-	if caster.investigated then
-        caster.investigated.isInvestigatedBySheriff = false
-        caster.investigated.sheriff = nil
-        caster.investigated = nil
+	if caster.affected then
+		table.remove(caster.affected.effects, {"Sheriff", caster})
     end
 
-    target.isInvestigatedBySheriff = true
-    target.sheriff = caster
-    caster.investigated = target
+    table.insert(target.effects, {"Sheriff", caster})
+    caster.affected = target
 
     local targetName = GameMode:ConvertEngineName(target:GetName())
     Notifications:Bottom(caster:GetPlayerID(), {text = "You have decided to investigate "..targetName, style={["font-size"]="20px"}, duration = 10})
@@ -42,26 +38,27 @@ function DoctorHeal(keys)
 		return
 	end
 
-	if caster.healed == target then
-		caster.healed.isHealed = false
-		caster.healed.doctor = nil
-		caster.healed = nil
+	if caster.affected == target then
+		table.remove(target.effects, {"Doctor", caster})
+		caster.affected = nil
 
-		Notifications:Bottom(caster:GetPlayerID(), {text = "You have changed your mind", style={["font-size"]="20px"}, duration = 10})
+		Notifications:Bottom(caster:GetPlayerID(), {text = "You have changed your mind", style={color="red",["font-size"]="20px"}, duration = 10})
 		return
-	
-	elseif caster.healed then
-    	caster.healed.isHealed = false
-		caster.healed.doctor = nil
-		caster.healed = nil
-    end
-	
-	target.isHealed = true
-	target.doctor = caster
-	caster.healed = target
+	end
 
-    local targetName = GameMode:ConvertEngineName(target:GetName())
-    Notifications:Bottom(caster:GetPlayerID(), {text = "You have decided to heal "..targetName, style={["font-size"]="20px"}, duration = 10})
+	if caster.affected then
+		table.remove(caster.affected.effects, {"Doctor", caster})
+    end
+
+    table.insert(target.effects, {"Doctor", caster})
+    caster.affected = target
+
+    if caster.affected == caster then
+    	Notifications:Bottom(caster:GetPlayerID(), {text = "You have decided to use a self-heal", style={["font-size"]="20px"}, duration = 10})
+    else
+    	local targetName = GameMode:ConvertEngineName(target:GetName())
+    	Notifications:Bottom(caster:GetPlayerID(), {text = "You have decided to heal "..targetName, style={["font-size"]="20px"}, duration = 10})
+    end
 end
 
 function InvestigatorInvestigate(keys)
@@ -72,23 +69,20 @@ function InvestigatorInvestigate(keys)
 		return
 	end
 
-	if caster.investigated == target then
-		caster.investigated.isInvestigatedByInvestigator = false
-		caster.investigated.investigator = nil
-		caster.investigated = nil
+	if caster.affected == target then
+		table.remove(target.effects, {"Investigator", caster})
+		caster.affected = nil
 
-		Notifications:Bottom(caster:GetPlayerID(), {text = "You have changed your mind", style={["font-size"]="20px"}, duration = 10})
+		Notifications:Bottom(caster:GetPlayerID(), {text = "You have changed your mind", style={color="red",["font-size"]="20px"}, duration = 10})
 		return
-	
-	elseif caster.investigated then
-    	caster.investigated.isInvestigatedByInvestigator = false
-		caster.investigated.investigator = nil
-		caster.investigated = nil
+	end
+
+	if caster.affected then
+		table.remove(caster.affected.effects, {"Investigator", caster})
     end
 
-    target.isInvestigatedByInvestigator = true
-    target.investigator = caster
-    caster.investigated = target
+    table.insert(target.effects, {"Investigator", caster})
+    caster.affected = target
 
     local targetName = GameMode:ConvertEngineName(target:GetName())
     Notifications:Bottom(caster:GetPlayerID(), {text = "You have decided to investigate "..targetName, style={["font-size"]="20px"}, duration = 10})
@@ -102,23 +96,20 @@ function JailorJail(keys)
 		return
 	end
 
-	if caster.jailed == target then
-		caster.jailed.isJailed = false
-		caster.jailed.jailor = nil
-		caster.jailed = nil
+	if caster.affected == target then
+		table.remove(target.effects, {"Jailor", caster})
+		caster.affected = nil
 
-		Notifications:Bottom(caster:GetPlayerID(), {text = "You have changed your mind", style={["font-size"]="20px"}, duration = 10})
+		Notifications:Bottom(caster:GetPlayerID(), {text = "You have changed your mind", style={color="red",["font-size"]="20px"}, duration = 10})
 		return
-	
-	elseif caster.jailed then
-		caster.jailed.isJailed = false
-		caster.jailed.jailor = nil
-		caster.jailed = nil
+	end
+
+	if caster.affected then
+		table.remove(caster.affected.effects, {"Jailor", caster})
     end
 
-    target.isJailed = true
-    target.jailor = caster
-    caster.jailed = target
+    table.insert(target.effects, {"Jailor", caster})
+    caster.affected = target
 
     local targetName = GameMode:ConvertEngineName(target:GetName())
     Notifications:Bottom(caster:GetPlayerID(), {text = "You have decided to jail "..targetName, style={["font-size"]="20px"}, duration = 10})
@@ -126,7 +117,7 @@ end
 
 function JailorExecuteOn(keys)
 	local caster = keys.caster
-	local prisoner = caster.prisoner
+	local prisoner = caster.affected
 
 	if caster.executes <= 0 then
     	Notifications:Bottom(caster:GetPlayerID(), {color="red", text = "You are out of executes", style={["font-size"]="20px"}, duration = 10})
@@ -139,9 +130,8 @@ function JailorExecuteOn(keys)
 	end
 
 	if prisoner and caster then
-		prisoner.isExecuted = true
-		prisoner.executor = caster
-		caster.executed = prisoner
+		caster.executing = true
+		table.insert(prisoner.effects, {"Executed", caster})
 	end
 
     local targetName = GameMode:ConvertEngineName(target:GetName())
@@ -151,12 +141,11 @@ end
 
 function JailorExecuteOff(keys)
 	local caster = keys.caster
-	local prisoner = caster.prisoner
+	local prisoner = caster.affected
 
 	if prisoner and caster then
-		prisoner.isExecuted = false
-		prisoner.executor = nil
-		caster.executed = nil
+		caster.executing = false
+		table.remove(prisoner.effects, {"Executed", caster})
 	end
 
     Notifications:Bottom(caster:GetPlayerID(), {text = "You have changed your mind", style={["font-size"]="20px"}, duration = 10})
@@ -184,31 +173,30 @@ function GodfatherOrderToKill(keys)
 	    end
 	end
 
-	if caster.mafioso.killed == target then
-		caster.mafioso.killed.isKilledByMafioso = false
-		caster.mafioso.killed.mafiosoKiller= nil
-		caster.mafioso.killed = nil
+	if caster.mafioso.target == target then
+		table.remove(target.effects, {"Mafioso", caster})
+		caster.mafioso.target = nil
 
 		local casterName = GameMode:ConvertEngineName(caster:GetName())
+
 		Notifications:Bottom(caster:GetPlayerID(), {text = casterName.." has changed their mind", style={["font-size"]="20px"}, duration = line_duration})
 
 		Notifications:Bottom(caster.mafioso:GetPlayerID(), {text = casterName.." has changed their mind", style={["font-size"]="20px"}, duration = line_duration, continue = true})
 
 		Notifications:Bottom(caster.framer:GetPlayerID(), {text = casterName.." has changed their mind", style={["font-size"]="20px"}, duration = line_duration, continue = true})
 		return
-	
-	elseif caster.mafioso.killed then
-    	caster.mafioso.killed.isKilledByMafioso = false
-    	caster.mafioso.killed.mafiosoKiller= nil
-		caster.mafioso.killed = nil
+	end
+
+	if caster.mafioso.target then
+		table.remove(caster.mafioso.target.effects, {"Mafioso", caster})
     end
 
-    target.isKilledByMafioso = true
-    target.mafiosoKiller = caster.mafioso
-    caster.mafioso.killed = target
+    table.insert(target.effects, {"Mafioso", caster})
+    caster.mafioso.target = target
 
     local casterName = GameMode:ConvertEngineName(caster:GetName())
     local targetName = GameMode:ConvertEngineName(target:GetName())
+    
     Notifications:Bottom(caster:GetPlayerID(), {text = casterName.." has decided to kill "..targetName, style={["font-size"]="20px"}, duration = line_duration})
 
     Notifications:Bottom(caster.mafioso:GetPlayerID(), {text = casterName.." has decided to kill "..targetName, style={["font-size"]="20px"}, duration = line_duration, continue = true})
@@ -233,29 +221,28 @@ function GodfatherKill(keys)
 	        end
 	    end
 
-	elseif caster.killed == target then
-		caster.killed.isKilledByGodfather = false
-		caster.killed.godfatherKiller = nil
-		caster.killed = nil
+	if caster.affected == target then
+		table.remove(target.effects, {"Godfather", caster})
+		caster.affected = nil
 
 		local casterName = GameMode:ConvertEngineName(caster:GetName())
+		
 		Notifications:Bottom(caster:GetPlayerID(), {text = casterName.." has changed their mind", style={["font-size"]="20px"}, duration = line_duration})
 
 		Notifications:Bottom(caster.framer:GetPlayerID(), {text = casterName.." has changed their mind", style={["font-size"]="20px"}, duration = line_duration, continue = true})
+		
 		return
 	
-	elseif caster.killed then
-		caster.killed.isKilledByGodfather = false
-		caster.killed.godfatherKiller = nil
-		caster.killed = nil
+	elseif caster.affected then
+		table.remove(caster.affected.effects, {"Godfather", caster})
 	end
 	
-	target.isKilledByGodfather = true
-	target.godfatherKiller = caster
-	caster.killed = target
+	table.insert(target.effects, {"Godfather", caster})
+    caster.affected = target
 
     local casterName = GameMode:ConvertEngineName(caster:GetName())
     local targetName = GameMode:ConvertEngineName(target:GetName())
+    
     Notifications:Bottom(caster:GetPlayerID(), {text = casterName.." has decided to kill "..targetName, style={["font-size"]="20px"}, duration = line_duration})
 
     Notifications:Bottom(caster.framer:GetPlayerID(), {text = casterName.." has decided to kill "..targetName, style={["font-size"]="20px"}, duration = line_duration, continue = true})
@@ -289,12 +276,12 @@ function FramerFrame(keys)
 
 	end
 
-	if caster.framed == target then
-		caster.framed.isFramed = false
-		caster.framed.framer = nil
-		caster.framed = nil
+	if caster.affected == target then
+		table.remove(target.effects, {"Framer", caster})
+		caster.affected = nil
 
 		local casterName = GameMode:ConvertEngineName(caster:GetName())
+		
 		Notifications:Bottom(caster:GetPlayerID(), {text = casterName.." has changed their mind", style={["font-size"]="20px"}, duration = line_duration})
 
 		Notifications:Bottom(caster.godfather:GetPlayerID(), {text = casterName.." has changed their mind", style={["font-size"]="20px"}, duration = line_duration, continue = true})
@@ -302,15 +289,12 @@ function FramerFrame(keys)
 		Notifications:Bottom(caster.godfather.mafioso:GetPlayerID(), {text = casterName.." has changed their mind", style={["font-size"]="20px"}, duration = line_duration, continue = true})
 		return
 	
-	elseif caster.framed then
-		caster.framed.isFramed = false
-		caster.framed.framer = nil
-		caster.framed = nil
+	elseif caster.affected then
+		table.remove(caster.affected.effects, {"Framer", caster})
 	end
 	
-	target.isFramed = true
-	target.framer = caster
-	caster.framed = target
+	table.insert(target.effects, {"Framer", caster})
+    caster.affected = target
 
     local casterName = GameMode:ConvertEngineName(caster:GetName())
     local targetName = GameMode:ConvertEngineName(target:GetName())
